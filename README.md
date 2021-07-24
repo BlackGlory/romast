@@ -24,6 +24,30 @@ import { dedent } from 'extra-tags'
 
 const org = dedent`
 * Romast
+`
+
+const romast = parse(org)
+// {
+//   "type": "document",
+//   "children": [
+//     {
+//       "type": "section",
+//       "level": 1,
+//       "children": [
+//         {
+//           "type": "headline",
+//           "level": 1,
+//           "children": [
+//             {
+//               "type": "text",
+//               "value": "Romast"
+//             }
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// }
 ```
 
 ## API
