@@ -2,15 +2,15 @@ export interface Node {
   type: string
 }
 
-export interface ParentOf<T extends Node[]> {
+export interface Parent {
+  children: Node[]
+}
+
+export interface ParentOf<T extends Node[]> extends Parent {
   children: T
 }
 
-export interface Document extends ParentOf<BlockContent[]> {
-  type: 'document'
-}
-
-export type BlockContent =
+export type UniversalBlockContent =
 | Section
 | Headline
 | Paragraph
@@ -22,7 +22,7 @@ export type BlockContent =
 | Table
 | HorizontalRule
 
-export type InlineContent =
+export type UniversalInlineContent =
 | Link
 | Text
 | Bold
@@ -35,17 +35,21 @@ export type InlineContent =
 
 export type TableContent = TableRow | TableHorizontalRule
 
-export interface Section extends ParentOf<BlockContent[]> {
+export interface Document extends ParentOf<UniversalBlockContent[]> {
+  type: 'document'
+}
+
+export interface Section extends ParentOf<UniversalBlockContent[]> {
   type: 'section'
   level: number
 }
 
-export interface Headline extends Node, ParentOf<InlineContent[]> {
+export interface Headline extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'headline'
   level: number
 }
 
-export interface Paragraph extends Node, ParentOf<InlineContent[]> {
+export interface Paragraph extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'paragraph'
 }
 
@@ -72,7 +76,7 @@ export interface List extends Node, ParentOf<Array<List | ListItem>> {
   ordered: boolean
 }
 
-export interface ListItem extends Node, ParentOf<InlineContent[]> {
+export interface ListItem extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'listItem'
   indent: number
   tag: string | null
@@ -86,7 +90,7 @@ export interface TableRow extends Node, ParentOf<TableCell[]> {
   type: 'tableRow'
 }
 
-export interface TableCell extends Node, ParentOf<InlineContent[]> {
+export interface TableCell extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'tableCell'
 }
 
@@ -99,7 +103,7 @@ export interface HorizontalRule extends Node {
 }
 
 // https://orgmode.org/manual/Creating-Footnotes.html
-export interface Footnote extends Node, ParentOf<Array<BlockContent | InlineContent>> {
+export interface Footnote extends Node, ParentOf<Array<UniversalBlockContent | UniversalInlineContent>> {
   type: 'footnote'
 }
 
@@ -113,7 +117,7 @@ export interface Drawer extends Node {
 export interface Link extends Node {
   type: 'link'
   protocol: string
-  description: string
+  description: string | null
   value: string
   search: string | number | null
 }

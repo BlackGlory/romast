@@ -1,8 +1,5 @@
 // https://github.com/orgapp/orgajs/blob/v2.4.9/packages/orga/src/types.ts
 
-// There is a PR that may cause breaking changes:
-// https://github.com/orgapp/orgajs/pull/104
-
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
 
@@ -201,7 +198,7 @@ export interface StyledText extends Literal {
 export interface Link extends Literal {
   type: 'link'
   protocol: string
-  description: string
+  description?: string
   value: string
   search?: string | number
 }

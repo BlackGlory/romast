@@ -8,7 +8,7 @@ export function isDocument(node: ROMAST.Node): node is ROMAST.Document {
   return is(node, 'document')
 }
 
-export function isBlockContent(node: ROMAST.Node): node is ROMAST.BlockContent {
+export function isBlockContent(node: ROMAST.Node): node is ROMAST.UniversalBlockContent {
   return isSection(node)
       || isHeadline(node)
       || isParagraph(node)
@@ -21,7 +21,7 @@ export function isBlockContent(node: ROMAST.Node): node is ROMAST.BlockContent {
       || isHorizontalRule(node)
 }
 
-export function isInlineContent(node: ROMAST.Node): node is ROMAST.InlineContent {
+export function isInlineContent(node: ROMAST.Node): node is ROMAST.UniversalInlineContent {
   return isLink(node)
       || isText(node)
       || isBold(node)

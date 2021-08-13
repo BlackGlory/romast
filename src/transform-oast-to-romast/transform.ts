@@ -207,7 +207,7 @@ function transformToken(node: OAST.Token, root: OAST.Document) {
 function transformPhrasingContent(
   node: OAST.PhrasingContent
 , root: OAST.Document
-): ROMAST.InlineContent | undefined {
+): ROMAST.UniversalInlineContent | undefined {
   if (OAST_IS.isStyledText(node)) return transformStyledText(node, root)
   if (OAST_IS.isLink(node)) return transformLink(node, root)
   if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
@@ -240,7 +240,7 @@ function transformStyledText(node: OAST.StyledText, root: OAST.Document) {
 function transformLink(node: OAST.Link, root: OAST.Document): ROMAST.Link {
   return {
     type: 'link'
-  , description: node.description
+  , description: node.description ?? null
   , protocol: node.protocol
   , value: node.value
   , search: node.search ?? null
