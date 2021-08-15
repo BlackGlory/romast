@@ -143,9 +143,24 @@ test('internal link', () => {
   })
 })
 
+test('horizontal rule', () => {
+  const text = dedent`
+    -----
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      { type: 'hr' }
+    ]
+  })
+})
+
 test('todo', () => {
   const text = dedent`
-    * TODO text [1/2] [50%]
+    * TODO [#A] text [1/2] [50%]
     - [X] task1
     - [ ] task2
   `
@@ -170,6 +185,10 @@ test('todo', () => {
                 type: 'todo'
               , keyword: 'TODO'
               , actionable: true
+              }
+            , {
+                type: 'priority'
+              , value: '[#A]'
               }
             , {
                 type: 'text.plain'

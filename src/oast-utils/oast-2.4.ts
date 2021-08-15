@@ -127,7 +127,7 @@ export interface Headline extends Child, Parent {
   tags?: string[]
 
   // See https://github.com/orgapp/orgajs/issues/110
-  children: Token[]
+  children: Array<Token | PhrasingContent>
 }
 
 export interface Paragraph extends Child, Parent, Attributed {
@@ -149,7 +149,6 @@ export type Token =
 | Keyword
 | Todo
 | Newline
-| HorizontalRule
 | Stars
 | Priority
 | Tags
@@ -158,9 +157,7 @@ export type Token =
 | ListItemTag
 | ListItemCheckbox
 | ListItemBullet
-| TableRule
 | TableColumnSeparator
-| PhrasingContent
 | FootnoteLabel
 | FootnoteInlineBegin
 | FootnoteReferenceEnd

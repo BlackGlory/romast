@@ -67,7 +67,7 @@ function transformHeadline(
     type: 'headline'
   , level: node.level
   , children: map(node.children, x => {
-      if (OAST_IS.isStars(x)) return transformStars(x, root)
+      if (OAST_IS.isToken(x)) return transformToken(x, root)
       if (OAST_IS.isPhrasingContent(x)) return transformPhrasingContent(x, root)
       throw new UnknownNodeError()
     })
@@ -185,7 +185,6 @@ function transformToken(node: OAST.Token, root: OAST.Document) {
   if (OAST_IS.isKeyword(node)) return transformKeyword(node, root)
   if (OAST_IS.isTodo(node)) return transformTodo(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
-  if (OAST_IS.isHorizontalRule(node)) return transformHorizontalRule(node, root)
   if (OAST_IS.isStars(node)) return transformStars(node, root)
   if (OAST_IS.isPriority(node)) return transformPriority(node, root)
   if (OAST_IS.isTags(node)) return transformTags(node, root)
@@ -194,7 +193,6 @@ function transformToken(node: OAST.Token, root: OAST.Document) {
   if (OAST_IS.isListItemTag(node)) return transformListItemTag(node, root)
   if (OAST_IS.isListItemCheckbox(node)) return transformListItemCheckbox(node, root)
   if (OAST_IS.isListItemBullet(node)) return transformListItemBullet(node, root)
-  if (OAST_IS.isTableRule(node)) return transformTableRule(node, root)
   if (OAST_IS.isTableColumnSeparator(node)) return transformTableColumnSeparator(node, root)
   if (OAST_IS.isPhrasingContent(node)) return transformPhrasingContent(node, root)
   if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
@@ -216,11 +214,13 @@ function transformPhrasingContent(
   if (OAST_IS.isLink(node)) return transformLink(node, root)
   if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
-  // if (OAST_IS.isToken(node)) return transformToken(node, root)
   throw new UnknownNodeError()
 }
 
-function transformHorizontalRule(node: OAST.HorizontalRule, root: OAST.Document): ROMAST.HorizontalRule {
+function transformHorizontalRule(
+  node: OAST.HorizontalRule
+, root: OAST.Document
+): ROMAST.HorizontalRule {
   return { type: 'horizontalRule' }
 }
 

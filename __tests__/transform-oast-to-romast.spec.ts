@@ -437,13 +437,46 @@ describe('OAST.FootnoteReferenceEnd', () => {
 
 describe('OAST.Todo', () => {
   it('return undefined', () => {
-    // TODO
+    const oast = O.document({}, [
+      O.section(1, {}, [
+        O.headline(1, true, 'content', [
+          O.stars(1)
+        , O.todo('TODO', true)
+        , O.plain('value')
+        ])
+      ])
+    ])
+
+    const result = transform(oast)
+
+    expect(result).toStrictEqual(R.document([
+      R.section(1, R.headline(1, [
+        R.text('value')
+      ]), [])
+    ]))
   })
 })
 
 describe('OAST.Priority', () => {
   it('return undefined', () => {
-    // TODO
+    const oast = O.document({}, [
+      O.section(1, {}, [
+        O.headline(1, true, 'content', [
+          O.stars(1)
+        , O.todo('TODO', true)
+        , O.priority('[#A]')
+        , O.plain('value')
+        ])
+      ])
+    ])
+
+    const result = transform(oast)
+
+    expect(result).toStrictEqual(R.document([
+      R.section(1, R.headline(1, [
+        R.text('value')
+      ]), [])
+    ]))
   })
 })
 
