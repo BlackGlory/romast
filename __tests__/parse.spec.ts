@@ -11,11 +11,7 @@ test('Example', () => {
 
   expect(result).toStrictEqual(
     R.document([
-      R.section(1, [
-        R.headline(1, [
-          R.text('Romast')
-        ])
-      ])
+      R.section(1, R.headline(1, [R.text('Romast')]), [])
     ])
   )
 })

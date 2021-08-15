@@ -12,7 +12,6 @@ export interface ParentOf<T extends Node[]> extends Parent {
 
 export type UniversalBlockContent =
 | Section
-| Headline
 | Paragraph
 | Example
 | Source
@@ -42,6 +41,7 @@ export interface Document extends ParentOf<UniversalBlockContent[]> {
 export interface Section extends ParentOf<UniversalBlockContent[]> {
   type: 'section'
   level: number
+  headline: Headline
 }
 
 export interface Headline extends Node, ParentOf<UniversalInlineContent[]> {

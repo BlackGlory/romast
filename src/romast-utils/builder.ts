@@ -7,10 +7,15 @@ export function document(children: ROMAST.Document['children']): ROMAST.Document
   }
 }
 
-export function section(level: ROMAST.Section['level'], children: ROMAST.Section['children']): ROMAST.Section {
+export function section(
+  level: ROMAST.Section['level']
+, headline: ROMAST.Section['headline']
+, children: ROMAST.Section['children']
+): ROMAST.Section {
   return {
     type: 'section'
   , level
+  , headline
   , children
   }
 }

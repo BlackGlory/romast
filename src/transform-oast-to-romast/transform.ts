@@ -13,7 +13,7 @@ import {
 , underlined
 , code
 } from '@src/romast-utils/builder'
-import { CustomError } from '@blackglory/errors'
+import { CustomError, assert } from '@blackglory/errors'
 import { isntUndefined } from '@blackglory/types'
 import { findFootnote } from './find-footnote'
 
@@ -42,16 +42,20 @@ function transformContent(node: OAST.Content, root: OAST.Document) {
   if (OAST_IS.isList(node)) return transformList(node, root)
   if (OAST_IS.isTable(node)) return transformTable(node, root)
   if (OAST_IS.isHorizontalRule(node)) return transformHorizontalRule(node, root)
-  if (OAST_IS.isHeadline(node)) return transformHeadline(node, root)
+  if (OAST_IS.isHeadline(node)) return undefined
   if (OAST_IS.isHTML(node)) return transformHTML(node, root)
   throw new UnknownNodeError()
 }
 
 function transformSection(node: OAST.Section, root: OAST.Document): ROMAST.Section {
+  const [headline, ...children] = node.children
+  assert(OAST_IS.isHeadline(headline), 'The first element of children should be a headline')
+
   return {
     type: 'section'
   , level: node.level
-  , children: map(node.children, x => transformContent(x, root))
+  , headline: transformHeadline(headline, root)
+  , children: map(children, x => transformContent(x, root))
   }
 }
 

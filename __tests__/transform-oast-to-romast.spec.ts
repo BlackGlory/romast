@@ -12,16 +12,21 @@ describe('OAST.Document', () => {
   })
 })
 
-describe('OAST.Section', () => {
+describe('OAST.Section, OAST.Headline, OAST.Stars', () => {
   it('return ROMAST.Section', () => {
     const oast = O.document({}, [
-      O.section(1, {}, [])
+      O.section(1, {}, [
+        O.headline(1, true, 'content', [
+          O.stars(1)
+        , O.plain('value')
+        ])
+      ])
     ])
 
     const result = transform(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.section(1, [])
+      R.section(1, R.headline(1, [R.text('value')]), [])
     ]))
   })
 })
@@ -203,16 +208,14 @@ describe('OAST.Table, OAST.TableRow, OAST.TableCell', () => {
 })
 
 describe('OAST.Headline', () => {
-  it('return ROMAST.Headline', () => {
+  it('return undefined', () => {
     const oast = O.document({}, [
       O.headline(1, true, 'content', [])
     ])
 
     const result = transform(oast)
 
-    expect(result).toStrictEqual(R.document([
-      R.headline(1, [])
-    ]))
+    expect(result).toStrictEqual(R.document([]))
   })
 })
 
@@ -430,22 +433,6 @@ describe('OAST.FootnoteInlineBegin', () => {
 
 describe('OAST.FootnoteReferenceEnd', () => {
   // TODO
-})
-
-describe('OAST.Stars', () => {
-  it('return undefined', () => {
-    const oast = O.document({}, [
-      O.headline(1, true, 'content', [
-        O.stars(1)
-      ])
-    ])
-
-    const result = transform(oast)
-
-    expect(result).toStrictEqual(R.document([
-      R.headline(1, [])
-    ]))
-  })
 })
 
 describe('OAST.Todo', () => {
