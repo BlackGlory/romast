@@ -1,7 +1,7 @@
 {
   "name": "romast",
   "version": "1.0.0",
-  "description": "",
+  "description": "Renderable Org-Mode Abstract Syntax Tree",
   "keywords": [],
   "files": [
     "lib",
@@ -9,8 +9,6 @@
   ],
   "main": "lib/es2018/index.js",
   "types": "lib/es2018/index.d.ts",
-  "module": "dist/es2018/index.mjs",
-  "browser": "dist/es2018/index.umd.js",
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
   "license": "MIT",
   "scripts": {
@@ -18,8 +16,10 @@
     "test": "jest --config jest.config.js",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:coverage": "jest --coverage --config jest.config.js",
-    "prepublishOnly": "run-s clean build",
-    "clean": "rimraf lib",
+    "prepublishOnly": "run-s clean build bundle",
+    "clean": "run-p clean:*",
+    "clean:build": "rimraf lib",
+    "clean:bundle": "rimraf dist",
     "build": "run-p build:*",
     "build:es2015": "run-s build:es2015:*",
     "build:es2015:compile": "tsc --project tsconfig.build.json --target es2015 --outDir lib/es2015",

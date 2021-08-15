@@ -4,7 +4,7 @@
 
 rmdast v1 is an easy-to-render version of [oast v2],
 the new AST is designed to render nodes directly from AST to any platform, e.g. React.
-So you can precisely control the translation results through recursive descent analysis.
+So you can precisely control the translation results by recursive descent analysis.
 
 [oast v2]: https://github.com/orgapp/orgajs
 
@@ -55,7 +55,7 @@ const romast = parse(org)
 ### parse
 
 ```ts
-function parse(text: string): ROMAST.Document
+function parse(text: string): AST.Document
 ```
 
 ### is
