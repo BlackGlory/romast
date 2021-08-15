@@ -116,7 +116,7 @@ export interface Drawer extends Node {
 
 export interface Link extends Node {
   type: 'link'
-  protocol: string
+  protocol: 'internal' | string
   description: string | null
   value: string
   search: string | number | null

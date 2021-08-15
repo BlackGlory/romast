@@ -78,7 +78,7 @@ function transformBlock(
   node: OAST.Block
 , root: OAST.Document
 ): ROMAST.Example | ROMAST.Source | ROMAST.Example | ROMAST.Quote | undefined {
-  switch (node.name) {
+  switch (node.name.toLowerCase()) {
     case 'quote': return quote(node.value)
     case 'src': return source(node.params, node.value)
     case 'example': return example(node.params, node.value)

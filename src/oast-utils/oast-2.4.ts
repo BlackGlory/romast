@@ -127,7 +127,7 @@ export interface Headline extends Child, Parent {
   tags?: string[]
 
   // See https://github.com/orgapp/orgajs/issues/110
-  children: Array<Stars | PhrasingContent>
+  children: Token[]
 }
 
 export interface Paragraph extends Child, Parent, Attributed {
