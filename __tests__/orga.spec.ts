@@ -4,7 +4,7 @@ import { isObject } from '@blackglory/types'
 
 test('export settings', () => {
   const text = dedent`
-    #+TITLE: I'm in the Mood for Org
+  #+TITLE: I'm in the Mood for Org
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -20,7 +20,7 @@ test('export settings', () => {
 
 test('comment', () => {
   const text = `
-    # comment
+  # comment
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -34,8 +34,8 @@ test('comment', () => {
 test('inline footnote', () => {
   // 如果document只有footnote, 而没有其他内容, orga解析出来结果将会是undefined
   const text = dedent`
-    Hello[fn:LABEL:DEFINITION]
-    World[fn::DEFINITION]
+  Hello[fn:LABEL:DEFINITION]
+  World[fn::DEFINITION]
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -86,9 +86,9 @@ test('inline footnote', () => {
 
 test('footnote', () => {
   const text = dedent`
-    The Org homepage[fn:LABEL] now looks a lot better than it used to.
+  The Org homepage[fn:LABEL] now looks a lot better than it used to.
 
-    [fn:LABEL] The link is: http://orgmode.org
+  [fn:LABEL] The link is: http://orgmode.org
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -135,7 +135,7 @@ test('footnote', () => {
 
 test('heading', () => {
   const text = dedent`
-    * Heading
+  * Heading
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -169,11 +169,11 @@ test('heading', () => {
 
 test('SRC', () => {
   const text = dedent`
-    #+BEGIN_SRC javascript
-    function main() {
-      console.log('Hello World')
-    }
-    #+END_SRC
+  #+BEGIN_SRC javascript
+  function main() {
+    console.log('Hello World')
+  }
+  #+END_SRC
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -197,11 +197,11 @@ test('SRC', () => {
 
 test('src', () => {
   const text = dedent`
-    #+begin_src javascript
-    function main() {
-      console.log('Hello World')
-    }
-    #+end_src
+  #+begin_src javascript
+  function main() {
+    console.log('Hello World')
+  }
+  #+end_src
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -226,14 +226,14 @@ test('src', () => {
 test('drawer', () => {
   // 不知道为什么, Orga的抽屉必须在Section里, 因此第一个抽屉不会被识别
   const text = dedent`
-    :DRAWERNAME:
-    This is outside the drawer.
-    :END:
+  :DRAWERNAME:
+  This is outside the drawer.
+  :END:
 
-    * Headline
-    :DRAWERNAME:
-    This is inside the drawer.
-    :END:
+  * Headline
+  :DRAWERNAME:
+  This is inside the drawer.
+  :END:
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -284,7 +284,7 @@ test('drawer', () => {
 
 test('raw link', () => {
   const text = dedent`
-    https://example.com
+  https://example.com
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -307,7 +307,7 @@ test('raw link', () => {
 
 test('internal link', () => {
   const text = dedent`
-    <<target>>[[target]]
+  <<target>>[[target]]
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -335,7 +335,7 @@ test('internal link', () => {
 
 test('horizontal rule', () => {
   const text = dedent`
-    -----
+  -----
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -350,8 +350,8 @@ test('horizontal rule', () => {
 
 test('headline with tags', () => {
   const text = dedent`
-    * headline1 :tag1:tag2:
-    ** headline2 :tag3:tag4:
+  * headline1 :tag1:tag2:
+  ** headline2 :tag3:tag4:
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -415,8 +415,8 @@ test('headline with tags', () => {
 
 test('description list item', () => {
   const text = dedent`
-    - item :: *hello* /world/
-      text
+  - item :: *hello* /world/
+    text
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -470,8 +470,8 @@ test('description list item', () => {
 
 test('nested list', () => {
   const text = dedent`
-    - list1
-      - list2
+  - list1
+    - list2
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -529,10 +529,11 @@ test('nested list', () => {
 
 test('todo', () => {
   const text = dedent`
-    * TODO [#A] text [1/2] [50%]
-    - [X] task1
-    - [ ] task2
-      [ ] text
+  * TODO [#A] text [1/2] [50%]
+  SCHEDULED: <2004-12-25 Sat>
+  - [X] task1
+  - [ ] task2
+    [ ] text
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -567,6 +568,13 @@ test('todo', () => {
                 type: 'newline'
               }
             ]
+          }
+        , {
+            type: 'planning'
+          , keyword: 'SCHEDULED'
+          , timestamp: {
+              date: expect.any(Date)
+            }
           }
         , {
             type: 'list'

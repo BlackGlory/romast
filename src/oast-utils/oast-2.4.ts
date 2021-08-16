@@ -181,6 +181,10 @@ export interface TableCell extends Child, Parent {
   children: UniversalInlineContent[]
 }
 
+export interface TableRule extends Node {
+  type: 'table.hr'
+}
+
 export interface Paragraph extends Child, Parent, Attributed {
   type: 'paragraph'
   children: UniversalInlineContent[]
@@ -242,8 +246,4 @@ export interface ListItemBullet extends Node {
   type: 'list.item.bullet'
   ordered: boolean
   indent: number
-}
-
-export interface TableRule extends Node {
-  type: 'table.hr'
 }
