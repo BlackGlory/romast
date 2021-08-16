@@ -8,7 +8,9 @@ export function isDocument(node: ROMAST.Node): node is ROMAST.Document {
   return is(node, 'document')
 }
 
-export function isBlockContent(node: ROMAST.Node): node is ROMAST.UniversalBlockContent {
+export function isUniversalBlockContent(
+  node: ROMAST.Node
+): node is ROMAST.UniversalBlockContent {
   return isSection(node)
       || isHeadline(node)
       || isParagraph(node)
@@ -21,7 +23,9 @@ export function isBlockContent(node: ROMAST.Node): node is ROMAST.UniversalBlock
       || isHorizontalRule(node)
 }
 
-export function isInlineContent(node: ROMAST.Node): node is ROMAST.UniversalInlineContent {
+export function isUniversalInlineContent(
+  node: ROMAST.Node
+): node is ROMAST.UniversalInlineContent {
   return isLink(node)
       || isText(node)
       || isBold(node)
@@ -31,6 +35,7 @@ export function isInlineContent(node: ROMAST.Node): node is ROMAST.UniversalInli
       || isUnderlined(node)
       || isCode(node)
       || isFootnote(node)
+      || isInlineFootnote(node)
 }
 
 export function isTableContent(node: ROMAST.Node): node is ROMAST.TableContent {
@@ -78,7 +83,9 @@ export function isTableRow(node: ROMAST.Node): node is ROMAST.TableRow {
   return is(node, 'tableRow')
 }
 
-export function isTableCell(node: ROMAST.Node): node is ROMAST.TableCell {
+export function isTableCell(
+  node: ROMAST.Node
+): node is ROMAST.TableCell {
   return is(node, 'tableCell')
 }
 
@@ -92,6 +99,10 @@ export function isHorizontalRule(node: ROMAST.Node): node is ROMAST.HorizontalRu
 
 export function isFootnote(node: ROMAST.Node): node is ROMAST.Footnote {
   return is(node, 'footnote')
+}
+
+export function isInlineFootnote(node: ROMAST.Node): node is ROMAST.InlineFootnote {
+  return is(node, 'inlineFootnote')
 }
 
 export function isDrawer(node: ROMAST.Node): node is ROMAST.Drawer {

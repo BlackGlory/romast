@@ -244,34 +244,20 @@ function transformLink(node: OAST.Link, root: OAST.Document): ROMAST.Link {
 function transformFootnoteReference(
   node: OAST.FootnoteReference
 , root: OAST.Document
-): ROMAST.Footnote {
-  if (node.label.trim() === '') {
-    // no label, so it must has children
-
+): ROMAST.Footnote | ROMAST.InlineFootnote {
+  if (node.children.length === 0) {
+    const footnote = findFootnote(root, node.label)
     return {
       type: 'footnote'
-    , children: map(node.children, x => transformUniversalInlineContent(x, root))
+    , children: map(
+        footnote?.children ?? []
+      , x => transformUniversalBlockContent(x, root)
+      )
     }
   } else {
-    if (node.children.length === 0) {
-      // has label, no children, it is the most common type
-
-      const footnote = findFootnote(root, node.label)
-      return {
-        type: 'footnote'
-      , children: map(footnote?.children ?? [], x => transformUniversalBlockContent(x, root))
-      }
-    } else {
-      // has label, but also has children, concat them
-
-      const footnote = findFootnote(root, node.label)
-      return {
-        type: 'footnote'
-      , children: [
-          ...map(node.children, x => transformUniversalInlineContent(x, root))
-        , ...map(footnote?.children ?? [], x => transformUniversalBlockContent(x, root))
-        ]
-      }
+    return {
+      type: 'inlineFootnote'
+    , children: map(node.children, x => transformUniversalInlineContent(x, root))
     }
   }
 }

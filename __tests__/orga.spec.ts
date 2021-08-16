@@ -32,7 +32,7 @@ test('comment', () => {
 })
 
 test('inline footnote', () => {
-  // 只有footnote的document解析出来是undefined, 所以必须加点内容
+  // 如果document只有footnote, 而没有其他内容, orga解析出来结果将会是undefined
   const text = dedent`
     Hello[fn:LABEL:DEFINITION]
     World[fn::DEFINITION]

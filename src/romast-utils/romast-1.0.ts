@@ -31,6 +31,7 @@ export type UniversalInlineContent =
 | Underlined
 | Code
 | Footnote
+| InlineFootnote
 
 export type TableContent = TableRow | TableHorizontalRule
 
@@ -104,12 +105,14 @@ export interface HorizontalRule extends Node {
   type: 'horizontalRule'
 }
 
-// https://orgmode.org/manual/Creating-Footnotes.html
-export interface Footnote extends Node, ParentOf<Array<UniversalBlockContent | UniversalInlineContent>> {
+export interface Footnote extends Node, ParentOf<UniversalBlockContent[]> {
   type: 'footnote'
 }
 
-// https://orgmode.org/manual/Drawers.html
+export interface InlineFootnote extends Node, ParentOf<UniversalInlineContent[]> {
+  type: 'inlineFootnote'
+}
+
 export interface Drawer extends Node {
   type: 'drawer'
   name: string

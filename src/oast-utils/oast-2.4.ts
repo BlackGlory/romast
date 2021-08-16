@@ -122,6 +122,12 @@ export interface Footnote extends Child, Parent {
   children: UniversalBlockContent[]
 }
 
+export interface FootnoteReference extends Child, Parent {
+  type: 'footnote.reference'
+  label: string
+  children: UniversalInlineContent[]
+}
+
 export interface Block extends Literal, Attributed {
   type: 'block'
   name: string
@@ -204,12 +210,6 @@ export interface Link extends Literal {
   description?: string
   value: string
   search?: string | number
-}
-
-export interface FootnoteReference extends Child, Parent {
-  type: 'footnote.reference'
-  label: string
-  children: UniversalInlineContent[]
 }
 
 export interface Stars extends Node {

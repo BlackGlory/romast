@@ -44,6 +44,57 @@ describe('OAST.Footnote', () => {
   })
 })
 
+describe('OAST.FootnoteReference', () => {
+  describe('footnote reference', () => {
+    it('return ROMAST.Footnote', () => {
+      const oast = O.document({}, [
+        O.paragraph({}, [
+          O.footnoteReference('label', [])
+        ])
+      , O.footnote('label', [
+          O.paragraph({}, [
+            O.plain('footnote')
+          ])
+        ])
+      ])
+
+      const result = transform(oast)
+
+      expect(result).toStrictEqual(R.document([
+        R.paragraph([
+          R.footnote([
+            R.paragraph([
+              R.text('footnote')
+            ])
+          ])
+        ])
+      ]))
+    })
+  })
+
+  describe('inline footnote', () => {
+    it('return ROMAST.InlineFootnote', () => {
+      const oast = O.document({}, [
+        O.paragraph({}, [
+          O.footnoteReference('label', [
+            O.plain('footnote')
+          ])
+        ])
+      ])
+
+      const result = transform(oast)
+
+      expect(result).toStrictEqual(R.document([
+        R.paragraph([
+          R.inlineFootnote([
+            R.text('footnote')
+          ])
+        ])
+      ]))
+    })
+  })
+})
+
 describe('OAST.Block', () => {
   describe('name = QUOTE', () => {
     it('return ROMAST.Quote', () => {
@@ -406,12 +457,6 @@ describe('OAST.Link', () => {
         R.link('https', 'description', 'value')
       ])
     ]))
-  })
-})
-
-describe('OAST.FootnoteReference', () => {
-  it('return ROMAST.Footnote', () => {
-    // TODO
   })
 })
 

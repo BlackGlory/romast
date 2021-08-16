@@ -126,7 +126,19 @@ export function footnote(children: ROMAST.Footnote['children']): ROMAST.Footnote
   }
 }
 
-export function drawer(name: ROMAST.Drawer['name'], value: ROMAST.Drawer['value']): ROMAST.Drawer {
+export function inlineFootnote(
+  children: ROMAST.InlineFootnote['children']
+): ROMAST.InlineFootnote {
+  return {
+    type: 'inlineFootnote'
+  , children
+  }
+}
+
+export function drawer(
+  name: ROMAST.Drawer['name']
+, value: ROMAST.Drawer['value']
+): ROMAST.Drawer {
   return {
     type: 'drawer'
   , name
