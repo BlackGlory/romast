@@ -87,20 +87,6 @@ export function isHTML(node: OAST.Node): node is OAST.HTML {
   return is(node, 'html')
 }
 
-export function isToken(node: OAST.Node): node is OAST.Token {
-  return isTodo(node)
-      || isNewline(node)
-      || isHorizontalRule(node)
-      || isStars(node)
-      || isPriority(node)
-      || isTags(node)
-      || isListItemCheckbox(node)
-      || isListItemBullet(node)
-      || isTableRule(node)
-      || isTableColumnSeparator(node)
-      || isPhrasingContent(node)
-}
-
 export function isPhrasingContent(node: OAST.Node): node is OAST.PhrasingContent {
   return isStyledText(node)
       || isLink(node)
@@ -160,8 +146,4 @@ export function isListItemBullet(node: OAST.Node): node is OAST.ListItemBullet {
 
 export function isTableRule(node: OAST.Node): node is OAST.TableRule {
   return is(node, 'table.hr')
-}
-
-export function isTableColumnSeparator(node: OAST.Node): node is OAST.TableColumnSeparator {
-  return is(node, 'table.columnSeparator')
 }

@@ -13,6 +13,7 @@
 // - `footnote.label`
 // - `footnote.inline.begin`
 // - `footnote.inline.end`
+// - `table.columnSeparator`
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -179,9 +180,6 @@ export type ListItemContent =
 | ListItemCheckbox
 | PhrasingContent
 
-export type Token =
-| TableColumnSeparator
-
 export type PhrasingContent =
 | StyledText
 | Link
@@ -255,8 +253,4 @@ export interface ListItemBullet extends Node {
 
 export interface TableRule extends Node {
   type: 'table.hr'
-}
-
-export interface TableColumnSeparator extends Node {
-  type: 'table.columnSeparator'
 }

@@ -186,17 +186,6 @@ function transformHTML(node: OAST.HTML, root: OAST.Document): undefined {
   return undefined
 }
 
-function transformToken(node: OAST.Token, root: OAST.Document) {
-  if (OAST_IS.isTodo(node)) return transformTodo(node, root)
-  if (OAST_IS.isNewline(node)) return transformNewline(node, root)
-  if (OAST_IS.isStars(node)) return transformStars(node, root)
-  if (OAST_IS.isPriority(node)) return transformPriority(node, root)
-  if (OAST_IS.isTags(node)) return transformTags(node, root)
-  if (OAST_IS.isTableColumnSeparator(node)) return transformTableColumnSeparator(node, root)
-  if (OAST_IS.isPhrasingContent(node)) return transformPhrasingContent(node, root)
-  throw new UnknownNodeError()
-}
-
 function transformPhrasingContent(
   node: OAST.PhrasingContent
 , root: OAST.Document
@@ -312,13 +301,6 @@ function transformTableRule(
 , root: OAST.Document
 ): ROMAST.TableHorizontalRule {
   return { type: 'tableHorizontalRule' }
-}
-
-function transformTableColumnSeparator(
-  node: OAST.TableColumnSeparator
-, root: OAST.Document
-): undefined {
-  return undefined
 }
 
 function map<T, V>(arr: T[], fn: (x: T) => V | undefined): V[] {

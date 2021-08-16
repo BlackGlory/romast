@@ -299,7 +299,3 @@ export function listItemBullet(
 export function tableRule(): OAST.TableRule {
   return { type: 'table.hr' }
 }
-
-export function tableColumnSeparator(): OAST.TableColumnSeparator {
-  return { type: 'table.columnSeparator' }
-}
