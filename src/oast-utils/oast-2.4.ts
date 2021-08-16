@@ -70,12 +70,6 @@ export type ListItemContent =
 | ListItemCheckbox
 | UniversalInlineContent
 
-export type UniversalInlineContent =
-| StyledText
-| Link
-| FootnoteReference
-| Newline
-
 export type UniversalBlockContent =
 | Paragraph
 | Block
@@ -83,6 +77,12 @@ export type UniversalBlockContent =
 | List
 | Table
 | HorizontalRule
+
+export type UniversalInlineContent =
+| StyledText
+| Link
+| FootnoteReference
+| Newline
 
 export interface Document extends Child, Parent {
   type: 'document'

@@ -37,6 +37,7 @@ function transformSectionContent(node: OAST.SectionContent, root: OAST.Document)
   if (OAST_IS.isUniversalBlockContent(node)) return transformUniversalBlockContent(node, root)
   if (OAST_IS.isSection(node)) return transformSection(node, root)
   if (OAST_IS.isHeadline(node)) return undefined
+  if (OAST_IS.isPlanning(node)) return transformPlanning(node, root)
   throw new UnknownNodeError()
 }
 
@@ -78,10 +79,20 @@ function transformUniversalBlockContent(
   if (OAST_IS.isParagraph(node)) return transformParagraph(node, root)
   if (OAST_IS.isBlock(node)) return transformBlock(node, root)
   if (OAST_IS.isDrawer(node)) return transformDrawer(node, root)
-  if (OAST_IS.isPlanning(node)) return transformPlanning(node, root)
   if (OAST_IS.isList(node)) return transformList(node, root)
   if (OAST_IS.isTable(node)) return transformTable(node, root)
   if (OAST_IS.isHorizontalRule(node)) return transformHorizontalRule(node, root)
+  throw new UnknownNodeError()
+}
+
+function transformUniversalInlineContent(
+  node: OAST.UniversalInlineContent
+, root: OAST.Document
+): ROMAST.UniversalInlineContent | undefined {
+  if (OAST_IS.isStyledText(node)) return transformStyledText(node, root)
+  if (OAST_IS.isLink(node)) return transformLink(node, root)
+  if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
+  if (OAST_IS.isNewline(node)) return transformNewline(node, root)
   throw new UnknownNodeError()
 }
 
@@ -196,17 +207,6 @@ function transformParagraph(
     type: 'paragraph'
   , children: map(node.children, x => transformUniversalInlineContent(x, root))
   }
-}
-
-function transformUniversalInlineContent(
-  node: OAST.UniversalInlineContent
-, root: OAST.Document
-): ROMAST.UniversalInlineContent | undefined {
-  if (OAST_IS.isStyledText(node)) return transformStyledText(node, root)
-  if (OAST_IS.isLink(node)) return transformLink(node, root)
-  if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
-  if (OAST_IS.isNewline(node)) return transformNewline(node, root)
-  throw new UnknownNodeError()
 }
 
 function transformHorizontalRule(
