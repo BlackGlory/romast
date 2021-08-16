@@ -192,8 +192,6 @@ function transformToken(node: OAST.Token, root: OAST.Document) {
   if (OAST_IS.isStars(node)) return transformStars(node, root)
   if (OAST_IS.isPriority(node)) return transformPriority(node, root)
   if (OAST_IS.isTags(node)) return transformTags(node, root)
-  if (OAST_IS.isPlanningKeyword(node)) return transformPlanningKeyword(node, root)
-  if (OAST_IS.isPlanningTimestamp(node)) return transformPlanningTimestamp(node, root)
   if (OAST_IS.isTableColumnSeparator(node)) return transformTableColumnSeparator(node, root)
   if (OAST_IS.isPhrasingContent(node)) return transformPhrasingContent(node, root)
   if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
@@ -337,19 +335,8 @@ function transformComment(node: OAST.Comment, root: OAST.Document): undefined {
   return undefined
 }
 
-function transformFootnoteLabel(node: OAST.FootnoteLabel, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformPlanningKeyword(
-  node: OAST.PlanningKeyword
-, root: OAST.Document
-): undefined {
-  return undefined
-}
-
-function transformPlanningTimestamp(
-  node: OAST.PlanningTimestamp
+function transformFootnoteLabel(
+  node: OAST.FootnoteLabel
 , root: OAST.Document
 ): undefined {
   return undefined
@@ -362,7 +349,10 @@ function transformListItemCheckbox(
   return undefined
 }
 
-function transformListItemBullet(node: OAST.ListItemBullet, root: OAST.Document): undefined {
+function transformListItemBullet(
+  node: OAST.ListItemBullet
+, root: OAST.Document
+): undefined {
   return undefined
 }
 

@@ -334,24 +334,6 @@ export function footnoteLabel(
   }
 }
 
-export function planningKeyword(
-  value: OAST.PlanningKeyword['value']
-): OAST.PlanningKeyword {
-  return {
-    type: 'planning.keyword'
-  , value
-  }
-}
-
-export function planningTimestamp(
-  value: OAST.PlanningTimestamp['value']
-): OAST.PlanningTimestamp {
-  return {
-    type: 'planning.timestamp'
-  , value
-  }
-}
-
 export function listItemCheckbox(
   checked: OAST.ListItemCheckbox['checked']
 ): OAST.ListItemCheckbox {

@@ -94,8 +94,6 @@ export function isToken(node: OAST.Node): node is OAST.Token {
       || isStars(node)
       || isPriority(node)
       || isTags(node)
-      || isPlanningKeyword(node)
-      || isPlanningTimestamp(node)
       || isListItemCheckbox(node)
       || isListItemBullet(node)
       || isTableRule(node)
@@ -190,14 +188,6 @@ export function isComment(node: OAST.Node): node is OAST.Comment {
 
 export function isFootnoteLabel(node: OAST.Node): node is OAST.FootnoteLabel {
   return is(node, 'footnote.label')
-}
-
-export function isPlanningKeyword(node: OAST.Node): node is OAST.PlanningKeyword {
-  return is(node, 'planning.keyword')
-}
-
-export function isPlanningTimestamp(node: OAST.Node): node is OAST.PlanningTimestamp {
-  return is(node, 'planning.timestamp')
 }
 
 export function isListItemCheckbox(node: OAST.Node): node is OAST.ListItemCheckbox {

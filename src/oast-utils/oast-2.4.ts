@@ -3,6 +3,8 @@
 // 它包含了一些会在后处理阶段被消耗掉, 因此实际上并不作为AST输出的节点, 例如:
 // - `list.item.tag`
 // - `keyword`
+// - `planning.keyword`
+// - `planning.timestamp`
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -170,8 +172,6 @@ export type ListItemContent =
 | PhrasingContent
 
 export type Token =
-| PlanningKeyword
-| PlanningTimestamp
 | TableColumnSeparator
 | FootnoteLabel
 | FootnoteInlineBegin
@@ -303,16 +303,6 @@ export interface Comment extends Literal {
 export interface FootnoteLabel extends Node {
   type: 'footnote.label'
   label: string
-}
-
-export interface PlanningKeyword extends Literal {
-  type: 'planning.keyword'
-  value: string
-}
-
-export interface PlanningTimestamp extends UnistLiteral {
-  type: 'planning.timestamp'
-  value: Timestamp
 }
 
 export interface ListItemCheckbox extends Node {
