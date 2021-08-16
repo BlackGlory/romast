@@ -1,6 +1,8 @@
 // https://github.com/orgapp/orgajs/blob/v2.4.9/packages/orga/src/types.ts
 // 注意, orga的types.ts并不是一份准确的AST定义,
-// 它包含了一些会在后处理阶段被消耗掉, 因此实际上并不作为AST输出的节点, 例如`list.item.tag`.
+// 它包含了一些会在后处理阶段被消耗掉, 因此实际上并不作为AST输出的节点, 例如:
+// - `list.item.tag`
+// - `keyword`
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -44,7 +46,6 @@ export interface Section extends Child, Parent {
 
 export type TopLevelContent =
 | Content
-| Keyword
 | Footnote
 
 export type Content =
@@ -126,10 +127,7 @@ export interface Headline extends Child, Parent {
   type: 'headline'
   level: number
 
-  // 带有Keyword节点的Headline特有的属性
-  keyword?: string
-
-  // 带有Todo节点的Headline特有的属性
+  // 只有带有Todo节点时, 该属性为true
   actionable: boolean
 
   // 带有Priority节点的Headline特有的属性
@@ -172,7 +170,6 @@ export type ListItemContent =
 | PhrasingContent
 
 export type Token =
-| Keyword
 | PlanningKeyword
 | PlanningTimestamp
 | TableColumnSeparator
@@ -301,12 +298,6 @@ export interface DrawerEnd extends Node {
 
 export interface Comment extends Literal {
   type: 'comment'
-}
-
-export interface Keyword extends Node {
-  type: 'keyword'
-  key: string
-  value: string
 }
 
 export interface FootnoteLabel extends Node {

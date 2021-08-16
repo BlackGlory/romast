@@ -2,6 +2,22 @@ import { parse } from 'orga'
 import { dedent } from 'extra-tags'
 import { isObject } from '@blackglory/types'
 
+test('export settings', () => {
+  const text = dedent`
+    #+TITLE: I'm in the Mood for Org
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , properties: {
+      title: `I'm in the Mood for Org`
+    }
+  , children: []
+  })
+})
+
 test('heading', () => {
   const text = dedent`
     * Heading

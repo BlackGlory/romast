@@ -130,7 +130,7 @@ export function headline(
 , actionable: OAST.Headline['actionable']
 , content: OAST.Headline['content']
 , children: OAST.Headline['children']
-, { keyword, priority, tags }: Pick<OAST.Headline, 'keyword' | 'priority' | 'tags'> = {}
+, { priority, tags }: Pick<OAST.Headline, 'priority' | 'tags'> = {}
 ): OAST.Headline {
   return {
     type: 'headline'
@@ -138,7 +138,6 @@ export function headline(
   , actionable
   , content
   , children
-  , keyword
   , priority
   , tags
   }
@@ -322,17 +321,6 @@ export function drawerEnd(): OAST.DrawerEnd {
 export function comment(value: OAST.Comment['value']): OAST.Comment {
   return {
     type: 'comment'
-  , value
-  }
-}
-
-export function keyword(
-  key: OAST.Keyword['key']
-, value: OAST.Keyword['value']
-): OAST.Keyword {
-  return {
-    type: 'keyword'
-  , key
   , value
   }
 }

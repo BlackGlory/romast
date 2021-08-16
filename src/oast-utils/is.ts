@@ -18,7 +18,6 @@ export function isSection(node: OAST.Node): node is OAST.Section {
 
 export function isTopLevelContent(node: OAST.Node): node is OAST.TopLevelContent {
   return isContent(node)
-      || isKeyword(node)
       || isFootnote(node)
 }
 
@@ -89,8 +88,7 @@ export function isHTML(node: OAST.Node): node is OAST.HTML {
 }
 
 export function isToken(node: OAST.Node): node is OAST.Token {
-  return isKeyword(node)
-      || isTodo(node)
+  return isTodo(node)
       || isNewline(node)
       || isHorizontalRule(node)
       || isStars(node)
@@ -188,10 +186,6 @@ export function isDrawerEnd(node: OAST.Node): node is OAST.DrawerEnd {
 
 export function isComment(node: OAST.Node): node is OAST.Comment {
   return is(node, 'comment')
-}
-
-export function isKeyword(node: OAST.Node): node is OAST.Keyword {
-  return is(node, 'keyword')
 }
 
 export function isFootnoteLabel(node: OAST.Node): node is OAST.FootnoteLabel {

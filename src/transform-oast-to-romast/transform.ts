@@ -28,7 +28,6 @@ export function transformDocument(root: OAST.Document): ROMAST.Document {
 
 function transformTopLevelContent(node: OAST.TopLevelContent, root: OAST.Document) {
   if (OAST_IS.isContent(node)) return transformContent(node, root)
-  if (OAST_IS.isKeyword(node)) return transformKeyword(node, root)
   if (OAST_IS.isFootnote(node)) return transformFootnote(node, root)
   throw new UnknownNodeError()
 }
@@ -188,7 +187,6 @@ function transformHTML(node: OAST.HTML, root: OAST.Document): undefined {
 }
 
 function transformToken(node: OAST.Token, root: OAST.Document) {
-  if (OAST_IS.isKeyword(node)) return transformKeyword(node, root)
   if (OAST_IS.isTodo(node)) return transformTodo(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
   if (OAST_IS.isStars(node)) return transformStars(node, root)
@@ -336,10 +334,6 @@ function transformDrawerEnd(node: OAST.DrawerEnd, root: OAST.Document): undefine
 }
 
 function transformComment(node: OAST.Comment, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformKeyword(node: OAST.Keyword, root: OAST.Document): undefined {
   return undefined
 }
 
