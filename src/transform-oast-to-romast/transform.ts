@@ -42,7 +42,6 @@ function transformContent(node: OAST.Content, root: OAST.Document) {
   if (OAST_IS.isTable(node)) return transformTable(node, root)
   if (OAST_IS.isHorizontalRule(node)) return transformHorizontalRule(node, root)
   if (OAST_IS.isHeadline(node)) return undefined
-  if (OAST_IS.isHTML(node)) return transformHTML(node, root)
   throw new UnknownNodeError()
 }
 
@@ -180,10 +179,6 @@ function transformParagraph(
     type: 'paragraph'
   , children: map(node.children, x => transformPhrasingContent(x, root))
   }
-}
-
-function transformHTML(node: OAST.HTML, root: OAST.Document): undefined {
-  return undefined
 }
 
 function transformPhrasingContent(

@@ -31,7 +31,6 @@ export function isContent(node: OAST.Node): node is OAST.Content {
       || isTable(node)
       || isHorizontalRule(node)
       || isHeadline(node)
-      || isHTML(node)
 }
 
 export function isFootnote(node: OAST.Node): node is OAST.Footnote {
@@ -81,10 +80,6 @@ export function isHeadline(node: OAST.Node): node is OAST.Headline {
 
 export function isParagraph(node: OAST.Node): node is OAST.Paragraph {
   return is(node, 'paragraph')
-}
-
-export function isHTML(node: OAST.Node): node is OAST.HTML {
-  return is(node, 'html')
 }
 
 export function isPhrasingContent(node: OAST.Node): node is OAST.PhrasingContent {

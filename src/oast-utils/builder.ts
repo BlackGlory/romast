@@ -154,13 +154,6 @@ export function paragraph(
   }
 }
 
-export function HTML(value: OAST.HTML['value']): OAST.HTML {
-  return {
-    type: 'html'
-  , value
-  }
-}
-
 export function horizontalRule(): OAST.HorizontalRule {
   return { type: 'hr' }
 }

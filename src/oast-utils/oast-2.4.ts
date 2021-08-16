@@ -14,6 +14,7 @@
 // - `footnote.inline.begin`
 // - `footnote.inline.end`
 // - `table.columnSeparator`
+// - `html`
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -69,7 +70,6 @@ export type Content =
 | Table
 | HorizontalRule
 | Headline
-| HTML
 
 export interface Footnote extends Child, Parent {
   type: 'footnote'
@@ -162,10 +162,6 @@ interface Literal extends UnistLiteral {
   value: string
 }
 
-export interface HTML extends Literal {
-  type: 'html'
-}
-
 // Tokens
 
 export type HeadlineContent =
@@ -195,14 +191,13 @@ export interface Newline extends Node {
 }
 
 export interface StyledText extends Literal {
-  type:
-  | 'text.plain'
-  | 'text.bold'
-  | 'text.verbatim'
-  | 'text.italic'
-  | 'text.strikeThrough'
-  | 'text.underline'
-  | 'text.code'
+  type: 'text.plain'
+      | 'text.bold'
+      | 'text.verbatim'
+      | 'text.italic'
+      | 'text.strikeThrough'
+      | 'text.underline'
+      | 'text.code'
 }
 
 export interface Link extends Literal {

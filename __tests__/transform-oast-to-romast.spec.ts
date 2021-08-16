@@ -237,18 +237,6 @@ describe('OAST.Pargraph', () => {
   })
 })
 
-describe('OAST.HTML', () => {
-  it('return undefined', () => {
-    const oast = O.document({}, [
-      O.HTML('value')
-    ])
-
-    const result = transform(oast)
-
-    expect(result).toStrictEqual(R.document([]))
-  })
-})
-
 describe('OAST.HorizontalRule', () => {
   it('return ROMAST.HorizontalRule', () => {
     const oast = O.document({}, [
