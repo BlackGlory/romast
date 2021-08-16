@@ -8,12 +8,61 @@ export function isDocument(node: ROMAST.Node): node is ROMAST.Document {
   return is(node, 'document')
 }
 
+export function isBlockNode(node: ROMAST.Node): node is ROMAST.BlockNode {
+  return isDocument(node)
+      || isSection(node)
+      || isHeadline(node)
+      || isParagraph(node)
+      || isExample(node)
+      || isSource(node)
+      || isQuote(node)
+      || isList(node)
+      || isListItem(node)
+      || isTable(node)
+      || isTableRow(node)
+      || isTableCell(node)
+      || isTableHorizontalRule(node)
+      || isHorizontalRule(node)
+      || isDrawer(node)
+}
+
+export function isInlineNode(node: ROMAST.Node): node is ROMAST.InlineNode {
+  return isFootnote(node)
+      || isInlineFootnote(node)
+      || isLink(node)
+      || isText(node)
+      || isBold(node)
+      || isVerbatim(node)
+      || isItalic(node)
+      || isStrikethrough(node)
+      || isUnderlined(node)
+      || isCode(node)
+}
+
+export function isDocumentContent(node: ROMAST.Node): node is ROMAST.DocumentContent {
+  return isUniversalBlockContent(node)
+      || isSection(node)
+}
+
+export function isSectionContent(node: ROMAST.Node): node is ROMAST.SectionContent {
+  return isUniversalBlockContent(node)
+      || isSection(node)
+}
+
+export function isTableContent(node: ROMAST.Node): node is ROMAST.TableContent {
+  return isTableRow(node)
+      || isTableHorizontalRule(node)
+}
+
+export function isListContent(node: ROMAST.Node): node is ROMAST.ListContent {
+  return isList(node)
+      || isListItem(node)
+}
+
 export function isUniversalBlockContent(
   node: ROMAST.Node
 ): node is ROMAST.UniversalBlockContent {
-  return isSection(node)
-      || isHeadline(node)
-      || isParagraph(node)
+  return isParagraph(node)
       || isExample(node)
       || isSource(node)
       || isQuote(node)
@@ -36,11 +85,6 @@ export function isUniversalInlineContent(
       || isCode(node)
       || isFootnote(node)
       || isInlineFootnote(node)
-}
-
-export function isTableContent(node: ROMAST.Node): node is ROMAST.TableContent {
-  return isTableRow(node)
-      || isTableHorizontalRule(node)
 }
 
 export function isSection(node: ROMAST.Node): node is ROMAST.Section {
