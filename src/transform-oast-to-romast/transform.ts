@@ -239,7 +239,6 @@ function transformLink(node: OAST.Link, root: OAST.Document): ROMAST.Link {
   , description: node.description ?? null
   , protocol: node.protocol
   , value: node.value
-  , search: node.search ?? null
   }
 }
 

@@ -150,14 +150,12 @@ export function link(
   protocol: ROMAST.Link['protocol']
 , description: ROMAST.Link['description']
 , value: ROMAST.Link['value']
-, { search = null }: Partial<Pick<ROMAST.Link, 'search'>> = {}
 ): ROMAST.Link {
   return {
     type: 'link'
   , protocol
   , description
   , value
-  , search
   }
 }
 

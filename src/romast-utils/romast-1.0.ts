@@ -162,7 +162,6 @@ export interface Link extends Node {
   protocol: 'internal' | string
   description: string | null
   value: string
-  search: string | number | null
 }
 
 export interface Text extends Node {
