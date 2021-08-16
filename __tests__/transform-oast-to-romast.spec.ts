@@ -189,12 +189,16 @@ describe('OAST.List, OAST.ListItem, OAST.ListItemBullet', () => {
   })
 })
 
-describe('OAST.Table, OAST.TableRow, OAST.TableCell', () => {
+describe('OAST.Table, OAST.TableRow, OAST.TableRule, OAST.TableCell', () => {
   it('return ROMAST.Table', () => {
     const oast = O.document({}, [
       O.table({}, [
         O.tableRow([
-          O.tableCell([])
+          O.tableCell([O.plain('header')])
+        ])
+      , O.tableRule()
+      , O.tableRow([
+          O.tableCell([O.plain('body')])
         ])
       ])
     ])
@@ -204,7 +208,11 @@ describe('OAST.Table, OAST.TableRow, OAST.TableCell', () => {
     expect(result).toStrictEqual(R.document([
       R.table([
         R.tableRow([
-          R.tableCell([])
+          R.tableCell([R.text('header')])
+        ])
+      , R.tableHorizontalRule()
+      , R.tableRow([
+          R.tableCell([R.text('body')])
         ])
       ])
     ]))
@@ -471,11 +479,5 @@ describe('OAST.ListItem, OAST.ListItemCheckbox', () => {
         R.listItem(0, [R.text('value')], { checked: true })
       ])
     ]))
-  })
-})
-
-describe('OAST.TableRule', () => {
-  it('return undefined', () => {
-    // TODO
   })
 })
