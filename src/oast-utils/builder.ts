@@ -289,35 +289,6 @@ export function tags(tags: OAST.Tags['tags']): OAST.Tags {
   }
 }
 
-export function blockBegin(
-  name: OAST.BlockBegin['name']
-, params: OAST.BlockBegin['params']
-): OAST.BlockBegin {
-  return {
-    type: 'block.begin'
-  , name
-  , params
-  }
-}
-
-export function blockEnd(name: OAST.BlockEnd['name']): OAST.BlockEnd {
-  return {
-    type: 'block.end'
-  , name
-  }
-}
-
-export function drawerBegin(name: OAST.DrawerBegin['name']): OAST.DrawerBegin {
-  return {
-    type: 'drawer.begin'
-  , name
-  }
-}
-
-export function drawerEnd(): OAST.DrawerEnd {
-  return { type: 'drawer.end' }
-}
-
 export function comment(value: OAST.Comment['value']): OAST.Comment {
   return {
     type: 'comment'

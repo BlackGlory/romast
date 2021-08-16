@@ -197,10 +197,6 @@ function transformToken(node: OAST.Token, root: OAST.Document) {
   if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
   if (OAST_IS.isFootnoteInlineBegin(node)) return transformFootnoteInlineBegin(node, root)
   if (OAST_IS.isFootnoteReferenceEnd(node)) return transformFootnoteReferenceEnd(node, root)
-  if (OAST_IS.isBlockBegin(node)) return transformBlockBegin(node, root)
-  if (OAST_IS.isBlockEnd(node)) return transformBlockEnd(node, root)
-  if (OAST_IS.isDrawerBegin(node)) return transformDrawerBegin(node, root)
-  if (OAST_IS.isDrawerEnd(node)) return transformDrawerEnd(node, root)
   if (OAST_IS.isComment(node)) return transformComment(node, root)
   throw new UnknownNodeError()
 }
@@ -312,22 +308,6 @@ function transformPriority(node: OAST.Priority, root: OAST.Document): undefined 
 }
 
 function transformTags(node: OAST.Tags, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformBlockBegin(node: OAST.BlockBegin, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformBlockEnd(node: OAST.BlockEnd, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformDrawerBegin(node: OAST.DrawerBegin, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformDrawerEnd(node: OAST.DrawerEnd, root: OAST.Document): undefined {
   return undefined
 }
 

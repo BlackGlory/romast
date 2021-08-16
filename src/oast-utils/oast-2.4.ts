@@ -5,6 +5,10 @@
 // - `keyword`
 // - `planning.keyword`
 // - `planning.timestamp`
+// - `block.begin`
+// - `block.end`
+// - `drawer.begin`
+// - `drawer.end`
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -176,10 +180,6 @@ export type Token =
 | FootnoteLabel
 | FootnoteInlineBegin
 | FootnoteReferenceEnd
-| BlockBegin
-| BlockEnd
-| DrawerBegin
-| DrawerEnd
 | Comment
 
 export type PhrasingContent =
@@ -270,30 +270,6 @@ export interface Priority extends Literal {
 export interface Tags extends Node {
   type: 'tags'
   tags: string[]
-}
-
-// block tokens
-
-export interface BlockBegin extends Node {
-  type: 'block.begin'
-  name: string
-  params: string[]
-}
-
-export interface BlockEnd extends Node {
-  type: 'block.end'
-  name: string
-}
-
-// drawer tokens
-
-export interface DrawerBegin extends Node {
-  type: 'drawer.begin'
-  name: string
-}
-
-export interface DrawerEnd extends Node {
-  type: 'drawer.end'
 }
 
 export interface Comment extends Literal {

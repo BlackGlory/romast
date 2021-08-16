@@ -108,6 +108,65 @@ test('src', () => {
   })
 })
 
+test('drawer', () => {
+  // 不知道为什么, Orga的抽屉必须在Section里, 因此第一个抽屉不会被识别
+  const text = dedent`
+    :DRAWERNAME:
+    This is outside the drawer.
+    :END:
+
+    * Headline
+    :DRAWERNAME:
+    This is inside the drawer.
+    :END:
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'This is outside the drawer.'
+          }
+        ]
+      }
+    , {
+        type: 'section'
+      , level: 1
+      , children: [
+          {
+            type: 'headline'
+          , level: 1
+          , children: [
+              {
+                type: 'stars'
+              , level: 1
+              }
+            , {
+                type: 'text.plain'
+              , value: 'Headline'
+              }
+            , {
+                type: 'newline'
+              }
+            ]
+          }
+        , {
+            type: 'drawer'
+          , name: 'DRAWERNAME'
+          , value: 'This is inside the drawer.'
+          }
+        ]
+      }
+    ]
+  })
+})
+
 test('raw link', () => {
   const text = dedent`
     https://example.com

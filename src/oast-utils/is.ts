@@ -102,10 +102,6 @@ export function isToken(node: OAST.Node): node is OAST.Token {
       || isFootnoteLabel(node)
       || isFootnoteInlineBegin(node)
       || isFootnoteReferenceEnd(node)
-      || isBlockBegin(node)
-      || isBlockEnd(node)
-      || isDrawerBegin(node)
-      || isDrawerEnd(node)
       || isComment(node)
 }
 
@@ -164,22 +160,6 @@ export function isPriority(node: OAST.Node): node is OAST.Priority {
 
 export function isTags(node: OAST.Node): node is OAST.Tags {
   return is(node, 'tags')
-}
-
-export function isBlockBegin(node: OAST.Node): node is OAST.BlockBegin {
-  return is(node, 'block.begin')
-}
-
-export function isBlockEnd(node: OAST.Node): node is OAST.BlockEnd {
-  return is(node, 'block.end')
-}
-
-export function isDrawerBegin(node: OAST.Node): node is OAST.DrawerBegin {
-  return is(node, 'drawer.begin')
-}
-
-export function isDrawerEnd(node: OAST.Node): node is OAST.DrawerEnd {
-  return is(node, 'drawer.end')
 }
 
 export function isComment(node: OAST.Node): node is OAST.Comment {
