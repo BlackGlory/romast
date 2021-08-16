@@ -2,7 +2,7 @@ import { parse } from '@src/parse'
 import { dedent } from 'extra-tags'
 import * as R from '@src/romast-utils/builder'
 
-test('Example', () => {
+test('Section', () => {
   const org = dedent`
   * Romast
   `
