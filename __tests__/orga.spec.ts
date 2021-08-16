@@ -81,6 +81,153 @@ describe('footnote', () => {
     })
   })
 
+  test('footnote with other nodes', () => {
+    const text = dedent`
+    * headline1
+    footnote[fn:LABEL]
+
+    [fn:LABEL] paragraph1
+
+    paragraph2
+
+    ** headline2
+    section2
+
+    * headline3
+    section3
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'section'
+        , level: 1
+        , children: [
+            {
+              type: 'headline'
+            , level: 1
+            , children: [
+                {
+                  type: 'stars'
+                , level: 1
+                }
+              , {
+                  type: 'text.plain'
+                , value: 'headline1'
+                }
+              , { type: 'newline' }
+              ]
+            }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'footnote'
+                }
+              , {
+                  type: 'footnote.reference'
+                , label: 'LABEL'
+                , children: []
+                }
+              ]
+            }
+          ]
+        }
+      , {
+          type: 'footnote'
+        , label: 'LABEL'
+        , children: [
+            {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'paragraph1'
+                }
+              ]
+            }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'paragraph2'
+                }
+              ]
+            }
+          ]
+        }
+      , {
+          type: 'section'
+        , level: 2
+        , children: [
+            {
+              type: 'headline'
+            , children: [
+                {
+                  type: 'stars'
+                , level: 2
+                }
+              , {
+                  type: 'text.plain'
+                , value: 'headline2'
+                }
+              , {
+                  type: 'newline'
+                }
+              ]
+            }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'section2'
+                }
+              ]
+            }
+          ]
+        }
+      , {
+          type: 'section'
+        , level: 1
+        , children: [
+            {
+              type: 'headline'
+            , level: 1
+            , children: [
+                {
+                  type: 'stars'
+                , level: 1
+                }
+              , {
+                  type: 'text.plain'
+                , value: 'headline3'
+                }
+              , {
+                  type: 'newline'
+                }
+              ]
+            }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'section3'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
+  })
+
   test('inline footnote', () => {
     // 如果document只有footnote, 而没有其他内容, orga解析出来结果将会是undefined
     const text = dedent`
