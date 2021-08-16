@@ -8,29 +8,58 @@ export function isParent(node: OAST.Node): node is OAST.Parent {
   return 'children' in node
 }
 
-export function isDocument(node: OAST.Node): node is OAST.Document {
-  return is(node, 'document')
-}
-
-export function isSection(node: OAST.Node): node is OAST.Section {
-  return is(node, 'section')
-}
-
-export function isTopLevelContent(node: OAST.Node): node is OAST.TopLevelContent {
-  return isContent(node)
+export function isDocumentContent(node: OAST.Node): node is OAST.DocumentContent {
+  return isUniversalBlockContent(node)
+      || isSection(node)
       || isFootnote(node)
 }
 
-export function isContent(node: OAST.Node): node is OAST.Content {
-  return isSection(node)
-      || isParagraph(node)
+export function isSectionContent(node: OAST.Node): node is OAST.SectionContent {
+  return isUniversalBlockContent(node)
+      || isSection(node)
+      || isHeadline(node)
+}
+
+export function isTableContent(node: OAST.Node): node is OAST.TableContent {
+  return isTableRow(node)
+      || isTableRule(node)
+}
+
+export function isHeadlineContent(node: OAST.Node): node is OAST.HeadlineContent {
+  return isStars(node)
+      || isTodo(node)
+      || isPriority(node)
+      || isTags(node)
+      || isUniversalInlineContent(node)
+}
+
+export function isUniversalInlineContent(
+  node: OAST.Node
+): node is OAST.UniversalInlineContent {
+  return isStyledText(node)
+      || isLink(node)
+      || isFootnoteReference(node)
+      || isNewline(node)
+}
+
+export function isUniversalBlockContent(
+  node: OAST.Node
+): node is OAST.UniversalBlockContent {
+  return isParagraph(node)
       || isBlock(node)
       || isDrawer(node)
       || isPlanning(node)
       || isList(node)
       || isTable(node)
       || isHorizontalRule(node)
-      || isHeadline(node)
+}
+
+export function isDocument(node: OAST.Node): node is OAST.Document {
+  return is(node, 'document')
+}
+
+export function isSection(node: OAST.Node): node is OAST.Section {
+  return is(node, 'section')
 }
 
 export function isFootnote(node: OAST.Node): node is OAST.Footnote {
@@ -51,11 +80,6 @@ export function isPlanning(node: OAST.Node): node is OAST.Planning {
 
 export function isList(node: OAST.Node): node is OAST.List {
   return is(node, 'list')
-}
-
-export function isTableContent(node: OAST.Node): node is OAST.TableContent {
-  return isTableRow(node)
-      || isTableRule(node)
 }
 
 export function isTable(node: OAST.Node): node is OAST.Table {
@@ -80,13 +104,6 @@ export function isHeadline(node: OAST.Node): node is OAST.Headline {
 
 export function isParagraph(node: OAST.Node): node is OAST.Paragraph {
   return is(node, 'paragraph')
-}
-
-export function isPhrasingContent(node: OAST.Node): node is OAST.PhrasingContent {
-  return isStyledText(node)
-      || isLink(node)
-      || isFootnoteReference(node)
-      || isNewline(node)
 }
 
 export function isHorizontalRule(node: OAST.Node): node is OAST.HorizontalRule {

@@ -19,49 +19,61 @@
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
 
-// Basic Types
-
 // The original name is `Parent`, which is definitely a wrong name
-export interface Child {
+interface Child {
   parent?: Parent
 }
 
-export type Primitive = string | number | boolean
+type Primitive = string | number | boolean
 
-export interface Attributes {
+interface Attributes {
   [key: string]: Primitive | Record<string, Primitive>
 }
 
-export interface Attributed {
+interface Attributed {
   attributes: Attributes
 }
 
-export interface Timestamp {
+interface Timestamp {
   date: Date
   end?: Date
 }
 
-// Syntax Tree Nodes
-
-export interface Document extends Child, Parent {
-  type: 'document'
-  properties: Record<string, string>
-  children: TopLevelContent[]
+interface Literal extends UnistLiteral {
+  value: string
 }
 
-export interface Section extends Child, Parent {
-  type: 'section'
-  level: number
-  properties: Record<string, string>
-  children: Content[]
-}
-
-export type TopLevelContent =
-| Content
+export type DocumentContent =
+| UniversalBlockContent
+| Section
 | Footnote
 
-export type Content =
+export type SectionContent =
+| UniversalBlockContent
 | Section
+| Headline
+
+export type TableContent = TableRow | TableRule
+
+export type HeadlineContent =
+| Stars
+| Todo
+| Priority
+| Tags
+| UniversalInlineContent
+
+export type ListItemContent =
+| ListItemBullet
+| ListItemCheckbox
+| UniversalInlineContent
+
+export type UniversalInlineContent =
+| StyledText
+| Link
+| FootnoteReference
+| Newline
+
+export type UniversalBlockContent =
 | Paragraph
 | Block
 | Drawer
@@ -69,14 +81,45 @@ export type Content =
 | List
 | Table
 | HorizontalRule
-| Headline
+
+export interface Document extends Child, Parent {
+  type: 'document'
+  properties: Record<string, string>
+  children: DocumentContent[]
+}
+
+export interface Section extends Child, Parent {
+  type: 'section'
+  level: number
+  properties: Record<string, string>
+  children: SectionContent[]
+}
+
+export interface Headline extends Child, Parent {
+  type: 'headline'
+  level: number
+
+  // 只有带有Todo节点时, 该属性为true
+  actionable: boolean
+
+  // 带有Priority节点的Headline特有的属性
+  priority?: string
+
+  // 带有Tag节点的Headline特有的属性
+  tags?: string[]
+
+  content: string
+
+  // See https://github.com/orgapp/orgajs/issues/110
+  children: HeadlineContent[]
+}
 
 export interface Footnote extends Child, Parent {
   type: 'footnote'
   label: string
 
   // See https://github.com/orgapp/orgajs/issues/110
-  children: Content[]
+  children: UniversalBlockContent[]
 }
 
 export interface Block extends Literal, Attributed {
@@ -105,7 +148,17 @@ export interface List extends Child, Parent, Attributed {
   children: Array<List | ListItem>
 }
 
-export type TableContent = TableRow | TableRule
+export interface ListItem extends Child, Parent {
+  type: 'list.item'
+  indent: number
+
+  // 正确的名称应该是`term`, 当节点有`term`时, 代表它是一个description list item
+  // https://orgmode.org/manual/Plain-Lists.html
+  tag?: string
+
+  // See https://github.com/orgapp/orgajs/issues/110
+  children: ListItemContent[]
+}
 
 export interface Table extends Child, Parent, Attributed {
   type: 'table'
@@ -119,68 +172,13 @@ export interface TableRow extends Child, Parent {
 
 export interface TableCell extends Child, Parent {
   type: 'table.cell'
-  children: PhrasingContent[]
-}
-
-export interface ListItem extends Child, Parent {
-  type: 'list.item'
-  indent: number
-
-  // 正确的名称应该是`term`, 当节点有`term`时, 代表它是一个description list item
-  // https://orgmode.org/manual/Plain-Lists.html
-  tag?: string
-
-  // See https://github.com/orgapp/orgajs/issues/110
-  children: ListItemContent[]
-}
-
-export interface Headline extends Child, Parent {
-  type: 'headline'
-  level: number
-
-  // 只有带有Todo节点时, 该属性为true
-  actionable: boolean
-
-  // 带有Priority节点的Headline特有的属性
-  priority?: string
-
-  // 带有Tag节点的Headline特有的属性
-  tags?: string[]
-
-  content: string
-
-  // See https://github.com/orgapp/orgajs/issues/110
-  children: HeadlineContent[]
+  children: UniversalInlineContent[]
 }
 
 export interface Paragraph extends Child, Parent, Attributed {
   type: 'paragraph'
-  children: PhrasingContent[]
+  children: UniversalInlineContent[]
 }
-
-interface Literal extends UnistLiteral {
-  value: string
-}
-
-// Tokens
-
-export type HeadlineContent =
-| Stars
-| Todo
-| Priority
-| Tags
-| PhrasingContent
-
-export type ListItemContent = 
-| ListItemBullet
-| ListItemCheckbox
-| PhrasingContent
-
-export type PhrasingContent =
-| StyledText
-| Link
-| FootnoteReference
-| Newline
 
 export interface HorizontalRule extends Node {
   type: 'hr'
@@ -211,7 +209,7 @@ export interface Link extends Literal {
 export interface FootnoteReference extends Child, Parent {
   type: 'footnote.reference'
   label: string
-  children: PhrasingContent[]
+  children: UniversalInlineContent[]
 }
 
 export interface Stars extends Node {

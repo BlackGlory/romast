@@ -211,18 +211,6 @@ describe('OAST.Table, OAST.TableRow, OAST.TableCell', () => {
   })
 })
 
-describe('OAST.Headline', () => {
-  it('return undefined', () => {
-    const oast = O.document({}, [
-      O.headline(1, true, 'content', [])
-    ])
-
-    const result = transform(oast)
-
-    expect(result).toStrictEqual(R.document([]))
-  })
-})
-
 describe('OAST.Pargraph', () => {
   it('return ROMAST.Paragraph', () => {
     const oast = O.document({}, [
