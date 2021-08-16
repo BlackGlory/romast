@@ -148,14 +148,14 @@ export function drawer(
 
 export function link(
   protocol: ROMAST.Link['protocol']
-, description: ROMAST.Link['description']
-, value: ROMAST.Link['value']
+, title: ROMAST.Link['title']
+, url: ROMAST.Link['url']
 ): ROMAST.Link {
   return {
     type: 'link'
   , protocol
-  , description
-  , value
+  , title: title
+  , url: url
   }
 }
 

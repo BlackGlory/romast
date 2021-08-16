@@ -160,8 +160,8 @@ export interface Drawer extends Node {
 export interface Link extends Node {
   type: 'link'
   protocol: 'internal' | string
-  description: string | null
-  value: string
+  title: string | null
+  url: string
 }
 
 export interface Text extends Node {

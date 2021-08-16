@@ -236,9 +236,9 @@ function transformStyledText(node: OAST.StyledText, root: OAST.Document) {
 function transformLink(node: OAST.Link, root: OAST.Document): ROMAST.Link {
   return {
     type: 'link'
-  , description: node.description ?? null
+  , title: node.description ?? null
   , protocol: node.protocol
-  , value: node.value
+  , url: node.value
   }
 }
 
