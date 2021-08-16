@@ -80,6 +80,7 @@ export interface List extends Node, ParentOf<Array<List | ListItem>> {
 export interface ListItem extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'listItem'
   indent: number
+  checked: boolean | null
   term: string | null
 }
 

@@ -168,7 +168,7 @@ describe('OAST.Planning', () => {
   })
 })
 
-describe('OAST.List, OAST.ListItem', () => {
+describe('OAST.List, OAST.ListItem, OAST.ListItemBullet', () => {
   it('return ROMAST.List, ROMAST.ListItem', () => {
     const oast = O.document({}, [
       O.list(0, true, {}, [
@@ -419,14 +419,6 @@ describe('OAST.FootnoteReference', () => {
   })
 })
 
-describe('OAST.FootnoteInlineBegin', () => {
-  // TODO
-})
-
-describe('OAST.FootnoteReferenceEnd', () => {
-  // TODO
-})
-
 describe('OAST.Todo', () => {
   it('return undefined', () => {
     const oast = O.document({}, [
@@ -472,72 +464,13 @@ describe('OAST.Priority', () => {
   })
 })
 
-describe('OAST.Tags', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.BlockBegin', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.BlockEnd', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.DrawerBegin', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.DrawerEnd', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.Comment', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.Keyword', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.FootnoteLabel', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.PlanningKeyword', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.PlanningTimestamp', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.ListItemCheckbox', () => {
-  it('return undefined', () => {
+describe('OAST.ListItem, OAST.ListItemCheckbox', () => {
+  it('OAST.ListItem', () => {
     const oast = O.document({}, [
       O.list(0, false, {}, [
         O.listItem(0, [
           O.listItemBullet(0, false)
+        , O.listItemCheckbox(true)
         , O.plain('value')
         ])
       ])
@@ -547,25 +480,13 @@ describe('OAST.ListItemCheckbox', () => {
 
     expect(result).toStrictEqual(R.document([
       R.list(0, false, [
-        R.listItem(0, [R.text('value')])
+        R.listItem(0, [R.text('value')], { checked: true })
       ])
     ]))
   })
 })
 
-describe('OAST.ListItemBullet', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
 describe('OAST.TableRule', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
-describe('OAST.TableColumnSeparator', () => {
   it('return undefined', () => {
     // TODO
   })

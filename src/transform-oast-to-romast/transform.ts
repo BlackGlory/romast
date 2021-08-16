@@ -159,16 +159,22 @@ function transformListItem(
   node: OAST.ListItem
 , root: OAST.Document
 ): ROMAST.ListItem {
+  const checkbox = node.children.find(OAST_IS.isListItemCheckbox)
+  const checked = checkbox ? checkbox.checked : null
   return {
     type: 'listItem'
   , indent: node.indent
+  , checked
   , term: node.tag ?? null
-  , children: map(node.children, x => {
-      if (OAST_IS.isListItemBullet(x)) return transformListItemBullet(x, root)
-      if (OAST_IS.isPhrasingContent(x)) return transformPhrasingContent(x, root)
-      throw new UnknownNodeError()
-    })
+  , children: map(node.children, x => transformListItemContent(x, root))
   }
+}
+
+function transformListItemContent(node: OAST.ListItemContent, root: OAST.Document) {
+  if (OAST_IS.isListItemBullet(node)) return transformListItemBullet(node, root)
+  if (OAST_IS.isListItemCheckbox(node)) return transformListItemCheckbox(node, root)
+  if (OAST_IS.isPhrasingContent(node)) return transformPhrasingContent(node, root)
+  throw new UnknownNodeError()
 }
 
 function transformParagraph(

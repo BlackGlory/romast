@@ -532,6 +532,7 @@ test('todo', () => {
     * TODO [#A] text [1/2] [50%]
     - [X] task1
     - [ ] task2
+      [ ] text
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -607,6 +608,15 @@ test('todo', () => {
                   , value: 'task2'
                   }
                 ]
+              }
+            ]
+          }
+        , {
+            type: 'paragraph'
+          , children: [
+              {
+                type: 'text.plain'
+              , value: '[ ] text'
               }
             ]
           }
