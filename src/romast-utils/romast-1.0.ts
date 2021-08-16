@@ -47,6 +47,7 @@ export interface Section extends ParentOf<UniversalBlockContent[]> {
 export interface Headline extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'headline'
   level: number
+  tags: string[]
 }
 
 export interface Paragraph extends Node, ParentOf<UniversalInlineContent[]> {

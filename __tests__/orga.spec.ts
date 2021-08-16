@@ -158,6 +158,71 @@ test('horizontal rule', () => {
   })
 })
 
+test('headline with tags', () => {
+  const text = dedent`
+    * headline1 :tag1:tag2:
+    ** headline2 :tag3:tag4:
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'section'
+      , level: 1
+      , children: [
+          {
+            type: 'headline'
+          , tags: ['tag1', 'tag2']
+          , children: [
+              {
+                type: 'stars'
+              , level: 1
+              }
+            , {
+                type: 'text.plain'
+              , value: 'headline1'
+              }
+            , {
+                type: 'tags'
+              , tags: ['tag1', 'tag2']
+              }
+            , {
+                type: 'newline'
+              }
+            ]
+          }
+        , {
+            type: 'section'
+          , level: 2
+          , children: [
+              {
+                type: 'headline'
+              , children: [
+                  {
+                    type: 'stars'
+                  , level: 2
+                  }
+                , {
+                    type: 'text.plain'
+                  , value: 'headline2'
+                  }
+                , {
+                    type: 'tags'
+                  , tags: ['tag3', 'tag4']
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+})
+
 test('description list item', () => {
   const text = dedent`
     - item :: *hello* /world/
@@ -298,7 +363,6 @@ test('todo', () => {
             , {
                 type: 'todo'
               , keyword: 'TODO'
-              , actionable: true
               }
             , {
                 type: 'priority'

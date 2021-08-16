@@ -20,11 +20,16 @@ export function section(
   }
 }
 
-export function headline(level: ROMAST.Headline['level'], children: ROMAST.Headline['children']): ROMAST.Headline {
+export function headline(
+  level: ROMAST.Headline['level']
+, tags: string[]
+, children: ROMAST.Headline['children']
+): ROMAST.Headline {
   return {
     type: 'headline'
   , level
   , children
+  , tags
   }
 }
 

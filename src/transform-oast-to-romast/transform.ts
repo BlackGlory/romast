@@ -66,12 +66,18 @@ function transformHeadline(
   return {
     type: 'headline'
   , level: node.level
-  , children: map(node.children, x => {
-      if (OAST_IS.isToken(x)) return transformToken(x, root)
-      if (OAST_IS.isPhrasingContent(x)) return transformPhrasingContent(x, root)
-      throw new UnknownNodeError()
-    })
+  , tags: node.tags ?? []
+  , children: map(node.children, x => transformHeadlineContent(x, root))
   }
+}
+
+function transformHeadlineContent(node: OAST.HeadlineContent, root: OAST.Document) {
+  if (OAST_IS.isStars(node)) return transformStars(node, root)
+  if (OAST_IS.isTodo(node)) return transformTodo(node, root)
+  if (OAST_IS.isPriority(node)) return transformPriority(node, root)
+  if (OAST_IS.isTags(node)) return transformTags(node, root)
+  if (OAST_IS.isPhrasingContent(node)) return transformPhrasingContent(node, root)
+  throw new UnknownNodeError()
 }
 
 function transformFootnote(node: OAST.Footnote, root: OAST.Document): undefined {

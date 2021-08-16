@@ -125,11 +125,20 @@ export interface ListItem extends Child, Parent {
 export interface Headline extends Child, Parent {
   type: 'headline'
   level: number
+
+  // 带有Keyword节点的Headline特有的属性
   keyword?: string
+
+  // 带有Todo节点的Headline特有的属性
   actionable: boolean
+
+  // 带有Priority节点的Headline特有的属性
   priority?: string
-  content: string
+
+  // 带有Tag节点的Headline特有的属性
   tags?: string[]
+
+  content: string
 
   // See https://github.com/orgapp/orgajs/issues/110
   children: HeadlineContent[]
