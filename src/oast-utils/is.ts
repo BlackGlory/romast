@@ -18,6 +18,7 @@ export function isSectionContent(node: OAST.Node): node is OAST.SectionContent {
   return isUniversalBlockContent(node)
       || isSection(node)
       || isHeadline(node)
+      || isPlanning(node)
 }
 
 export function isTableContent(node: OAST.Node): node is OAST.TableContent {
@@ -30,6 +31,19 @@ export function isHeadlineContent(node: OAST.Node): node is OAST.HeadlineContent
       || isTodo(node)
       || isPriority(node)
       || isTags(node)
+      || isUniversalInlineContent(node)
+}
+
+export function isListContent(node: OAST.Node): node is OAST.ListContent {
+  return isList(node)
+      || isListItem(node)
+}
+
+export function isListItemContent(
+  node: OAST.ListItemContent
+): node is OAST.ListItemContent {
+  return isListItemBullet(node)
+      || isListItemCheckbox(node)
       || isUniversalInlineContent(node)
 }
 
@@ -48,7 +62,6 @@ export function isUniversalBlockContent(
   return isParagraph(node)
       || isBlock(node)
       || isDrawer(node)
-      || isPlanning(node)
       || isList(node)
       || isTable(node)
       || isHorizontalRule(node)

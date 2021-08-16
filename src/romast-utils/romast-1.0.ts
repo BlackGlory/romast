@@ -10,8 +10,48 @@ export interface ParentOf<T extends Node[]> extends Parent {
   children: T
 }
 
-export type UniversalBlockContent =
+export type BlockNode =
+| Document
 | Section
+| Headline
+| Paragraph
+| Example
+| Source
+| Quote
+| List
+| ListItem
+| Table
+| TableRow
+| TableCell
+| TableHorizontalRule
+| HorizontalRule
+| Drawer
+
+export type InlineNode =
+| Footnote
+| InlineFootnote
+| Link
+| Text
+| Bold
+| Verbatim
+| Italic
+| Strikethrough
+| Underlined
+| Code
+
+export type DocumentContent =
+| UniversalBlockContent
+| Section
+
+export type SectionContent =
+| UniversalBlockContent
+| Section
+
+export type TableContent = TableRow | TableHorizontalRule
+
+export type ListContent = List | ListItem
+
+export type UniversalBlockContent =
 | Paragraph
 | Example
 | Source
@@ -33,13 +73,11 @@ export type UniversalInlineContent =
 | Footnote
 | InlineFootnote
 
-export type TableContent = TableRow | TableHorizontalRule
-
-export interface Document extends ParentOf<UniversalBlockContent[]> {
+export interface Document extends ParentOf<DocumentContent[]> {
   type: 'document'
 }
 
-export interface Section extends ParentOf<UniversalBlockContent[]> {
+export interface Section extends ParentOf<SectionContent[]> {
   type: 'section'
   level: number
   headline: Headline
@@ -72,7 +110,7 @@ export interface Quote extends Node {
   value: string
 }
 
-export interface List extends Node, ParentOf<Array<List | ListItem>> {
+export interface List extends Node, ParentOf<ListContent[]> {
   type: 'list'
   indent: number
   ordered: boolean

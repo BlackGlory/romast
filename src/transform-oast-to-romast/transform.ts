@@ -58,6 +58,12 @@ function transformHeadlineContent(node: OAST.HeadlineContent, root: OAST.Documen
   throw new UnknownNodeError()
 }
 
+function transformListContent(node: OAST.ListContent, root: OAST.Document) {
+  if (OAST_IS.isList(node)) return transformList(node, root)
+  if (OAST_IS.isListItem(node)) return transformListItem(node, root)
+  throw new UnknownNodeError()
+}
+
 function transformListItemContent(node: OAST.ListItemContent, root: OAST.Document) {
   if (OAST_IS.isListItemBullet(node)) return transformListItemBullet(node, root)
   if (OAST_IS.isListItemCheckbox(node)) return transformListItemCheckbox(node, root)
@@ -136,11 +142,7 @@ function transformList(node: OAST.List, root: OAST.Document): ROMAST.List {
     type: 'list'
   , indent: node.indent
   , ordered: node.ordered
-  , children: map(node.children, x => {
-      if (OAST_IS.isList(x)) return transformList(x, root)
-      if (OAST_IS.isListItem(x)) return transformListItem(x, root)
-      throw new UnknownNodeError()
-    })
+  , children: map(node.children, x => transformListContent(x, root))
   }
 }
 

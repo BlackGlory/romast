@@ -52,6 +52,7 @@ export type SectionContent =
 | UniversalBlockContent
 | Section
 | Headline
+| Planning
 
 export type TableContent = TableRow | TableRule
 
@@ -61,6 +62,8 @@ export type HeadlineContent =
 | Priority
 | Tags
 | UniversalInlineContent
+
+export type ListContent = List | ListItem
 
 export type ListItemContent =
 | ListItemBullet
@@ -77,7 +80,6 @@ export type UniversalBlockContent =
 | Paragraph
 | Block
 | Drawer
-| Planning
 | List
 | Table
 | HorizontalRule
@@ -151,7 +153,7 @@ export interface List extends Child, Parent, Attributed {
   type: 'list'
   indent: number
   ordered: boolean
-  children: Array<List | ListItem>
+  children: ListContent[]
 }
 
 export interface ListItem extends Child, Parent {
