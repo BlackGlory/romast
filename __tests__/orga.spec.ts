@@ -158,6 +158,120 @@ test('horizontal rule', () => {
   })
 })
 
+test('description list item', () => {
+  const text = dedent`
+    - item :: *hello* /world/
+      text
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'list'
+      , indent: 0
+      , ordered: false
+      , children: [
+          {
+            type: 'list.item'
+          , indent: 0
+          , tag: 'item'
+          , children: [
+              {
+                type: 'list.item.bullet'
+              , indent: 0
+              , ordered: false
+              }
+            , {
+                type: 'text.bold'
+              , value: 'hello'
+              }
+            , {
+                type: 'text.plain'
+              , value: ' '
+              }
+            , {
+                type: 'text.italic'
+              , value: 'world'
+              }
+            ]
+          }
+        ]
+      }
+    , {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'text'
+          }
+        ]
+      }
+    ]
+  })
+})
+
+test('nested list', () => {
+  const text = dedent`
+    - list1
+      - list2
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'list'
+      , indent: 0
+      , ordered: false
+      , children: [
+          {
+            type: 'list.item'
+          , indent: 0
+          , children: [
+              {
+                type: 'list.item.bullet'
+              , indent: 0
+              , ordered: false
+              }
+            , {
+                type: 'text.plain'
+              , value: 'list1'
+              }
+            ]
+          }
+        , {
+            type: 'list'
+          , indent: 2
+          , ordered: false
+          , children: [
+              {
+                type: 'list.item'
+              , indent: 2
+              , children: [
+                  {
+                    type: 'list.item.bullet'
+                  , indent: 2
+                  , ordered: false
+                  }
+                , {
+                    type: 'text.plain'
+                  , value: 'list2'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+})
+
 test('todo', () => {
   const text = dedent`
     * TODO [#A] text [1/2] [50%]

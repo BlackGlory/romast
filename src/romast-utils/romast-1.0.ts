@@ -79,7 +79,7 @@ export interface List extends Node, ParentOf<Array<List | ListItem>> {
 export interface ListItem extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'listItem'
   indent: number
-  tag: string | null
+  term: string | null
 }
 
 export interface Table extends Node, ParentOf<TableContent[]> {

@@ -98,7 +98,6 @@ export function isToken(node: OAST.Node): node is OAST.Token {
       || isTags(node)
       || isPlanningKeyword(node)
       || isPlanningTimestamp(node)
-      || isListItemTag(node)
       || isListItemCheckbox(node)
       || isListItemBullet(node)
       || isTableRule(node)
@@ -205,10 +204,6 @@ export function isPlanningKeyword(node: OAST.Node): node is OAST.PlanningKeyword
 
 export function isPlanningTimestamp(node: OAST.Node): node is OAST.PlanningTimestamp {
   return is(node, 'planning.timestamp')
-}
-
-export function isListItemTag(node: OAST.Node): node is OAST.ListItemTag {
-  return is(node, 'list.item.tag')
 }
 
 export function isListItemCheckbox(node: OAST.Node): node is OAST.ListItemCheckbox {

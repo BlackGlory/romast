@@ -74,12 +74,12 @@ export function list(
 export function listItem(
   indent: ROMAST.ListItem['indent']
 , children: ROMAST.ListItem['children']
-, { tag = null }: Partial<Pick<ROMAST.ListItem, 'tag'>> = {}
+, { term = null }: Partial<Pick<ROMAST.ListItem, 'term'>> = {}
 ): ROMAST.ListItem {
   return {
     type: 'listItem'
   , indent
-  , tag
+  , term
   , children
   }
 }

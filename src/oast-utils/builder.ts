@@ -1,6 +1,9 @@
 import * as OAST from './oast-2.4'
 
-export function document(properties: OAST.Document['properties'], children: OAST.Document['children']): OAST.Document {
+export function document(
+  properties: OAST.Document['properties']
+, children: OAST.Document['children']
+): OAST.Document {
   return {
     type: 'document'
   , properties
@@ -8,7 +11,11 @@ export function document(properties: OAST.Document['properties'], children: OAST
   }
 }
 
-export function section(level: OAST.Section['level'], properties: OAST.Section['properties'], children: OAST.Section['children']): OAST.Section {
+export function section(
+  level: OAST.Section['level']
+, properties: OAST.Section['properties']
+, children: OAST.Section['children']
+): OAST.Section {
   return {
     type: 'section'
   , level
@@ -17,7 +24,10 @@ export function section(level: OAST.Section['level'], properties: OAST.Section['
   }
 }
 
-export function footnote(label: OAST.Footnote['label'], children: OAST.Footnote['children']): OAST.Footnote {
+export function footnote(
+  label: OAST.Footnote['label']
+, children: OAST.Footnote['children']
+): OAST.Footnote {
   return {
     type: 'footnote'
   , label
@@ -40,7 +50,10 @@ export function block(
   }
 }
 
-export function drawer(name: OAST.Drawer['name'], value: OAST.Drawer['value']): OAST.Drawer {
+export function drawer(
+  name: OAST.Drawer['name']
+, value: OAST.Drawer['value']
+): OAST.Drawer {
   return {
     type: 'drawer'
   , name
@@ -48,7 +61,10 @@ export function drawer(name: OAST.Drawer['name'], value: OAST.Drawer['value']): 
   }
 }
 
-export function planning(keyword: OAST.Planning['keyword'], timestamp: OAST.Planning['timestamp']): OAST.Planning {
+export function planning(
+  keyword: OAST.Planning['keyword']
+, timestamp: OAST.Planning['timestamp']
+): OAST.Planning {
   return {
     type: 'planning'
   , keyword
@@ -71,7 +87,10 @@ export function list(
   }
 }
 
-export function table(attributes: OAST.Table['attributes'], children: OAST.Table['children']): OAST.Table {
+export function table(
+  attributes: OAST.Table['attributes']
+, children: OAST.Table['children']
+): OAST.Table {
   return {
     type: 'table'
   , attributes
@@ -226,7 +245,9 @@ export function footnoteReference(
   }
 }
 
-export function footnoteInlineBegin(label: OAST.FootnoteInlineBegin['label']): OAST.FootnoteInlineBegin {
+export function footnoteInlineBegin(
+  label: OAST.FootnoteInlineBegin['label']
+): OAST.FootnoteInlineBegin {
   return {
     type: 'footnote.inline.begin'
   , label
@@ -244,7 +265,10 @@ export function stars(level: OAST.Stars['level']): OAST.Stars {
   }
 }
 
-export function todo(keyword: OAST.Todo['keyword'], actionable: OAST.Todo['actionable']): OAST.Todo {
+export function todo(
+  keyword: OAST.Todo['keyword']
+, actionable: OAST.Todo['actionable']
+): OAST.Todo {
   return {
     type: 'todo'
   , keyword
@@ -266,7 +290,10 @@ export function tags(tags: OAST.Tags['tags']): OAST.Tags {
   }
 }
 
-export function blockBegin(name: OAST.BlockBegin['name'], params: OAST.BlockBegin['params']): OAST.BlockBegin {
+export function blockBegin(
+  name: OAST.BlockBegin['name']
+, params: OAST.BlockBegin['params']
+): OAST.BlockBegin {
   return {
     type: 'block.begin'
   , name
@@ -299,7 +326,10 @@ export function comment(value: OAST.Comment['value']): OAST.Comment {
   }
 }
 
-export function keyword(key: OAST.Keyword['key'], value: OAST.Keyword['value']): OAST.Keyword {
+export function keyword(
+  key: OAST.Keyword['key']
+, value: OAST.Keyword['value']
+): OAST.Keyword {
   return {
     type: 'keyword'
   , key
@@ -307,35 +337,36 @@ export function keyword(key: OAST.Keyword['key'], value: OAST.Keyword['value']):
   }
 }
 
-export function footnoteLabel(label: OAST.FootnoteLabel['label']): OAST.FootnoteLabel {
+export function footnoteLabel(
+  label: OAST.FootnoteLabel['label']
+): OAST.FootnoteLabel {
   return {
     type: 'footnote.label'
   , label
   }
 }
 
-export function planningKeyword(value: OAST.PlanningKeyword['value']): OAST.PlanningKeyword {
+export function planningKeyword(
+  value: OAST.PlanningKeyword['value']
+): OAST.PlanningKeyword {
   return {
     type: 'planning.keyword'
   , value
   }
 }
 
-export function planningTimestamp(value: OAST.PlanningTimestamp['value']): OAST.PlanningTimestamp {
+export function planningTimestamp(
+  value: OAST.PlanningTimestamp['value']
+): OAST.PlanningTimestamp {
   return {
     type: 'planning.timestamp'
   , value
   }
 }
 
-export function listItemTag(value: OAST.ListItemTag['value']): OAST.ListItemTag {
-  return {
-    type: 'list.item.tag'
-  , value
-  }
-}
-
-export function listItemCheckbox(checked: OAST.ListItemCheckbox['checked']): OAST.ListItemCheckbox {
+export function listItemCheckbox(
+  checked: OAST.ListItemCheckbox['checked']
+): OAST.ListItemCheckbox {
   return {
     type: 'list.item.checkbox'
   , checked
@@ -343,13 +374,13 @@ export function listItemCheckbox(checked: OAST.ListItemCheckbox['checked']): OAS
 }
 
 export function listItemBullet(
-  ordered: OAST.ListItemBullet['ordered']
-, indent: OAST.ListItemBullet['indent']
+  indent: OAST.ListItemBullet['indent']
+, ordered: OAST.ListItemBullet['ordered']
 ): OAST.ListItemBullet {
   return {
     type: 'list.item.bullet'
-  , ordered
   , indent
+  , ordered
   }
 }
 

@@ -170,16 +170,21 @@ describe('OAST.Planning', () => {
 describe('OAST.List, OAST.ListItem', () => {
   it('return ROMAST.List, ROMAST.ListItem', () => {
     const oast = O.document({}, [
-      O.list(1, true, {}, [
-        O.listItem(1, [])
+      O.list(0, true, {}, [
+        O.listItem(0, [
+          O.listItemBullet(0, false)
+        , O.plain('value')
+        ], { tag: 'term' })
       ])
     ])
 
     const result = transform(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.list(1, true, [
-        R.listItem(1, [])
+      R.list(0, true, [
+        R.listItem(0, [
+          R.text('value')
+        ], { term: 'term' })
       ])
     ]))
   })
@@ -540,15 +545,24 @@ describe('OAST.PlanningTimestamp', () => {
   })
 })
 
-describe('OAST.ListItemTag', () => {
-  it('return undefined', () => {
-    // TODO
-  })
-})
-
 describe('OAST.ListItemCheckbox', () => {
   it('return undefined', () => {
-    // TODO
+    const oast = O.document({}, [
+      O.list(0, false, {}, [
+        O.listItem(0, [
+          O.listItemBullet(0, false)
+        , O.plain('value')
+        ])
+      ])
+    ])
+
+    const result = transform(oast)
+
+    expect(result).toStrictEqual(R.document([
+      R.list(0, false, [
+        R.listItem(0, [R.text('value')])
+      ])
+    ]))
   })
 })
 

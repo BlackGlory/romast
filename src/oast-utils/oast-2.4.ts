@@ -1,4 +1,6 @@
 // https://github.com/orgapp/orgajs/blob/v2.4.9/packages/orga/src/types.ts
+// 注意, orga的types.ts并不是一份准确的AST定义,
+// 它包含了一些会在后处理阶段被消耗掉, 因此实际上并不作为AST输出的节点, 例如`list.item.tag`.
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -111,10 +113,13 @@ export interface TableCell extends Child, Parent {
 export interface ListItem extends Child, Parent {
   type: 'list.item'
   indent: number
+
+  // 正确的名称应该是`term`, 当节点有`term`时, 代表它是一个description list item
+  // https://orgmode.org/manual/Plain-Lists.html
   tag?: string
 
   // See https://github.com/orgapp/orgajs/issues/110
-  children: Array<ListItemBullet | PhrasingContent>
+  children: ListItemContent[]
 }
 
 export interface Headline extends Child, Parent {
@@ -127,7 +132,7 @@ export interface Headline extends Child, Parent {
   tags?: string[]
 
   // See https://github.com/orgapp/orgajs/issues/110
-  children: Array<Token | PhrasingContent>
+  children: HeadlineContent[]
 }
 
 export interface Paragraph extends Child, Parent, Attributed {
@@ -145,18 +150,22 @@ export interface HTML extends Literal {
 
 // Tokens
 
-export type Token =
-| Keyword
-| Todo
-| Newline
+export type HeadlineContent =
 | Stars
+| Todo
 | Priority
 | Tags
+| PhrasingContent
+
+export type ListItemContent = 
+| ListItemBullet
+| ListItemCheckbox
+| PhrasingContent
+
+export type Token =
+| Keyword
 | PlanningKeyword
 | PlanningTimestamp
-| ListItemTag
-| ListItemCheckbox
-| ListItemBullet
 | TableColumnSeparator
 | FootnoteLabel
 | FootnoteInlineBegin
@@ -304,10 +313,6 @@ export interface PlanningKeyword extends Literal {
 export interface PlanningTimestamp extends UnistLiteral {
   type: 'planning.timestamp'
   value: Timestamp
-}
-
-export interface ListItemTag extends Literal {
-  type: 'list.item.tag'
 }
 
 export interface ListItemCheckbox extends Node {
