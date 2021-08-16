@@ -219,12 +219,13 @@ describe('OAST.Planning', () => {
   })
 })
 
-describe('OAST.List, OAST.ListItem, OAST.ListItemBullet', () => {
+describe('OAST.List, OAST.ListItem, OAST.ListItemBullet, OAST.ListItemCheckbox', () => {
   it('return ROMAST.List, ROMAST.ListItem', () => {
     const oast = O.document({}, [
       O.list(0, true, {}, [
         O.listItem(0, [
           O.listItemBullet(0, false)
+        , O.listItemCheckbox(true)
         , O.plain('value')
         ], { tag: 'term' })
       ])
@@ -234,7 +235,7 @@ describe('OAST.List, OAST.ListItem, OAST.ListItemBullet', () => {
 
     expect(result).toStrictEqual(R.document([
       R.list(0, true, [
-        R.listItem(0, [R.text('value')], { term: 'term' })
+        R.listItem(0, [R.text('value')], { term: 'term', checked: true })
       ])
     ]))
   })
@@ -501,28 +502,6 @@ describe('OAST.Priority', () => {
       R.section(1, R.headline(1, [], [
         R.text('value')
       ]), [])
-    ]))
-  })
-})
-
-describe('OAST.ListItem, OAST.ListItemCheckbox', () => {
-  it('OAST.ListItem', () => {
-    const oast = O.document({}, [
-      O.list(0, false, {}, [
-        O.listItem(0, [
-          O.listItemBullet(0, false)
-        , O.listItemCheckbox(true)
-        , O.plain('value')
-        ])
-      ])
-    ])
-
-    const result = transform(oast)
-
-    expect(result).toStrictEqual(R.document([
-      R.list(0, false, [
-        R.listItem(0, [R.text('value')], { checked: true })
-      ])
     ]))
   })
 })

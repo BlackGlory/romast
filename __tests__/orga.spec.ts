@@ -31,111 +31,115 @@ test('comment', () => {
   })
 })
 
-test('inline footnote', () => {
-  // 如果document只有footnote, 而没有其他内容, orga解析出来结果将会是undefined
-  const text = dedent`
-  Hello[fn:LABEL:DEFINITION]
-  World[fn::DEFINITION]
-  `
+describe('footnote', () => {
+  test('footnote', () => {
+    const text = dedent`
+    The Org homepage[fn:LABEL] now looks a lot better than it used to.
 
-  const result = removeAllAdditionalProps(parse(text))
+    [fn:LABEL] The link is: http://orgmode.org
+    `
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'paragraph'
-      , children: [
-          {
-            type: 'text.plain'
-          , value: 'Hello'
-          }
-        , {
-            type: 'footnote.reference'
-          , label: 'LABEL'
-          , children: [
-              {
-                type: 'text.plain'
-              , value: 'DEFINITION'
-              }
-            ]
-          }
-        , {
-            type: 'text.plain'
-          , value: ' '
-          }
-        , {
-            type: 'text.plain'
-          , value: 'World'
-          }
-        , {
-            type: 'footnote.reference'
-          , label: ''
-          , children: [
-              {
-                type: 'text.plain'
-              , value: 'DEFINITION'
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: 'The Org homepage'
+            }
+          , {
+              type: 'footnote.reference'
+            , label: 'LABEL'
+            , children: []
+            }
+          , {
+              type: 'text.plain'
+            , value: ' now looks a lot better than it used to.'
+            }
+          ]
+        }
+      , {
+          type: 'footnote'
+        , label: 'LABEL'
+        , children: [
+            {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'The link is: http://orgmode.org'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
-})
 
-test('footnote', () => {
-  const text = dedent`
-  The Org homepage[fn:LABEL] now looks a lot better than it used to.
+  test('inline footnote', () => {
+    // 如果document只有footnote, 而没有其他内容, orga解析出来结果将会是undefined
+    const text = dedent`
+    Hello[fn:LABEL:DEFINITION]
+    World[fn::DEFINITION]
+    `
 
-  [fn:LABEL] The link is: http://orgmode.org
-  `
+    const result = removeAllAdditionalProps(parse(text))
 
-  const result = removeAllAdditionalProps(parse(text))
-
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'paragraph'
-      , children: [
-          {
-            type: 'text.plain'
-          , value: 'The Org homepage'
-          }
-        , {
-            type: 'footnote.reference'
-          , label: 'LABEL'
-          , children: []
-          }
-        , {
-            type: 'text.plain'
-          , value: ' now looks a lot better than it used to.'
-          }
-        ]
-      }
-    , {
-        type: 'footnote'
-      , label: 'LABEL'
-      , children: [
-          {
-            type: 'paragraph'
-          , children: [
-              {
-                type: 'text.plain'
-              , value: 'The link is: http://orgmode.org'
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: 'Hello'
+            }
+          , {
+              type: 'footnote.reference'
+            , label: 'LABEL'
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'DEFINITION'
+                }
+              ]
+            }
+          , {
+              type: 'text.plain'
+            , value: ' '
+            }
+          , {
+              type: 'text.plain'
+            , value: 'World'
+            }
+          , {
+              type: 'footnote.reference'
+            , label: ''
+            , children: [
+                {
+                  type: 'text.plain'
+                , value: 'DEFINITION'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
 })
 
 test('heading', () => {
   const text = dedent`
-  * Heading
+  * headline1
+  ** headline2 :tag1:tag2:
+  *** headline3 :tag3:tag4:
   `
 
   const result = removeAllAdditionalProps(parse(text))
@@ -157,7 +161,62 @@ test('heading', () => {
               }
             , {
                 type: 'text.plain'
-              , value: 'Heading'
+              , value: 'headline1'
+              }
+            , {
+                type: 'newline'
+              }
+            ]
+          }
+        , {
+            type: 'section'
+          , level: 2
+          , children: [
+              {
+                type: 'headline'
+              , level: 2
+              , tags: ['tag1', 'tag2']
+              , children: [
+                  {
+                    type: 'stars'
+                  , level: 2
+                  }
+                , {
+                    type: 'text.plain'
+                  , value: 'headline2'
+                  }
+                , {
+                    type: 'tags'
+                  , tags: ['tag1', 'tag2']
+                  }
+                , {
+                    type: 'newline'
+                  }
+                ]
+              }
+            , {
+                type: 'section'
+              , level: 3
+              , children: [
+                  {
+                    type: 'headline'
+                  , level: 3
+                  , children: [
+                      {
+                        type: 'stars'
+                      , level: 3
+                      }
+                    , {
+                        type: 'text.plain'
+                      , value: 'headline3'
+                      }
+                    , {
+                        type: 'tags'
+                      , tags: ['tag3', 'tag4']
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -167,59 +226,61 @@ test('heading', () => {
   })
 })
 
-test('SRC', () => {
-  const text = dedent`
-  #+BEGIN_SRC javascript
-  function main() {
-    console.log('Hello World')
-  }
-  #+END_SRC
-  `
+describe('block', () => {
+  test('SRC', () => {
+    const text = dedent`
+    #+BEGIN_SRC javascript
+    function main() {
+      console.log('Hello World')
+    }
+    #+END_SRC
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'block'
-      , name: 'SRC'
-      , params: ['javascript']
-      , value: dedent`
-          function main() {
-            console.log('Hello World')
-          }
-        `
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'block'
+        , name: 'SRC'
+        , params: ['javascript']
+        , value: dedent`
+            function main() {
+              console.log('Hello World')
+            }
+          `
+        }
+      ]
+    })
   })
-})
 
-test('src', () => {
-  const text = dedent`
-  #+begin_src javascript
-  function main() {
-    console.log('Hello World')
-  }
-  #+end_src
-  `
+  test('src', () => {
+    const text = dedent`
+    #+begin_src javascript
+    function main() {
+      console.log('Hello World')
+    }
+    #+end_src
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'block'
-      , name: 'src'
-      , params: ['javascript']
-      , value: dedent`
-          function main() {
-            console.log('Hello World')
-          }
-        `
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'block'
+        , name: 'src'
+        , params: ['javascript']
+        , value: dedent`
+            function main() {
+              console.log('Hello World')
+            }
+          `
+        }
+      ]
+    })
   })
 })
 
@@ -282,54 +343,56 @@ test('drawer', () => {
   })
 })
 
-test('raw link', () => {
-  const text = dedent`
-  https://example.com
-  `
+describe('link', () => {
+  test('plain link', () => {
+    const text = dedent`
+    https://example.com
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'paragraph'
-      , children: [
-          {
-            type: 'text.plain'
-          , value: 'https://example.com'
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: 'https://example.com'
+            }
+          ]
+        }
+      ]
+    })
   })
-})
 
-test('internal link', () => {
-  const text = dedent`
-  <<target>>[[target]]
-  `
+  test('internal link', () => {
+    const text = dedent`
+    <<target>>[[target]]
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'paragraph'
-      , children: [
-          {
-            type: 'text.plain'
-          , value: '<<target>>'
-          }
-        , {
-            type: 'link'
-          , protocol: 'internal'
-          , value: 'target'
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: '<<target>>'
+            }
+          , {
+              type: 'link'
+            , protocol: 'internal'
+            , value: 'target'
+            }
+          ]
+        }
+      ]
+    })
   })
 })
 
@@ -348,182 +411,119 @@ test('horizontal rule', () => {
   })
 })
 
-test('headline with tags', () => {
-  const text = dedent`
-  * headline1 :tag1:tag2:
-  ** headline2 :tag3:tag4:
-  `
+describe('list', () => {
+  test('description list item', () => {
+    const text = dedent`
+    - item :: *hello* /world/
+      text
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'section'
-      , level: 1
-      , children: [
-          {
-            type: 'headline'
-          , tags: ['tag1', 'tag2']
-          , children: [
-              {
-                type: 'stars'
-              , level: 1
-              }
-            , {
-                type: 'text.plain'
-              , value: 'headline1'
-              }
-            , {
-                type: 'tags'
-              , tags: ['tag1', 'tag2']
-              }
-            , {
-                type: 'newline'
-              }
-            ]
-          }
-        , {
-            type: 'section'
-          , level: 2
-          , children: [
-              {
-                type: 'headline'
-              , children: [
-                  {
-                    type: 'stars'
-                  , level: 2
-                  }
-                , {
-                    type: 'text.plain'
-                  , value: 'headline2'
-                  }
-                , {
-                    type: 'tags'
-                  , tags: ['tag3', 'tag4']
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'list'
+        , indent: 0
+        , ordered: false
+        , children: [
+            {
+              type: 'list.item'
+            , indent: 0
+            , tag: 'item'
+            , children: [
+                {
+                  type: 'list.item.bullet'
+                , indent: 0
+                , ordered: false
+                }
+              , {
+                  type: 'text.bold'
+                , value: 'hello'
+                }
+              , {
+                  type: 'text.plain'
+                , value: ' '
+                }
+              , {
+                  type: 'text.italic'
+                , value: 'world'
+                }
+              ]
+            }
+          ]
+        }
+      , {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: 'text'
+            }
+          ]
+        }
+      ]
+    })
   })
-})
 
-test('description list item', () => {
-  const text = dedent`
-  - item :: *hello* /world/
-    text
-  `
+  test('nested list', () => {
+    const text = dedent`
+    - list1
+      - list2
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'list'
-      , indent: 0
-      , ordered: false
-      , children: [
-          {
-            type: 'list.item'
-          , indent: 0
-          , tag: 'item'
-          , children: [
-              {
-                type: 'list.item.bullet'
-              , indent: 0
-              , ordered: false
-              }
-            , {
-                type: 'text.bold'
-              , value: 'hello'
-              }
-            , {
-                type: 'text.plain'
-              , value: ' '
-              }
-            , {
-                type: 'text.italic'
-              , value: 'world'
-              }
-            ]
-          }
-        ]
-      }
-    , {
-        type: 'paragraph'
-      , children: [
-          {
-            type: 'text.plain'
-          , value: 'text'
-          }
-        ]
-      }
-    ]
-  })
-})
-
-test('nested list', () => {
-  const text = dedent`
-  - list1
-    - list2
-  `
-
-  const result = removeAllAdditionalProps(parse(text))
-
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'list'
-      , indent: 0
-      , ordered: false
-      , children: [
-          {
-            type: 'list.item'
-          , indent: 0
-          , children: [
-              {
-                type: 'list.item.bullet'
-              , indent: 0
-              , ordered: false
-              }
-            , {
-                type: 'text.plain'
-              , value: 'list1'
-              }
-            ]
-          }
-        , {
-            type: 'list'
-          , indent: 2
-          , ordered: false
-          , children: [
-              {
-                type: 'list.item'
-              , indent: 2
-              , children: [
-                  {
-                    type: 'list.item.bullet'
-                  , indent: 2
-                  , ordered: false
-                  }
-                , {
-                    type: 'text.plain'
-                  , value: 'list2'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'list'
+        , indent: 0
+        , ordered: false
+        , children: [
+            {
+              type: 'list.item'
+            , indent: 0
+            , children: [
+                {
+                  type: 'list.item.bullet'
+                , indent: 0
+                , ordered: false
+                }
+              , {
+                  type: 'text.plain'
+                , value: 'list1'
+                }
+              ]
+            }
+          , {
+              type: 'list'
+            , indent: 2
+            , ordered: false
+            , children: [
+                {
+                  type: 'list.item'
+                , indent: 2
+                , children: [
+                    {
+                      type: 'list.item.bullet'
+                    , indent: 2
+                    , ordered: false
+                    }
+                  , {
+                      type: 'text.plain'
+                    , value: 'list2'
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
 })
 
