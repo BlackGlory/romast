@@ -99,10 +99,6 @@ export function isToken(node: OAST.Node): node is OAST.Token {
       || isTableRule(node)
       || isTableColumnSeparator(node)
       || isPhrasingContent(node)
-      || isFootnoteLabel(node)
-      || isFootnoteInlineBegin(node)
-      || isFootnoteReferenceEnd(node)
-      || isComment(node)
 }
 
 export function isPhrasingContent(node: OAST.Node): node is OAST.PhrasingContent {
@@ -138,14 +134,6 @@ export function isFootnoteReference(node: OAST.Node): node is OAST.FootnoteRefer
   return is(node, 'footnote.reference')
 }
 
-export function isFootnoteInlineBegin(node: OAST.Node): node is OAST.FootnoteInlineBegin {
-  return is(node, 'footnote.inline.begin')
-}
-
-export function isFootnoteReferenceEnd(node: OAST.Node): node is OAST.FootnoteReferenceEnd {
-  return is(node, 'footnote.reference.end')
-}
-
 export function isStars(node: OAST.Node): node is OAST.Stars {
   return is(node, 'stars')
 }
@@ -160,14 +148,6 @@ export function isPriority(node: OAST.Node): node is OAST.Priority {
 
 export function isTags(node: OAST.Node): node is OAST.Tags {
   return is(node, 'tags')
-}
-
-export function isComment(node: OAST.Node): node is OAST.Comment {
-  return is(node, 'comment')
-}
-
-export function isFootnoteLabel(node: OAST.Node): node is OAST.FootnoteLabel {
-  return is(node, 'footnote.label')
 }
 
 export function isListItemCheckbox(node: OAST.Node): node is OAST.ListItemCheckbox {

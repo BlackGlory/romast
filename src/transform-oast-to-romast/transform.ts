@@ -194,10 +194,6 @@ function transformToken(node: OAST.Token, root: OAST.Document) {
   if (OAST_IS.isTags(node)) return transformTags(node, root)
   if (OAST_IS.isTableColumnSeparator(node)) return transformTableColumnSeparator(node, root)
   if (OAST_IS.isPhrasingContent(node)) return transformPhrasingContent(node, root)
-  if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
-  if (OAST_IS.isFootnoteInlineBegin(node)) return transformFootnoteInlineBegin(node, root)
-  if (OAST_IS.isFootnoteReferenceEnd(node)) return transformFootnoteReferenceEnd(node, root)
-  if (OAST_IS.isComment(node)) return transformComment(node, root)
   throw new UnknownNodeError()
 }
 
@@ -281,20 +277,6 @@ function transformFootnoteReference(
   }
 }
 
-function transformFootnoteInlineBegin(
-  node: OAST.FootnoteInlineBegin
-, root: OAST.Document
-): undefined {
-  return undefined
-}
-
-function transformFootnoteReferenceEnd(
-  node: OAST.FootnoteReferenceEnd
-, root: OAST.Document
-): undefined {
-  return undefined
-}
-
 function transformStars(node: OAST.Stars, root: OAST.Document): undefined {
   return undefined
 }
@@ -308,17 +290,6 @@ function transformPriority(node: OAST.Priority, root: OAST.Document): undefined 
 }
 
 function transformTags(node: OAST.Tags, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformComment(node: OAST.Comment, root: OAST.Document): undefined {
-  return undefined
-}
-
-function transformFootnoteLabel(
-  node: OAST.FootnoteLabel
-, root: OAST.Document
-): undefined {
   return undefined
 }
 

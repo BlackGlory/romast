@@ -1,6 +1,6 @@
 // https://github.com/orgapp/orgajs/blob/v2.4.9/packages/orga/src/types.ts
-// 注意, orga的types.ts并不是一份准确的AST定义,
-// 它包含了一些会在后处理阶段被消耗掉, 因此实际上并不作为AST输出的节点, 例如:
+// 注意, orga的types.ts并不是一份准确的AST定义.
+// 它包含了会在后处理阶段被消耗掉, 并不最终作为AST输出的节点:
 // - `list.item.tag`
 // - `keyword`
 // - `planning.keyword`
@@ -9,6 +9,10 @@
 // - `block.end`
 // - `drawer.begin`
 // - `drawer.end`
+// - `comment`
+// - `footnote.label`
+// - `footnote.inline.begin`
+// - `footnote.inline.end`
 
 import { Literal as UnistLiteral, Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
@@ -177,10 +181,6 @@ export type ListItemContent =
 
 export type Token =
 | TableColumnSeparator
-| FootnoteLabel
-| FootnoteInlineBegin
-| FootnoteReferenceEnd
-| Comment
 
 export type PhrasingContent =
 | StyledText
@@ -215,41 +215,11 @@ export interface Link extends Literal {
   search?: string | number
 }
 
-/**
- * A footnote reference, which is either:
- *
- * `[fn:LABEL]` - a plain footnote reference.
- *
- * `[fn:LABEL:DEFINITION]` - an inline footnote definition.
- *
- * `[fn::DEFINITION]` - an anonymous (inline) footnote definition.
- *
- * See https://orgmode.org/worg/dev/org-syntax.html#Footnote_References.
- *
- * If `label` is the empty string, then this is treated as an
- * anonymous footnote.
- *
- * If `children` is empty, then this is considered to not define a new
- * footnote (and in which case, `label` should not be the empty
- * string), if `children` is non-empty, then this is an inline
- * footnote definition.
- */
 export interface FootnoteReference extends Child, Parent {
   type: 'footnote.reference'
   label: string
   children: PhrasingContent[]
 }
-
-export interface FootnoteInlineBegin extends Node {
-  type: 'footnote.inline.begin'
-  label: string
-}
-
-export interface FootnoteReferenceEnd extends Node {
-  type: 'footnote.reference.end'
-}
-
-// headline tokens
 
 export interface Stars extends Node {
   type: 'stars'
@@ -270,15 +240,6 @@ export interface Priority extends Literal {
 export interface Tags extends Node {
   type: 'tags'
   tags: string[]
-}
-
-export interface Comment extends Literal {
-  type: 'comment'
-}
-
-export interface FootnoteLabel extends Node {
-  type: 'footnote.label'
-  label: string
 }
 
 export interface ListItemCheckbox extends Node {

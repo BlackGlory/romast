@@ -244,19 +244,6 @@ export function footnoteReference(
   }
 }
 
-export function footnoteInlineBegin(
-  label: OAST.FootnoteInlineBegin['label']
-): OAST.FootnoteInlineBegin {
-  return {
-    type: 'footnote.inline.begin'
-  , label
-  }
-}
-
-export function footnoteReferenceEnd(): OAST.FootnoteReferenceEnd {
-  return { type: 'footnote.reference.end' }
-}
-
 export function stars(level: OAST.Stars['level']): OAST.Stars {
   return {
     type: 'stars'
@@ -286,22 +273,6 @@ export function tags(tags: OAST.Tags['tags']): OAST.Tags {
   return {
     type: 'tags'
   , tags
-  }
-}
-
-export function comment(value: OAST.Comment['value']): OAST.Comment {
-  return {
-    type: 'comment'
-  , value
-  }
-}
-
-export function footnoteLabel(
-  label: OAST.FootnoteLabel['label']
-): OAST.FootnoteLabel {
-  return {
-    type: 'footnote.label'
-  , label
   }
 }
 

@@ -18,6 +18,121 @@ test('export settings', () => {
   })
 })
 
+test('comment', () => {
+  const text = `
+    # comment
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: []
+  })
+})
+
+test('inline footnote', () => {
+  // 只有footnote的document解析出来是undefined, 所以必须加点内容
+  const text = dedent`
+    Hello[fn:LABEL:DEFINITION]
+    World[fn::DEFINITION]
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'Hello'
+          }
+        , {
+            type: 'footnote.reference'
+          , label: 'LABEL'
+          , children: [
+              {
+                type: 'text.plain'
+              , value: 'DEFINITION'
+              }
+            ]
+          }
+        , {
+            type: 'text.plain'
+          , value: ' '
+          }
+        , {
+            type: 'text.plain'
+          , value: 'World'
+          }
+        , {
+            type: 'footnote.reference'
+          , label: ''
+          , children: [
+              {
+                type: 'text.plain'
+              , value: 'DEFINITION'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+})
+
+test('footnote', () => {
+  const text = dedent`
+    The Org homepage[fn:LABEL] now looks a lot better than it used to.
+
+    [fn:LABEL] The link is: http://orgmode.org
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'The Org homepage'
+          }
+        , {
+            type: 'footnote.reference'
+          , label: 'LABEL'
+          , children: []
+          }
+        , {
+            type: 'text.plain'
+          , value: ' now looks a lot better than it used to.'
+          }
+        ]
+      }
+    , {
+        type: 'footnote'
+      , label: 'LABEL'
+      , children: [
+          {
+            type: 'paragraph'
+          , children: [
+              {
+                type: 'text.plain'
+              , value: 'The link is: http://orgmode.org'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+})
+
 test('heading', () => {
   const text = dedent`
     * Heading
