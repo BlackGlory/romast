@@ -491,9 +491,9 @@ test('drawer', () => {
 })
 
 describe('link', () => {
-  test('plain link', () => {
+  test('external link', () => {
     const text = dedent`
-    https://example.com
+    [[https://github.com][Github]]
     `
 
     const result = removeAllAdditionalProps(parse(text))
@@ -505,8 +505,37 @@ describe('link', () => {
           type: 'paragraph'
         , children: [
             {
-              type: 'text.plain'
-            , value: 'https://example.com'
+              type: 'link'
+            , protocol: 'https'
+            , description: 'Github'
+            , value: 'https://github.com'
+            , search: undefined
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('file link', () => {
+    const text = dedent`
+    [[file:code/main.c::255]]
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'link'
+            , protocol: 'file'
+            , value: 'code/main.c'
+            , description: undefined
+            , search: 255
             }
           ]
         }
@@ -535,6 +564,31 @@ describe('link', () => {
               type: 'link'
             , protocol: 'internal'
             , value: 'target'
+            , description: undefined
+            , search: undefined
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('plain url', () => {
+    const text = dedent`
+    https://example.com
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: 'https://example.com'
             }
           ]
         }
