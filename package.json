@@ -70,6 +70,7 @@
     "@blackglory/types": "^0.4.7",
     "@types/unist": "^2.0.6",
     "date-fns": "^2.23.0",
+    "immer": "^9.0.5",
     "iterable-operator": "^0.14.2",
     "orga": "^2.4.9"
   }

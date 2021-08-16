@@ -4,8 +4,8 @@ function is<T extends ROMAST.Node>(node: ROMAST.Node, type: string): node is T {
   return node.type === type
 }
 
-export function isDocument(node: ROMAST.Node): node is ROMAST.Document {
-  return is(node, 'document')
+export function isParent(node: ROMAST.Node): node is ROMAST.Node & ROMAST.Parent {
+  return 'children' in node
 }
 
 export function isBlockNode(node: ROMAST.Node): node is ROMAST.BlockNode {
@@ -85,6 +85,10 @@ export function isUniversalInlineContent(
       || isCode(node)
       || isFootnote(node)
       || isInlineFootnote(node)
+}
+
+export function isDocument(node: ROMAST.Node): node is ROMAST.Document {
+  return is(node, 'document')
 }
 
 export function isSection(node: ROMAST.Node): node is ROMAST.Section {
