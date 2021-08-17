@@ -47,6 +47,7 @@
     "@rollup/plugin-replace": "^3.0.0",
     "@rollup/plugin-typescript": "^8.2.5",
     "@types/jest": "^27.0.1",
+    "@types/lodash.clonedeep": "^4.5.6",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "babel-jest": "^27.0.6",
@@ -70,8 +71,10 @@
     "@blackglory/types": "^0.4.7",
     "@types/unist": "^2.0.6",
     "date-fns": "^2.23.0",
+    "hotypes": "^0.4.2",
     "immer": "^9.0.5",
     "iterable-operator": "^0.14.2",
+    "lodash.clonedeep": "^4.5.0",
     "orga": "^2.4.9"
   }
 }
