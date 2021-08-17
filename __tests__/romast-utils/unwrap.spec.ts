@@ -38,7 +38,7 @@ describe('unwrap', () => {
   test('section.headline', () => {
     const ast = wrap(
       R.document([
-        R.section(0, R.headline(0, [], []), [])
+        R.section(1, R.headline([], []), [])
       ])
     )
 
@@ -46,7 +46,7 @@ describe('unwrap', () => {
 
     expect(result).toStrictEqual(
       R.document([
-        R.section(0, R.headline(0, [], []), [])
+        R.section(1, R.headline([], []), [])
       ])
     )
   })

@@ -74,7 +74,7 @@ describe('wrap', () => {
 
   test('section.headline', () => {
     const ast = R.document([
-      R.section(0, R.headline(0, [], []), [])
+      R.section(0, R.headline([], []), [])
     ])
 
     const result = wrap(ast)

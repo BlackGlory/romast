@@ -5,7 +5,7 @@ import { section, headline, paragraph, bold, text } from '@romast-utils/builder'
 describe('map', () => {
   it('is preorder', () => {
     const ast =
-      section(1, headline(1, [], []), [
+      section(1, headline([], []), [
         paragraph([
           text('text')
         ])
@@ -22,8 +22,8 @@ describe('map', () => {
 
   it('is DFS', () => {
     const ast =
-      section(1, headline(1, [], []), [
-        section(1, headline(1, [], []), [
+      section(1, headline([], []), [
+        section(1, headline([], []), [
           paragraph([
             text('deep')
           ])

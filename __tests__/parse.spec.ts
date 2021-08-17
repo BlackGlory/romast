@@ -11,7 +11,24 @@ test('Section', () => {
 
   expect(result).toStrictEqual(
     R.document([
-      R.section(1, R.headline(1, [], [R.text('Romast')]), [])
+      R.section(1, R.headline([], [R.text('Romast')]), [])
+    ])
+  )
+})
+
+test('incorrect section level', () => {
+  const org = dedent`
+  *** level1
+  ***** level2
+  `
+
+  const result = parse(org)
+
+  expect(result).toStrictEqual(
+    R.document([
+      R.section(1, R.headline([], [R.text('level1')]), [
+        R.section(2, R.headline([], [R.text('level2')]), [])
+      ])
     ])
   )
 })

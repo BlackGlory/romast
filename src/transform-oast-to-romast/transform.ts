@@ -114,7 +114,6 @@ function transformHeadline(
 ): ROMAST.Headline {
   return {
     type: 'headline'
-  , level: node.level
   , tags: node.tags ?? []
   , children: map(node.children, x => transformHeadlineContent(x, root))
   }

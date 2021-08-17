@@ -27,7 +27,7 @@ describe('OAST.Section, OAST.Headline, OAST.Stars, OAST.Tags', () => {
     const result = transformDocument(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.section(1,R.headline(1, ['tag1', 'tag2'], [R.text('value')]), [])
+      R.section(1,R.headline(['tag1', 'tag2'], [R.text('value')]), [])
     ]))
   })
 })
@@ -476,7 +476,7 @@ describe('OAST.Todo', () => {
     const result = transformDocument(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.section(1, R.headline(1, [], [
+      R.section(1, R.headline([], [
         R.text('value')
       ]), [])
     ]))
@@ -499,7 +499,7 @@ describe('OAST.Priority', () => {
     const result = transformDocument(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.section(1, R.headline(1, [], [
+      R.section(1, R.headline([], [
         R.text('value')
       ]), [])
     ]))

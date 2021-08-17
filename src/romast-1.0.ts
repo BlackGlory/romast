@@ -85,7 +85,6 @@ export interface Section extends ParentOf<SectionContent[]> {
 
 export interface Headline extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'headline'
-  level: number
   tags: string[]
 }
 
