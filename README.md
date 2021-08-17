@@ -2,7 +2,7 @@
 
 **R**enderable **O**rg-**M**ode **A**bstract **S**yntax **T**ree.
 
-romast v1 is an easy-to-render version of [oast v2],
+romast is an easy-to-render version of [oast v2],
 the new AST is designed to render nodes directly from AST to any platform, e.g. React.
 So you can precisely control the translation results by recursive descent analysis.
 

@@ -1,4 +1,4 @@
-import * as AST from '@src/romast-1.0'
+import * as AST from '@src/romast'
 import { Mixin } from 'hotypes'
 import { isParent, isSection } from './is'
 import cloneDeep from 'lodash.clonedeep'

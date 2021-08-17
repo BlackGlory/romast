@@ -1,4 +1,4 @@
-import * as ROMAST from '@src/romast-1.0'
+import * as ROMAST from '@src/romast'
 import { isParent } from './is'
 import cloneDeep from 'lodash.clonedeep'
 

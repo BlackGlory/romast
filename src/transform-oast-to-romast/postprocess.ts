@@ -1,4 +1,4 @@
-import * as ROMAST from '@src/romast-1.0'
+import * as ROMAST from '@src/romast'
 import { filter } from '@romast-utils/filter'
 import { map } from '@romast-utils/map'
 import { isParent, isSection, isParagraph, isText } from '@romast-utils/is'

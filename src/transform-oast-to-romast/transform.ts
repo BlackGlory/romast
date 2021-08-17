@@ -1,5 +1,5 @@
 import * as OAST from '@src/oast-2.4'
-import * as ROMAST from '@src/romast-1.0'
+import * as ROMAST from '@src/romast'
 import * as OAST_IS from '@oast-utils/is'
 import {
   example
