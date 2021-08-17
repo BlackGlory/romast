@@ -6,9 +6,13 @@ export function map(
   node: ROMAST.Node
 , fn: (node: ROMAST.Node) => ROMAST.Node
 ): ROMAST.Node {
-  const newNode = fn(cloneDeep(node))
-  if (isParent(newNode)) {
-    newNode.children = newNode.children.map(x => map(x, fn))
+  return map(cloneDeep(node), fn)
+
+  function map(node: ROMAST.Node, fn: (node: ROMAST.Node) => ROMAST.Node) {
+    const newNode = fn(node)
+    if (isParent(newNode)) {
+      newNode.children = newNode.children.map(x => map(x, fn))
+    }
+    return newNode
   }
-  return newNode
 }
