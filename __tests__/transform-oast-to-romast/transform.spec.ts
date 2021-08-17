@@ -242,7 +242,29 @@ describe('OAST.List, OAST.ListItem, OAST.ListItemBullet, OAST.ListItemCheckbox',
 })
 
 describe('OAST.Table, OAST.TableRow, OAST.TableRule, OAST.TableCell', () => {
-  it('return ROMAST.Table', () => {
+  describe('no OAST.TableRule', () => {
+    const oast = O.document({}, [
+      O.table({}, [
+        O.tableRow([
+          O.tableCell([O.plain('body')])
+        ])
+      ])
+    ])
+
+    const result = transformDocument(oast)
+
+    expect(result).toStrictEqual(R.document([
+      R.table(null, [
+        R.tableRowGroup([
+          R.tableRow([
+            R.tableCell([R.text('body')])
+          ])
+        ])
+      ])
+    ]))
+  })
+
+  describe('single OAST.TableRule', () => {
     const oast = O.document({}, [
       O.table({}, [
         O.tableRow([
@@ -258,15 +280,62 @@ describe('OAST.Table, OAST.TableRow, OAST.TableRule, OAST.TableCell', () => {
     const result = transformDocument(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.table([
-        R.tableRow([
-          R.tableCell([R.text('header')])
+      R.table(
+        R.tableRowGroup([
+          R.tableRow([
+            R.tableCell([R.text('header')])
+          ])
         ])
-      , R.tableHorizontalRule()
-      , R.tableRow([
-          R.tableCell([R.text('body')])
+      , [
+          R.tableRowGroup([
+            R.tableRow([
+              R.tableCell([R.text('body')])
+            ])
+          ])
+        ]
+      )
+    ]))
+  })
+
+  describe('multiple OAST.TableRule', () => {
+    const oast = O.document({}, [
+      O.table({}, [
+        O.tableRow([
+          O.tableCell([O.plain('header')])
+        ])
+      , O.tableRule()
+      , O.tableRow([
+          O.tableCell([O.plain('body1')])
+        ])
+      , O.tableRule()
+      , O.tableRow([
+          O.tableCell([O.plain('body2')])
         ])
       ])
+    ])
+
+    const result = transformDocument(oast)
+
+    expect(result).toStrictEqual(R.document([
+      R.table(
+        R.tableRowGroup([
+          R.tableRow([
+            R.tableCell([R.text('header')])
+          ])
+        ])
+      , [
+          R.tableRowGroup([
+            R.tableRow([
+              R.tableCell([R.text('body1')])
+            ])
+          ])
+        , R.tableRowGroup([
+            R.tableRow([
+              R.tableCell([R.text('body2')])
+            ])
+          ])
+        ]
+      )
     ]))
   })
 })

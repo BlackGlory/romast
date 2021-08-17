@@ -21,9 +21,9 @@ export type BlockNode =
 | List
 | ListItem
 | Table
+| TableRowGroup
 | TableRow
 | TableCell
-| TableHorizontalRule
 | HorizontalRule
 | Drawer
 
@@ -46,8 +46,6 @@ export type DocumentContent =
 export type SectionContent =
 | UniversalBlockContent
 | Section
-
-export type TableContent = TableRow | TableHorizontalRule
 
 export type ListContent = List | ListItem
 
@@ -122,8 +120,13 @@ export interface ListItem extends Node, ParentOf<UniversalInlineContent[]> {
   term: string | null
 }
 
-export interface Table extends Node, ParentOf<TableContent[]> {
+export interface Table extends Node, ParentOf<TableRowGroup[]> {
   type: 'table'
+  header: TableRowGroup | null
+}
+
+export interface TableRowGroup extends Node, ParentOf<TableRow[]> {
+  type: 'tableRowGroup'
 }
 
 export interface TableRow extends Node, ParentOf<TableCell[]> {
@@ -132,10 +135,6 @@ export interface TableRow extends Node, ParentOf<TableCell[]> {
 
 export interface TableCell extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'tableCell'
-}
-
-export interface TableHorizontalRule extends Node {
-  type: 'tableHorizontalRule'
 }
 
 export interface HorizontalRule extends Node {

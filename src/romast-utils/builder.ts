@@ -88,9 +88,22 @@ export function listItem(
   }
 }
 
-export function table(children: ROMAST.Table['children']): ROMAST.Table {
+export function table(
+  header: ROMAST.Table['header']
+, children: ROMAST.Table['children']
+): ROMAST.Table {
   return {
     type: 'table'
+  , header
+  , children
+  }
+}
+
+export function tableRowGroup(
+  children: ROMAST.TableRowGroup['children']
+): ROMAST.TableRowGroup {
+  return {
+    type: 'tableRowGroup'
   , children
   }
 }
@@ -107,10 +120,6 @@ export function tableCell(children: ROMAST.TableCell['children']): ROMAST.TableC
     type: 'tableCell'
   , children
   }
-}
-
-export function tableHorizontalRule(): ROMAST.TableHorizontalRule {
-  return { type: 'tableHorizontalRule' }
 }
 
 export function horizontalRule(): ROMAST.HorizontalRule {

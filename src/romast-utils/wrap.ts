@@ -1,6 +1,6 @@
 import * as AST from '@src/romast'
 import { Mixin } from 'hotypes'
-import { isParent, isSection } from './is'
+import { isParent, isSection, isTable } from './is'
 import cloneDeep from 'lodash.clonedeep'
 import { isntUndefined } from '@blackglory/types'
 import { nanoid } from 'nanoid'
@@ -113,7 +113,16 @@ export type WrappedNode<
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
-      children: Array<WrappedNode<AST.TableContent, AST.TableContent, AST.Table>>
+      header: WrappedNode<AST.TableRowGroup, null, AST.Table>
+      children: Array<WrappedNode<AST.TableRowGroup, AST.TableRowGroup, AST.Table>>
+    }>
+: Node extends AST.TableRowGroup
+  ? Mixin<Node, {
+      id: string
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<WrappedNode<AST.TableRow, AST.TableRow, AST.TableRowGroup>>
     }>
 : Node extends AST.TableRow
   ? Mixin<Node, {
@@ -212,6 +221,10 @@ function wrapNode<
 
   if (isSection(wrappedNode)) {
     wrapNode(wrappedNode.headline, wrappedNode)
+  }
+
+  if (isTable(wrappedNode) && wrappedNode.header) {
+    wrapNode(wrappedNode.header, wrappedNode)
   }
 }
 

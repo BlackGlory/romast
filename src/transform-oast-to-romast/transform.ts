@@ -12,6 +12,7 @@ import {
 , strikethrough
 , underlined
 , code
+, tableRowGroup
 } from '@romast-utils/builder'
 import { CustomError, assert } from '@blackglory/errors'
 import { isntUndefined } from '@blackglory/types'
@@ -41,13 +42,25 @@ function transformSectionContent(node: OAST.SectionContent, root: OAST.Document)
   throw new UnknownNodeError()
 }
 
-function transformTableContent(
-  node: OAST.TableContent
-, root: OAST.Document
-): ROMAST.TableContent {
-  if (OAST_IS.isTableRow(node)) return transformTableRow(node, root)
-  if (OAST_IS.isTableRule(node)) return transformTableRule(node, root)
-  throw new UnknownNodeError()
+function transformTableContents(nodes: OAST.TableContent[], root: OAST.Document) {
+  const results: ROMAST.TableRowGroup[] = []
+
+  let rowGroup: ROMAST.TableRowGroup = tableRowGroup([])
+  for (const node of nodes) {
+    if (OAST_IS.isTableRow(node)) {
+      rowGroup.children.push(transformTableRow(node, root))
+    } else if (OAST_IS.isTableRule(node)) {
+      results.push(rowGroup)
+      rowGroup = tableRowGroup([])
+    } else {
+      throw new UnknownNodeError()
+    }
+  }
+  if (rowGroup.children.length > 0) {
+    results.push(rowGroup)
+  }
+
+  return results
 }
 
 function transformHeadlineContent(node: OAST.HeadlineContent, root: OAST.Document) {
@@ -157,9 +170,20 @@ function transformList(node: OAST.List, root: OAST.Document): ROMAST.List {
 }
 
 function transformTable(node: OAST.Table, root: OAST.Document): ROMAST.Table {
-  return {
-    type: 'table'
-  , children: map(node.children, x => transformTableContent(x, root))
+  const tableContents = transformTableContents(node.children, root)
+  if (tableContents.length <= 1) {
+    return {
+      type: 'table'
+    , header: null
+    , children: tableContents
+    }
+  } else {
+    const [header, ...children] = tableContents
+    return {
+      type: 'table'
+    , header
+    , children
+    }
   }
 }
 
@@ -290,13 +314,6 @@ function transformListItemBullet(
 , root: OAST.Document
 ): undefined {
   return undefined
-}
-
-function transformTableRule(
-  node: OAST.TableRule
-, root: OAST.Document
-): ROMAST.TableHorizontalRule {
-  return { type: 'tableHorizontalRule' }
 }
 
 function map<T, V>(arr: T[], fn: (x: T) => V | undefined): V[] {

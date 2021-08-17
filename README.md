@@ -77,9 +77,9 @@ type BlockNode =
 | List
 | ListItem
 | Table
+| TableRowGroup
 | TableRow
 | TableCell
-| TableHorizontalRule
 | HorizontalRule
 | Drawer
 
@@ -102,8 +102,6 @@ type DocumentContent =
 type SectionContent =
 | UniversalBlockContent
 | Section
-
-type TableContent = TableRow | TableHorizontalRule
 
 type ListContent = List | ListItem
 
@@ -178,8 +176,13 @@ interface ListItem extends Node, ParentOf<UniversalInlineContent[]> {
   term: string | null
 }
 
-interface Table extends Node, ParentOf<TableContent[]> {
+interface Table extends Node, ParentOf<TableRowGroup[]> {
   type: 'table'
+  header: TableRowGroup | null
+}
+
+interface TableRowGroup extends Node, ParentOf<TableRow[]> {
+  type: 'tableRowGroup'
 }
 
 interface TableRow extends Node, ParentOf<TableCell[]> {
@@ -188,10 +191,6 @@ interface TableRow extends Node, ParentOf<TableCell[]> {
 
 interface TableCell extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'tableCell'
-}
-
-interface TableHorizontalRule extends Node {
-  type: 'tableHorizontalRule'
 }
 
 interface HorizontalRule extends Node {
@@ -322,7 +321,7 @@ type NullOrWrappedNode<T extends AST.Node | null> =
   ? null
   : WrappedNode<NonNullable<T>>
 
-export type WrappedNode<
+type WrappedNode<
   Node extends AST.Node
 , Sibling extends AST.Node | null = AST.Node | null
 , Parent extends AST.Node | null = AST.Node | null
@@ -425,7 +424,16 @@ export type WrappedNode<
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
-      children: Array<WrappedNode<AST.TableContent, AST.TableContent, AST.Table>>
+      header: WrappedNode<AST.TableRowGroup, null, AST.Table>
+      children: Array<WrappedNode<AST.TableRowGroup, AST.TableRowGroup, AST.Table>>
+    }>
+: Node extends AST.TableRowGroup
+  ? Mixin<Node, {
+      id: string
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<WrappedNode<AST.TableRow, AST.TableRow, AST.TableRowGroup>>
     }>
 : Node extends AST.TableRow
   ? Mixin<Node, {

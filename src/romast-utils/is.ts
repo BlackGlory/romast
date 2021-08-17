@@ -19,9 +19,9 @@ export function isBlockNode(node: ROMAST.Node): node is ROMAST.BlockNode {
       || isList(node)
       || isListItem(node)
       || isTable(node)
+      || isTableRowGroup(node)
       || isTableRow(node)
       || isTableCell(node)
-      || isTableHorizontalRule(node)
       || isHorizontalRule(node)
       || isDrawer(node)
 }
@@ -47,11 +47,6 @@ export function isDocumentContent(node: ROMAST.Node): node is ROMAST.DocumentCon
 export function isSectionContent(node: ROMAST.Node): node is ROMAST.SectionContent {
   return isUniversalBlockContent(node)
       || isSection(node)
-}
-
-export function isTableContent(node: ROMAST.Node): node is ROMAST.TableContent {
-  return isTableRow(node)
-      || isTableHorizontalRule(node)
 }
 
 export function isListContent(node: ROMAST.Node): node is ROMAST.ListContent {
@@ -127,6 +122,10 @@ export function isTable(node: ROMAST.Node): node is ROMAST.Table {
   return is(node, 'table')
 }
 
+export function isTableRowGroup(node: ROMAST.Node): node is ROMAST.TableRowGroup {
+  return is(node, 'tableRowGroup')
+}
+
 export function isTableRow(node: ROMAST.Node): node is ROMAST.TableRow {
   return is(node, 'tableRow')
 }
@@ -135,10 +134,6 @@ export function isTableCell(
   node: ROMAST.Node
 ): node is ROMAST.TableCell {
   return is(node, 'tableCell')
-}
-
-export function isTableHorizontalRule(node: ROMAST.Node): node is ROMAST.TableHorizontalRule {
-  return is(node, 'tableHorizontalRule')
 }
 
 export function isHorizontalRule(node: ROMAST.Node): node is ROMAST.HorizontalRule {
