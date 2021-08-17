@@ -72,7 +72,6 @@
     "@types/unist": "^2.0.6",
     "date-fns": "^2.23.0",
     "hotypes": "^0.4.2",
-    "immer": "^9.0.5",
     "iterable-operator": "^0.14.2",
     "lodash.clonedeep": "^4.5.0",
     "orga": "^2.4.9"
