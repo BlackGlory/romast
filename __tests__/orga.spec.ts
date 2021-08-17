@@ -835,124 +835,210 @@ test('todo', () => {
   })
 })
 
-test('table', () => {
-  const text = dedent`
-  | Column 1 | Column 2 | Column 3 |
-  |----------|----------|----------|
-  |        1 | foo      |          |
-  |----------|----------|----------|
-  |        2 | bar      |          |
-  `
+describe('table', () => {
+  test('no horizontal rule', () => {
+    const text = dedent`
+    | Column 1 | Column 2 | Column 3 |
+    | foo      | bar      |          |
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'table'
-      , children: [
-          {
-            type: 'table.row'
-          , children: [
-              {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: ' Column 1 '
-                  }
-                ]
-              }
-            , {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: ' Column 2 '
-                  }
-                ]
-              }
-            , {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type:'text.plain'
-                  , value: ' Column 3 '
-                  }
-                ]
-              }
-            ]
-          }
-        , { type: 'table.hr' }
-        , {
-            type: 'table.row'
-          , children: [
-              {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: '        1 '
-                  }
-                ]
-              }
-            , {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: ' foo      '
-                  }
-                ]
-              }
-            , {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: '          '
-                  }
-                ]
-              }
-            ]
-          }
-        , { type: 'table.hr' }
-        , {
-            type: 'table.row'
-          , children: [
-              {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: '        2 '
-                  }
-                ]
-              }
-            , {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: ' bar      '
-                  }
-                ]
-              }
-            , {
-                type: 'table.cell'
-              , children: [
-                  {
-                    type: 'text.plain'
-                  , value: '          '
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'table'
+        , children: [
+            {
+              type: 'table.row'
+            , children: [
+                {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' Column 1 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' Column 2 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type:'text.plain'
+                    , value: ' Column 3 '
+                    }
+                  ]
+                }
+              ]
+            }
+          , {
+              type: 'table.row'
+            , children: [
+                {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' foo      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' bar      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: '          '
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('multiple horizontal rule', () => {
+    const text = dedent`
+    | Column 1 | Column 2 | Column 3 |
+    |----------|----------|----------|
+    |        1 | foo      |          |
+    |----------|----------|----------|
+    |        2 | bar      |          |
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'table'
+        , children: [
+            {
+              type: 'table.row'
+            , children: [
+                {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' Column 1 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' Column 2 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type:'text.plain'
+                    , value: ' Column 3 '
+                    }
+                  ]
+                }
+              ]
+            }
+          , { type: 'table.hr' }
+          , {
+              type: 'table.row'
+            , children: [
+                {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: '        1 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' foo      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: '          '
+                    }
+                  ]
+                }
+              ]
+            }
+          , { type: 'table.hr' }
+          , {
+              type: 'table.row'
+            , children: [
+                {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: '        2 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: ' bar      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text.plain'
+                    , value: '          '
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
 })
 
