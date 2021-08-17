@@ -2,7 +2,7 @@
 
 **R**enderable **O**rg-**M**ode **A**bstract **S**yntax **T**ree.
 
-rmdast v1 is an easy-to-render version of [oast v2],
+romast v1 is an easy-to-render version of [oast v2],
 the new AST is designed to render nodes directly from AST to any platform, e.g. React.
 So you can precisely control the translation results by recursive descent analysis.
 
@@ -35,7 +35,6 @@ const romast = parse(org)
 //       "level": 1,
 //       "headline": {
 //         "type": "headline",
-//         "level": 1,
 //         "tags": [],
 //         "children": [
 //           {
@@ -49,6 +48,8 @@ const romast = parse(org)
 //   ]
 // }
 ```
+
+## API
 
 ### AST
 
@@ -140,7 +141,6 @@ interface Section extends ParentOf<SectionContent[]> {
 
 interface Headline extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'headline'
-  level: number
   tags: string[]
 }
 
@@ -255,14 +255,230 @@ interface Code extends Node {
 }
 ```
 
-## API
-
 ### parse
 
 ```ts
 function parse(text: string): AST.Document
 ```
 
-### is
+### utils
+
+#### builder
+
+```ts
+import {} from 'romast/utils/builder'
+```
+
+Each romast node has a corresponding builder.
+```
+
+#### is
+
+```ts
+import {} from 'romast/utils/is'
+```
 
 Each romast node has a corresponding `is` function.
+
+#### flatMap
+
+```ts
+import { flatMap } from 'romast/utils/flat-map'
+
+function flatMap(
+  node: AST.Node
+, fn: (node: AST.Node) => AST.Node[]
+): AST.Node[]
+```
+
+#### map
+
+```ts
+import { map } from 'romast/utils/map'
+
+function map(
+  node: AST.Node
+, fn: (node: ROMAST.Node) => AST.Node
+): AST.Node
+```
+
+#### filter
+
+```ts
+import { filter } from 'romast/utils/filter'
+
+function filter(
+  node: AST.Node
+, predicate: (node: AST.Node) => unknown
+): AST.Node | undefined
+```
+
+#### wrap
+
+```ts
+import { wrap } from 'romast/utils/wrap'
+
+type NullOrWrappedNode<T extends AST.Node | null> =
+  T extends null
+  ? null
+  : WrappedNode<NonNullable<T>>
+
+export type WrappedNode<
+  Node extends AST.Node
+, Sibling extends AST.Node | null = AST.Node | null
+, Parent extends AST.Node | null = AST.Node | null
+> =
+  Node extends AST.Document
+  ? Mixin<Node, {
+      parent: null
+      previousSibling: null
+      nextSibling: null
+      children: Array<
+        WrappedNode<
+          AST.DocumentContent
+        , AST.DocumentContent
+        , AST.Document
+        >
+      >
+    }>
+: Node extends AST.Paragraph
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Paragraph
+        >
+      >
+    }>
+: Node extends AST.Section
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.SectionContent
+        , AST.SectionContent
+        , AST.Section
+        >
+      >
+    }>
+: Node extends AST.Headline
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Headline
+        >
+      >
+    }>
+: Node extends AST.Paragraph
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Paragraph
+        >
+      >
+    }>
+: Node extends AST.List
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<WrappedNode<AST.ListContent, AST.ListContent, AST.List>>
+    }>
+: Node extends AST.ListItem
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.ListItem
+        >
+      >
+    }>
+: Node extends AST.Table
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<WrappedNode<AST.TableContent, AST.TableContent, AST.Table>>
+    }>
+: Node extends AST.TableRow
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<WrappedNode<AST.TableCell, AST.TableCell, AST.TableRow>>
+    }>
+: Node extends AST.TableCell
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.TableCell
+        >
+      >
+    }>
+: Node extends AST.Footnote
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalBlockContent
+        , AST.UniversalBlockContent
+        , AST.Footnote
+        >
+      >
+    }>
+: Node extends AST.InlineFootnote
+  ? Mixin<Node, {
+      parent: NullOrWrappedNode<Parent>
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.InlineFootnote
+        >
+      >
+    }>
+: Mixin<Node, {
+    parent: NullOrWrappedNode<Parent>
+    previousSibling: NullOrWrappedNode<Sibling>
+    nextSibling: NullOrWrappedNode<Sibling>
+  }>
+
+function wrap<T extends AST.Node>(node: T): WrappedNode<T>
+```
+
+#### unwrap
+
+```ts
+import { unwrap } from 'romast/utils/unwrap'
+
+function unwrap<T extends AST.Node>(node: WrappedNode<T>): T
+```
