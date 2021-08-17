@@ -1,6 +1,6 @@
 import { parse } from '@src/parse'
 import { dedent } from 'extra-tags'
-import * as R from '@src/romast-utils/builder'
+import * as R from '@romast-utils/builder'
 
 test('Section', () => {
   const org = dedent`

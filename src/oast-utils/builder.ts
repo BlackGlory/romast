@@ -1,4 +1,4 @@
-import * as OAST from './oast-2.4'
+import * as OAST from '@src/oast-2.4'
 
 export function document(
   properties: OAST.Document['properties']

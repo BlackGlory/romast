@@ -1,4 +1,4 @@
-import * as ROMAST from './romast-1.0'
+import * as ROMAST from '@src/romast-1.0'
 import { isParent } from './is'
 import { produce, original } from 'immer'
 

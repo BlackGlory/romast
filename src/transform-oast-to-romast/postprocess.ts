@@ -1,17 +1,25 @@
-import * as ROMAST from './romast-1.0'
-import { filter } from './filter'
-import { map } from './map'
-import { isParent, isParagraph, isText } from './is'
-import { text } from './builder'
+import * as ROMAST from '@src/romast-1.0'
+import { filter } from '@romast-utils/filter'
+import { map } from '@romast-utils/map'
+import { isParent, isSection, isParagraph, isText } from '@romast-utils/is'
+import { text } from '@romast-utils/builder'
 
-export function removeEmptyParagraph(document: ROMAST.Document): ROMAST.Document {
+export function postprocess(document: ROMAST.Document): ROMAST.Document {
+  return (
+    removeEmptyParagraph(
+      concatContinuousText(document)
+    )
+  )
+}
+
+function removeEmptyParagraph(document: ROMAST.Document): ROMAST.Document {
   return filter(
     document
   , node => !(isParagraph(node) && node.children.length === 0)
   ) as ROMAST.Document
 }
 
-export function concatContinuousText(document: ROMAST.Document): ROMAST.Document {
+function concatContinuousText(document: ROMAST.Document): ROMAST.Document {
   return map(
     document
   , node => {

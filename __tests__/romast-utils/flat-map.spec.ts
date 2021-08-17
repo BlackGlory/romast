@@ -1,6 +1,6 @@
-import { flatMap } from '@src/romast-utils/flat-map'
-import { isText } from '@src/romast-utils/is'
-import { section, headline, paragraph, bold, text } from '@src/romast-utils/builder'
+import { flatMap } from '@romast-utils/flat-map'
+import { isText } from '@romast-utils/is'
+import { section, headline, paragraph, bold, text } from '@romast-utils/builder'
 
 describe('flatMap', () => {
   it('is preorder', () => {

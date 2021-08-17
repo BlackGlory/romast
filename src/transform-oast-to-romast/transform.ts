@@ -1,6 +1,6 @@
-import * as OAST from '@src/oast-utils/oast-2.4'
-import * as ROMAST from '@src/romast-utils/romast-1.0'
-import * as OAST_IS from '@src/oast-utils/is'
+import * as OAST from '@src/oast-2.4'
+import * as ROMAST from '@src/romast-1.0'
+import * as OAST_IS from '@oast-utils/is'
 import {
   example
 , source
@@ -12,7 +12,7 @@ import {
 , strikethrough
 , underlined
 , code
-} from '@src/romast-utils/builder'
+} from '@romast-utils/builder'
 import { CustomError, assert } from '@blackglory/errors'
 import { isntUndefined } from '@blackglory/types'
 import { findFootnote } from './find-footnote'
