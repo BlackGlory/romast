@@ -82,6 +82,7 @@
     "hotypes": "^0.4.2",
     "iterable-operator": "^0.14.2",
     "lodash.clonedeep": "^4.5.0",
+    "nanoid": "^3.1.25",
     "orga": "^2.4.9"
   }
 }

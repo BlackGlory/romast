@@ -19,16 +19,19 @@ describe('wrap', () => {
 
     expect(result).toMatchObject({
       type: 'document'
+    , id: expect.any(String)
     , parent: null
     , previousSibling: null
     , nextSibling: null
     , children: [
         {
           type: 'paragraph'
+        , id: expect.any(String)
         , previousSibling: null
         , children: [
             {
               type: 'text'
+            , id: expect.any(String)
             , value: 'first'
             , previousSibling: null
             , nextSibling: null
@@ -37,9 +40,11 @@ describe('wrap', () => {
         }
       , {
           type: 'paragraph'
+        , id: expect.any(String)
         , children: [
             {
               type: 'text'
+            , id: expect.any(String)
             , value: 'middle'
             , previousSibling: null
             , nextSibling: null
@@ -48,10 +53,12 @@ describe('wrap', () => {
         }
       , {
           type: 'paragraph'
+        , id: expect.any(String)
         , nextSibling: null
         , children: [
             {
               type: 'text'
+            , id: expect.any(String)
             , value: 'last'
             , previousSibling: null
             , nextSibling: null
@@ -81,16 +88,19 @@ describe('wrap', () => {
 
     expect(result).toMatchObject({
       type: 'document'
+    , id: expect.any(String)
     , parent: null
     , previousSibling: null
     , nextSibling: null
     , children: [
         {
           type: 'section'
+        , id: expect.any(String)
         , previousSibling: null
         , nextSibling: null
         , headline: {
             type: 'headline'
+          , id: expect.any(String)
           , children: []
           , previousSibling: null
           , nextSibling: null

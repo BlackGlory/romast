@@ -330,6 +330,7 @@ export type WrappedNode<
 > =
   Node extends AST.Document
   ? Mixin<Node, {
+      id: string
       parent: null
       previousSibling: null
       nextSibling: null
@@ -343,6 +344,7 @@ export type WrappedNode<
     }>
 : Node extends AST.Paragraph
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -356,6 +358,7 @@ export type WrappedNode<
     }>
 : Node extends AST.Section
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -369,6 +372,7 @@ export type WrappedNode<
     }>
 : Node extends AST.Headline
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -382,6 +386,7 @@ export type WrappedNode<
     }>
 : Node extends AST.Paragraph
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -395,6 +400,7 @@ export type WrappedNode<
     }>
 : Node extends AST.List
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -402,6 +408,7 @@ export type WrappedNode<
     }>
 : Node extends AST.ListItem
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -415,6 +422,7 @@ export type WrappedNode<
     }>
 : Node extends AST.Table
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -422,6 +430,7 @@ export type WrappedNode<
     }>
 : Node extends AST.TableRow
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -429,6 +438,7 @@ export type WrappedNode<
     }>
 : Node extends AST.TableCell
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -442,6 +452,7 @@ export type WrappedNode<
     }>
 : Node extends AST.Footnote
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -455,6 +466,7 @@ export type WrappedNode<
     }>
 : Node extends AST.InlineFootnote
   ? Mixin<Node, {
+      id: string
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
@@ -467,6 +479,7 @@ export type WrappedNode<
       >
     }>
 : Mixin<Node, {
+    id: string
     parent: NullOrWrappedNode<Parent>
     previousSibling: NullOrWrappedNode<Sibling>
     nextSibling: NullOrWrappedNode<Sibling>
