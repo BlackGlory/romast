@@ -270,7 +270,6 @@ import {} from 'romast/utils/builder'
 ```
 
 Each romast node has a corresponding builder.
-```
 
 #### is
 
