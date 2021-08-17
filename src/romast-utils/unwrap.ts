@@ -1,6 +1,6 @@
 import * as AST from '@src/romast'
 import { WrappedNode } from './wrap'
-import { isParent, isSection } from './is'
+import { isParent, isSection, isTable } from './is'
 import cloneDeep from 'lodash.clonedeep'
 
 export function unwrap<T extends AST.Node>(node: WrappedNode<T>): T {
@@ -21,6 +21,10 @@ function unwrapNode<T extends AST.Node>(node: WrappedNode<T>): void {
 
   if (isSection(node)) {
     unwrapNode(node.headline as WrappedNode<AST.Headline>)
+  }
+
+  if (isTable(node) && node.header) {
+    unwrapNode(node.header as WrappedNode<AST.TableRowGroup>)
   }
 }
 
