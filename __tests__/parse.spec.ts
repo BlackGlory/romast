@@ -20,14 +20,14 @@ test('Section', () => {
       R.section(1, R.headline([], [R.text('Romast')]), [
         R.paragraph([
           R.text('Lorem ipsum dolor sit amet,')
-        , R.brk()
+        , R.newline()
         , R.text('consectetur adipiscing elit,')
-        , R.brk()
+        , R.newline()
         , R.text('sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
         ])
       , R.paragraph([
           R.text('Duis aute irure dolor in reprehenderit in voluptate')
-        , R.brk()
+        , R.newline()
         , R.text('velit esse cillum dolore eu fugiat nulla pariatur.')
         ])
       ])

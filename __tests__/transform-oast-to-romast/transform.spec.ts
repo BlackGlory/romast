@@ -387,7 +387,7 @@ describe('OAST.Newline', () => {
 describe('OAST.StyledText', () => {
   describe('type = text.plain', () => {
     describe('text is whitespace', () => {
-      it('return ROMAST.Break', () => {
+      it('return ROMAST.Newline', () => {
         const oast = O.document({}, [
           O.paragraph({}, [
             O.plain('line1')
@@ -401,7 +401,7 @@ describe('OAST.StyledText', () => {
         expect(result).toStrictEqual(R.document([
           R.paragraph([
             R.text('line1')
-          , R.brk()
+          , R.newline()
           , R.text('line2')
           ])
         ]))

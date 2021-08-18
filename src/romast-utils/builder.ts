@@ -142,8 +142,8 @@ export function inlineFootnote(
   }
 }
 
-export function brk(): ROMAST.Break {
-  return { type: 'break' }
+export function newline(): ROMAST.Newline {
+  return { type: 'newline' }
 }
 
 export function drawer(

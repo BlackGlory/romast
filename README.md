@@ -58,14 +58,14 @@ const romast = parse(org)
 //               "value": "Lorem ipsum dolor sit amet,"
 //             },
 //             {
-//               "type": "break"
+//               "type": "newline"
 //             },
 //             {
 //               "type": "text",
 //               "value": "consectetur adipiscing elit,"
 //             },
 //             {
-//               "type": "break"
+//               "type": "newline"
 //             },
 //             {
 //               "type": "text",
@@ -81,7 +81,7 @@ const romast = parse(org)
 //               "value": "Duis aute irure dolor in reprehenderit in voluptate"
 //             },
 //             {
-//               "type": "break"
+//               "type": "newline"
 //             },
 //             {
 //               "type": "text",
@@ -140,7 +140,7 @@ type InlineNode =
 | Strikethrough
 | Underlined
 | Code
-| Break
+| Newline
 
 type DocumentContent =
 | UniversalBlockContent
@@ -173,7 +173,7 @@ type UniversalInlineContent =
 | Code
 | Footnote
 | InlineFootnote
-| Break
+| Newline
 
 interface Document extends ParentOf<DocumentContent[]> {
   type: 'document'
@@ -253,8 +253,8 @@ interface InlineFootnote extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'inlineFootnote'
 }
 
-interface Break extends Node {
-  type: 'break'
+interface Newline extends Node {
+  type: 'newline'
 }
 
 interface Drawer extends Node {
