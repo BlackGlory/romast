@@ -386,20 +386,44 @@ describe('OAST.Newline', () => {
 
 describe('OAST.StyledText', () => {
   describe('type = text.plain', () => {
-    it('return ROMAST.Text', () => {
-      const oast = O.document({}, [
-        O.paragraph({}, [
-          O.plain('value')
+    describe('text is whitespace', () => {
+      it('return ROMAST.Break', () => {
+        const oast = O.document({}, [
+          O.paragraph({}, [
+            O.plain('line1')
+          , O.plain(' ')
+          , O.plain('line2')
+          ])
         ])
-      ])
 
-      const result = transformDocument(oast)
+        const result = transformDocument(oast)
 
-      expect(result).toStrictEqual(R.document([
-        R.paragraph([
-          R.text('value')
+        expect(result).toStrictEqual(R.document([
+          R.paragraph([
+            R.text('line1')
+          , R.brk()
+          , R.text('line2')
+          ])
+        ]))
+      })
+    })
+
+    describe('text isnt whitespace', () => {
+      it('return ROMAST.Text', () => {
+        const oast = O.document({}, [
+          O.paragraph({}, [
+            O.plain('value')
+          ])
         ])
-      ]))
+
+        const result = transformDocument(oast)
+
+        expect(result).toStrictEqual(R.document([
+          R.paragraph([
+            R.text('value')
+          ])
+        ]))
+      })
     })
   })
 

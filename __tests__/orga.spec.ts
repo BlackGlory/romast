@@ -2,6 +2,67 @@ import { parse } from 'orga'
 import { dedent } from 'extra-tags'
 import { isObject } from '@blackglory/types'
 
+test('newline', () => {
+  const text = dedent`
+  Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit,
+  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+  Duis aute irure dolor in reprehenderit in voluptate
+  velit esse cillum dolore eu fugiat nulla pariatur.
+  `
+
+  const result = removeAllAdditionalProps(parse(text))
+
+  expect(result).toMatchObject({
+    type: 'document'
+  , children: [
+      {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'Lorem ipsum dolor sit amet,'
+          }
+        , {
+            type: 'text.plain'
+          , value: ' '
+          }
+        , {
+            type: 'text.plain'
+          , value: 'consectetur adipiscing elit,'
+          }
+        , {
+            type: 'text.plain'
+          , value: ' '
+          }
+        , {
+            type: 'text.plain'
+          , value: 'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+          }
+        ]
+      }
+    , {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'Duis aute irure dolor in reprehenderit in voluptate'
+          }
+        , {
+            type: 'text.plain'
+          , value: ' '
+          }
+        , {
+            type: 'text.plain'
+          , value: 'velit esse cillum dolore eu fugiat nulla pariatur.'
+          }
+        ]
+      }
+    ]
+  })
+})
+
 test('export settings', () => {
   const text = dedent`
   #+TITLE: I'm in the Mood for Org

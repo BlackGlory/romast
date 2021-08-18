@@ -38,6 +38,7 @@ export type InlineNode =
 | Strikethrough
 | Underlined
 | Code
+| Break
 
 export type DocumentContent =
 | UniversalBlockContent
@@ -70,6 +71,7 @@ export type UniversalInlineContent =
 | Code
 | Footnote
 | InlineFootnote
+| Break
 
 export interface Document extends ParentOf<DocumentContent[]> {
   type: 'document'
@@ -147,6 +149,10 @@ export interface Footnote extends Node, ParentOf<UniversalBlockContent[]> {
 
 export interface InlineFootnote extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'inlineFootnote'
+}
+
+export interface Break extends Node {
+  type: 'break'
 }
 
 export interface Drawer extends Node {

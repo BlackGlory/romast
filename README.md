@@ -24,6 +24,12 @@ import { dedent } from 'extra-tags'
 
 const org = dedent`
 * Romast
+Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+Duis aute irure dolor in reprehenderit in voluptate
+velit esse cillum dolore eu fugiat nulla pariatur.
 `
 
 const romast = parse(org)
@@ -43,7 +49,47 @@ const romast = parse(org)
 //           }
 //         ]
 //       },
-//       "children": []
+//       "children": [
+//         {
+//           "type": "paragraph",
+//           "children": [
+//             {
+//               "type": "text",
+//               "value": "Lorem ipsum dolor sit amet,"
+//             },
+//             {
+//               "type": "break"
+//             },
+//             {
+//               "type": "text",
+//               "value": "consectetur adipiscing elit,"
+//             },
+//             {
+//               "type": "break"
+//             },
+//             {
+//               "type": "text",
+//               "value": "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+//             }
+//           ]
+//         },
+//         {
+//           "type": "paragraph",
+//           "children": [
+//             {
+//               "type": "text",
+//               "value": "Duis aute irure dolor in reprehenderit in voluptate"
+//             },
+//             {
+//               "type": "break"
+//             },
+//             {
+//               "type": "text",
+//               "value": "velit esse cillum dolore eu fugiat nulla pariatur."
+//             }
+//           ]
+//         }
+//       ]
 //     }
 //   ]
 // }
@@ -94,6 +140,7 @@ type InlineNode =
 | Strikethrough
 | Underlined
 | Code
+| Break
 
 type DocumentContent =
 | UniversalBlockContent
@@ -126,6 +173,7 @@ type UniversalInlineContent =
 | Code
 | Footnote
 | InlineFootnote
+| Break
 
 interface Document extends ParentOf<DocumentContent[]> {
   type: 'document'
@@ -205,6 +253,10 @@ interface InlineFootnote extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'inlineFootnote'
 }
 
+interface Break extends Node {
+  type: 'break'
+}
+
 interface Drawer extends Node {
   type: 'drawer'
   name: string
@@ -252,6 +304,7 @@ interface Code extends Node {
   type: 'code'
   value: string
 }
+
 ```
 
 ### parse

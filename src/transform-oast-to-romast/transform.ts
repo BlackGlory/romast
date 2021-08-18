@@ -12,6 +12,7 @@ import {
 , strikethrough
 , underlined
 , code
+, brk
 , tableRowGroup
 } from '@romast-utils/builder'
 import { CustomError, assert } from '@blackglory/errors'
@@ -245,7 +246,9 @@ function transformNewline(node: OAST.Newline, root: OAST.Document): undefined {
 
 function transformStyledText(node: OAST.StyledText, root: OAST.Document) {
   switch (node.type) {
-    case 'text.plain': return text(node.value)
+    case 'text.plain': return isWhitespace(node.value)
+                              ? brk()
+                              : text(node.value)
     case 'text.bold': return bold(node.value)
     case 'text.verbatim': return verbatim(node.value)
     case 'text.italic': return italic(node.value)
@@ -253,6 +256,10 @@ function transformStyledText(node: OAST.StyledText, root: OAST.Document) {
     case 'text.underline': return underlined(node.value)
     case 'text.code': return code(node.value)
     default: throw new UnknownNodeError()
+  }
+
+  function isWhitespace(text: string): boolean {
+    return /^\s*$/.test(text)
   }
 }
 

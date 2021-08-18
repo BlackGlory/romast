@@ -5,13 +5,32 @@ import * as R from '@romast-utils/builder'
 test('Section', () => {
   const org = dedent`
   * Romast
+  Lorem ipsum dolor sit amet,
+  consectetur adipiscing elit,
+  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+  Duis aute irure dolor in reprehenderit in voluptate
+  velit esse cillum dolore eu fugiat nulla pariatur.
   `
 
   const result = parse(org)
 
   expect(result).toStrictEqual(
     R.document([
-      R.section(1, R.headline([], [R.text('Romast')]), [])
+      R.section(1, R.headline([], [R.text('Romast')]), [
+        R.paragraph([
+          R.text('Lorem ipsum dolor sit amet,')
+        , R.brk()
+        , R.text('consectetur adipiscing elit,')
+        , R.brk()
+        , R.text('sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
+        ])
+      , R.paragraph([
+          R.text('Duis aute irure dolor in reprehenderit in voluptate')
+        , R.brk()
+        , R.text('velit esse cillum dolore eu fugiat nulla pariatur.')
+        ])
+      ])
     ])
   )
 })

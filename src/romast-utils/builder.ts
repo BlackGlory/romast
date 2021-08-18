@@ -142,6 +142,10 @@ export function inlineFootnote(
   }
 }
 
+export function brk(): ROMAST.Break {
+  return { type: 'break' }
+}
+
 export function drawer(
   name: ROMAST.Drawer['name']
 , value: ROMAST.Drawer['value']

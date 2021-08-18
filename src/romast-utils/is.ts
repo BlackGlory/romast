@@ -37,6 +37,7 @@ export function isInlineNode(node: ROMAST.Node): node is ROMAST.InlineNode {
       || isStrikethrough(node)
       || isUnderlined(node)
       || isCode(node)
+      || isBreak(node)
 }
 
 export function isDocumentContent(node: ROMAST.Node): node is ROMAST.DocumentContent {
@@ -80,6 +81,7 @@ export function isUniversalInlineContent(
       || isCode(node)
       || isFootnote(node)
       || isInlineFootnote(node)
+      || isBreak(node)
 }
 
 export function isDocument(node: ROMAST.Node): node is ROMAST.Document {
@@ -182,4 +184,8 @@ export function isUnderlined(node: ROMAST.Node): node is ROMAST.Underlined {
 
 export function isCode(node: ROMAST.Node): node is ROMAST.Code {
   return is(node, 'code')
+}
+
+export function isBreak(node: ROMAST.Node): node is ROMAST.Break {
+  return is(node, 'break')
 }
