@@ -555,6 +555,29 @@ test('drawer', () => {
 })
 
 describe('link', () => {
+  test('link on styled text', () => {
+    const text = dedent`
+    *Please read the [[README]] first.*
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.bold'
+            , value: 'Please read the [[README]] first.'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
   test('external link', () => {
     const text = dedent`
     [[https://github.com][Github]]
