@@ -49,6 +49,7 @@ export type WrappedNode<
       parent: NullOrWrappedNode<Parent>
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
+      headline: WrappedNode<AST.Headline, null, AST.Section>
       children: Array<
         WrappedNode<
           AST.SectionContent
