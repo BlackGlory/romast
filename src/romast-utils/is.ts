@@ -139,7 +139,7 @@ export function isTableCell(
 }
 
 export function isHorizontalRule(node: ROMAST.Node): node is ROMAST.HorizontalRule {
-  return is(node, 'tableHorizontalRule')
+  return is(node, 'horizontalRule')
 }
 
 export function isFootnote(node: ROMAST.Node): node is ROMAST.Footnote {
