@@ -496,15 +496,21 @@ describe('block', () => {
 })
 
 test('drawer', () => {
-  // 不知道为什么, Orga的抽屉必须在Section里, 因此第一个抽屉不会被识别
+  // Orga的抽屉似乎必须在Section里, 因此第一个抽屉不会被识别
   const text = dedent`
+  Hello World.
+
   :DRAWERNAME:
-  This is outside the drawer.
+  This is not a drawer.
   :END:
 
   * Headline
   :DRAWERNAME:
   This is inside the drawer.
+  :END:
+
+  :不支持中文:
+  This is not a drawer.
   :END:
   `
 
@@ -518,7 +524,16 @@ test('drawer', () => {
       , children: [
           {
             type: 'text.plain'
-          , value: 'This is outside the drawer.'
+          , value: 'Hello World.'
+          }
+        ]
+      }
+    , {
+        type: 'paragraph'
+      , children: [
+          {
+            type: 'text.plain'
+          , value: 'This is not a drawer.'
           }
         ]
       }
@@ -547,6 +562,23 @@ test('drawer', () => {
             type: 'drawer'
           , name: 'DRAWERNAME'
           , value: 'This is inside the drawer.'
+          }
+        , {
+            type: 'paragraph'
+          , children: [
+              {
+                type: 'text.plain'
+              , value: ':不支持中文:'
+              }
+            , {
+                type: 'text.plain'
+              , value: ' '
+              }
+            , {
+                type: 'text.plain'
+              , value: 'This is not a drawer.'
+              }
+            ]
           }
         ]
       }
