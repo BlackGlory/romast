@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/BlackGlory/romast/compare/v1.0.0...v1.1.0) (2021-08-23)
+
+
+### Features
+
+* add `index` field ([2f6321c](https://github.com/BlackGlory/romast/commit/2f6321cf58d5767d98442c26e2ae9a321435d7ff))
+
 ## 1.0.0 (2021-08-21)
 
 
