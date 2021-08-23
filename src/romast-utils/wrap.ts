@@ -10,6 +10,14 @@ type NullOrWrappedNode<T extends AST.Node | null> =
   ? null
   : WrappedNode<NonNullable<T>>
 
+export interface IWrappedNode {
+  id: string
+  parent: IWrappedNode | null
+  index: number | null
+  previousSibling: IWrappedNode | null
+  nextSibling: IWrappedNode | null
+}
+
 export type WrappedNode<
   Node extends AST.Node
 , Sibling extends AST.Node | null = AST.Node | null
@@ -191,7 +199,7 @@ export type WrappedNode<
 : Mixin<Node, {
     id: string
     parent: NullOrWrappedNode<Parent>
-    index: number
+    index: number | null
     previousSibling: NullOrWrappedNode<Sibling>
     nextSibling: NullOrWrappedNode<Sibling>
   }>
