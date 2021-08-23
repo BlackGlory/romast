@@ -20,6 +20,7 @@ describe('wrap', () => {
     expect(result).toMatchObject({
       type: 'document'
     , id: expect.any(String)
+    , index: null
     , parent: null
     , previousSibling: null
     , nextSibling: null
@@ -27,11 +28,13 @@ describe('wrap', () => {
         {
           type: 'paragraph'
         , id: expect.any(String)
+        , index: 0
         , previousSibling: null
         , children: [
             {
               type: 'text'
             , id: expect.any(String)
+            , index: 0
             , value: 'first'
             , previousSibling: null
             , nextSibling: null
@@ -41,10 +44,12 @@ describe('wrap', () => {
       , {
           type: 'paragraph'
         , id: expect.any(String)
+        , index: 1
         , children: [
             {
               type: 'text'
             , id: expect.any(String)
+            , index: 0
             , value: 'middle'
             , previousSibling: null
             , nextSibling: null
@@ -54,11 +59,13 @@ describe('wrap', () => {
       , {
           type: 'paragraph'
         , id: expect.any(String)
+        , index: 2
         , nextSibling: null
         , children: [
             {
               type: 'text'
             , id: expect.any(String)
+            , index: 0
             , value: 'last'
             , previousSibling: null
             , nextSibling: null
@@ -90,17 +97,20 @@ describe('wrap', () => {
       type: 'document'
     , id: expect.any(String)
     , parent: null
+    , index: null
     , previousSibling: null
     , nextSibling: null
     , children: [
         {
           type: 'section'
         , id: expect.any(String)
+        , index: 0
         , previousSibling: null
         , nextSibling: null
         , headline: {
             type: 'headline'
           , id: expect.any(String)
+          , index: null
           , children: []
           , previousSibling: null
           , nextSibling: null

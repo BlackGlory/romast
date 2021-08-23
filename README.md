@@ -383,6 +383,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: null
+      index: null
       previousSibling: null
       nextSibling: null
       children: Array<
@@ -397,6 +398,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -411,8 +413,10 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
+      headline: WrappedNode<AST.Headline, null, AST.Section>
       children: Array<
         WrappedNode<
           AST.SectionContent
@@ -425,6 +429,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: null
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -439,6 +444,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -453,6 +459,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<WrappedNode<AST.ListContent, AST.ListContent, AST.List>>
@@ -461,6 +468,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -475,6 +483,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       header: WrappedNode<AST.TableRowGroup, null, AST.Table>
@@ -484,6 +493,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: Sibling extends null ? null : number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<WrappedNode<AST.TableRow, AST.TableRow, AST.TableRowGroup>>
@@ -492,6 +502,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<WrappedNode<AST.TableCell, AST.TableCell, AST.TableRow>>
@@ -500,6 +511,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -514,6 +526,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -528,6 +541,7 @@ type WrappedNode<
   ? Mixin<Node, {
       id: string
       parent: NullOrWrappedNode<Parent>
+      index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
       children: Array<
@@ -541,9 +555,12 @@ type WrappedNode<
 : Mixin<Node, {
     id: string
     parent: NullOrWrappedNode<Parent>
+    index: number
     previousSibling: NullOrWrappedNode<Sibling>
     nextSibling: NullOrWrappedNode<Sibling>
   }>
+
+
 
 function wrap<T extends AST.Node>(node: T): WrappedNode<T>
 ```
