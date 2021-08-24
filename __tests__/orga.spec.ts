@@ -787,6 +787,52 @@ describe('list', () => {
     })
   })
 
+  test('multiline list item', () => {
+    const text = dedent`
+    - line1
+      line2
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'list'
+        , indent: 0
+        , ordered: false
+        , children: [
+            {
+              type: 'list.item'
+            , indent: 0
+            , children: [
+                {
+                  type: 'list.item.bullet'
+                , indent: 0
+                , ordered: false
+                }
+              , {
+                  type: 'text.plain'
+                , value: 'line1'
+                }
+              ]
+            }
+          ]
+        }
+      , {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text.plain'
+            , value: 'line2'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
   test('nested list', () => {
     const text = dedent`
     - list1
