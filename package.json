@@ -80,6 +80,7 @@
     "@blackglory/errors": "^1.1.2",
     "@blackglory/types": "^0.4.7",
     "@types/unist": "^2.0.6",
+    "core-js": "^3.16.2",
     "date-fns": "^2.23.0",
     "hotypes": "^0.4.2",
     "iterable-operator": "^0.14.2",

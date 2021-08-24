@@ -1,6 +1,7 @@
 import * as ROMAST from '@src/romast'
 import { isParent } from './is'
 import cloneDeep from 'lodash.clonedeep'
+import 'core-js/features/array/flat'
 
 export function flatMap(
   node: ROMAST.Node
