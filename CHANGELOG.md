@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/BlackGlory/romast/compare/v1.1.1...v1.2.0) (2021-08-24)
+
+
+### Features
+
+* add find, traverseDescendantNodes ([9a089c7](https://github.com/BlackGlory/romast/commit/9a089c7a98515984ba098c98d8bc71510977fa75))
+* add findAll ([fa986b4](https://github.com/BlackGlory/romast/commit/fa986b4d9da2f4f7216e016a48b400175bd628d7))
+
 ### [1.1.1](https://github.com/BlackGlory/romast/compare/v1.1.0...v1.1.1) (2021-08-23)
 
 ## [1.1.0](https://github.com/BlackGlory/romast/compare/v1.0.0...v1.1.0) (2021-08-23)
