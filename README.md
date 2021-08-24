@@ -375,6 +375,15 @@ function find<T extends AST.Node>(
 ): T | undefined
 ```
 
+#### findAll
+
+```ts
+function findAll<T extends AST.Node>(
+  node: AST.Node
+, predicate: (node: AST.Node) => boolean
+): Iterable<T>
+```
+
 #### traverseDescendantNodes
 
 ```ts

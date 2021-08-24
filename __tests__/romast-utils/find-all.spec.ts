@@ -1,8 +1,10 @@
-import { find } from '@romast-utils/find'
-import { isText, isBold } from '@romast-utils/is'
+import { findAll } from '@romast-utils/find-all'
+import { isText } from '@romast-utils/is'
 import { section, headline, paragraph, text } from '@romast-utils/builder'
+import { toArray } from 'iterable-operator'
+import '@blackglory/jest-matchers'
 
-describe('find', () => {
+describe('findAll', () => {
   it('is preorder', () => {
     const ast =
       section(1, headline([], []), [
@@ -12,10 +14,10 @@ describe('find', () => {
       ])
 
     const result: string[] = []
-    find(ast, node => {
+    toArray(findAll(ast, node => {
       result.push(node.type)
       return false
-    })
+    }))
 
     expect(result).toEqual(['section', 'paragraph', 'text'])
   })
@@ -34,47 +36,36 @@ describe('find', () => {
       ])
 
     const result: string[] = []
-    find(ast, node => {
+    toArray(findAll(ast, node => {
       if (isText(node)) result.push(node.value)
       return false
-    })
+    }))
 
     expect(result).toEqual(['deep', 'shallow'])
   })
 
   describe('found', () => {
-    it('return found target', () => {
+    it('yield found target', () => {
       const ast =
         section(1, headline([], []), [
           section(1, headline([], []), [
             paragraph([
-              text('text')
+              text('deep')
             ])
+          ])
+        , paragraph([
+            text('shallow')
           ])
         ])
 
-      const result = find(ast, isText)
+      const result = findAll(ast, isText)
+      const arrResult = toArray(result)
 
-      expect(result).toStrictEqual(
-        text('text')
-      )
-    })
-  })
-
-  describe('not found', () => {
-    it('return undefined', () => {
-      const ast =
-        section(1, headline([], []), [
-          section(1, headline([], []), [
-            paragraph([
-              text('text')
-            ])
-          ])
-        ])
-
-      const result = find(ast, isBold)
-
-      expect(result).toBeUndefined()
+      expect(result).toBeIterable()
+      expect(arrResult).toStrictEqual([
+        text('deep')
+      , text('shallow')
+      ])
     })
   })
 })
