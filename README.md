@@ -349,7 +349,7 @@ import { map } from 'romast/utils/map'
 
 function map(
   node: AST.Node
-, fn: (node: ROMAST.Node) => AST.Node
+, fn: (node: AST.Node) => AST.Node
 ): AST.Node
 ```
 
@@ -362,6 +362,27 @@ function filter(
   node: AST.Node
 , predicate: (node: AST.Node) => unknown
 ): AST.Node | undefined
+```
+
+#### find
+
+```ts
+import { find } from 'romast/utils/find'
+
+function find<T extends AST.Node>(
+  node: AST.Node
+, predicate: (node: AST.Node) => boolean
+): T | undefined
+```
+
+#### traverseDescendantNodes
+
+```ts
+import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes'
+
+function traverseDescendantNodes(
+  parent: AST.Parent
+): Iterable<AST.Node>
 ```
 
 #### wrap
