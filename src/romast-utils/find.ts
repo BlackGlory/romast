@@ -9,23 +9,11 @@ export function find<T extends ROMAST.Node>(
 ): T | undefined {
   if (predicate(node)) return node as T
 
-  if (isSection(node) && node.headline) {
-    const result = find<T>(node.headline, predicate)
-    if (result) return result
-  } 
-
-  if (isTable(node) && node.header) {
-    const result = find<T>(node.header, predicate)
-    if (result) return result
-  }
-
-  if (isParent(node)) {
-    const result = findInIterable(
-      traverseDescendantNodes(node)
-    , node => predicate(node)
-    )
-    if (result) return result as T
-  }
+  const result = findInIterable(
+    traverseDescendantNodes(node)
+  , node => predicate(node)
+  )
+  if (result) return result as T
 
   return undefined
 }

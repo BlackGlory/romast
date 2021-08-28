@@ -1,21 +1,20 @@
 import * as ROMAST from '@src/romast'
 import { isParent, isSection, isTable } from './is'
 
-export function* traverseDescendantNodes(
-  parent: ROMAST.Parent
-): Iterable<ROMAST.Node> {
-  for (const childNode of parent.children) {
-    yield childNode
+export function* traverseDescendantNodes(node: ROMAST.Node): Iterable<ROMAST.Node> {
+  if (isSection(node)) {
+    yield node.headline
+    yield* traverseDescendantNodes(node.headline)
+  }
 
-    if (isSection(childNode)) {
-      yield childNode.headline
-    }
+  if (isTable(node) && node.header) {
+    yield node.header
+    yield* traverseDescendantNodes(node.header)
+  }
 
-    if (isTable(childNode) && childNode.header) {
-      yield childNode.header
-    }
-
-    if (isParent(childNode)) {
+  if (isParent(node)) {
+    for (const childNode of node.children) {
+      yield childNode
       yield* traverseDescendantNodes(childNode)
     }
   }
