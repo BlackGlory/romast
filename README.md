@@ -617,8 +617,6 @@ type WrappedNode<
     nextSibling: NullOrWrappedNode<Sibling>
   }>
 
-
-
 function wrap<T extends AST.Node>(node: T): WrappedNode<T>
 ```
 

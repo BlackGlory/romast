@@ -7,7 +7,7 @@ import '@blackglory/jest-matchers'
 describe('findAll', () => {
   it('is preorder', () => {
     const ast =
-      section(1, headline([], []), [
+      section(1, headline([], [text('headline')]), [
         paragraph([
           text('text')
         ])
@@ -19,7 +19,7 @@ describe('findAll', () => {
       return false
     }))
 
-    expect(result).toEqual(['section', 'paragraph', 'text'])
+    expect(result).toEqual(['section', 'headline', 'text', 'paragraph', 'text'])
   })
 
   it('is DFS', () => {

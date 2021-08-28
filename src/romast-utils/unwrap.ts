@@ -16,16 +16,16 @@ function unwrapNode<T extends AST.Node>(node: WrappedNode<T>): void {
   delete (node as Partial<WrappedNode<T>>).nextSibling
   delete (node as Partial<WrappedNode<T>>).id
 
-  if (isParent(node)) {
-    unwrapChildren(node)
-  }
-
   if (isSection(node)) {
     unwrapNode(node.headline as WrappedNode<AST.Headline>)
   }
 
   if (isTable(node) && node.header) {
     unwrapNode(node.header as WrappedNode<AST.TableRowGroup>)
+  }
+
+  if (isParent(node)) {
+    unwrapChildren(node)
   }
 }
 

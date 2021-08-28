@@ -268,16 +268,16 @@ function wrapNode<
     }
   }
 
-  if (isParent(wrappedNode)) {
-    wrapChildren(wrappedNode)
-  }
-
   if (isSection(wrappedNode)) {
     wrapNode(wrappedNode.headline, wrappedNode)
   }
 
   if (isTable(wrappedNode) && wrappedNode.header) {
     wrapNode(wrappedNode.header, wrappedNode)
+  }
+
+  if (isParent(wrappedNode)) {
+    wrapChildren(wrappedNode)
   }
 }
 

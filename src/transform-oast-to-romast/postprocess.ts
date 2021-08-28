@@ -55,12 +55,6 @@ function trimNewlines<T extends ROMAST.Node & ROMAST.Parent>(node: T): T {
         newNode.children = dropWhile(newNode.children, isNewline)
         newNode.children = dropRightWhile(newNode.children, isNewline)
       }
-      if (isSection(newNode)) {
-        newNode.headline = trimNewlines(newNode.headline)
-      }
-      if (isTable(newNode) && newNode.header) {
-        newNode.header = trimNewlines(newNode.header)
-      }
       return newNode
     }
   ) as T

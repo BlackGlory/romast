@@ -1,4 +1,4 @@
-// https://github.com/orgapp/orgajs/blob/v2.4.9/packages/orga/src/types.ts
+// https://github.com/orgapp/orgajs/blob/v2.6.0/packages/orga/src/types.ts
 // 注意, orga的types.ts并不是一份准确的AST定义.
 // 它包含了会在后处理阶段被消耗掉, 并不最终作为AST输出的节点:
 // - `keyword`

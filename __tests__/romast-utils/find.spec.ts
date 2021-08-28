@@ -5,7 +5,7 @@ import { section, headline, paragraph, text } from '@romast-utils/builder'
 describe('find', () => {
   it('is preorder', () => {
     const ast =
-      section(1, headline([], []), [
+      section(1, headline([], [text('headline')]), [
         paragraph([
           text('text')
         ])
@@ -17,7 +17,7 @@ describe('find', () => {
       return false
     })
 
-    expect(result).toEqual(['section', 'paragraph', 'text'])
+    expect(result).toEqual(['section', 'headline', 'text', 'paragraph', 'text'])
   })
 
   it('is DFS', () => {

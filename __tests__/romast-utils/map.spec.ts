@@ -5,7 +5,7 @@ import { section, headline, paragraph, bold, text } from '@romast-utils/builder'
 describe('map', () => {
   it('is preorder', () => {
     const ast =
-      section(1, headline([], []), [
+      section(1, headline([], [text('headline')]), [
         paragraph([
           text('text')
         ])
@@ -17,7 +17,7 @@ describe('map', () => {
       return node
     })
 
-    expect(result).toEqual(['section', 'paragraph', 'text'])
+    expect(result).toEqual(['section', 'headline', 'text', 'paragraph', 'text'])
   })
 
   it('is DFS', () => {
