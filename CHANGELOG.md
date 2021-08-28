@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/BlackGlory/romast/compare/v2.0.0...v2.0.1) (2021-08-28)
+
+
+### Bug Fixes
+
+* traverseDescendantNodes ([7cd5885](https://github.com/BlackGlory/romast/commit/7cd5885c683d12e803ed11874f077f925d74169d))
+
 ## [2.0.0](https://github.com/BlackGlory/romast/compare/v1.2.2...v2.0.0) (2021-08-28)
 
 
