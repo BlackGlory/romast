@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-2.6'
+import * as OAST from '@src/oast-3.0'
 
 function is<T extends OAST.Node>(node: OAST.Node, type: string): node is T {
   return node.type === type

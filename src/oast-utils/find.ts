@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-2.6'
+import * as OAST from '@src/oast-3.0'
 import { traverseDescendantNodes } from './traverse-descendant-node'
 import { isParent } from './is'
 import { find as findInIterable } from 'iterable-operator'
