@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/BlackGlory/romast/compare/v1.2.2...v2.0.0) (2021-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* The property `title` is removed from AST.Link.
+The property `value` is removed from AST.Drawer.
+
+### Features
+
+* improve utils ([628f59d](https://github.com/BlackGlory/romast/commit/628f59d8601d69c4d1cfdd37a7fba48dddb9bbca))
+* upgrade orga to v2.6.0 ([963784e](https://github.com/BlackGlory/romast/commit/963784e9e841e2cf408014bf2742fc2492f01ec1))
+
 ### [1.2.2](https://github.com/BlackGlory/romast/compare/v1.2.1...v1.2.2) (2021-08-27)
 
 ### [1.2.1](https://github.com/BlackGlory/romast/compare/v1.2.0...v1.2.1) (2021-08-27)
