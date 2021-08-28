@@ -386,9 +386,7 @@ function findAll<T extends AST.Node>(
 ```ts
 import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes'
 
-function traverseDescendantNodes(
-  parent: AST.Parent
-): Iterable<AST.Node>
+function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 ```
 
 #### wrap
