@@ -2,7 +2,7 @@ import { parse } from '@src/parse'
 import { dedent } from 'extra-tags'
 import * as R from '@romast-utils/builder'
 
-test('Section', () => {
+test('section', () => {
   const org = dedent`
   * Romast
   Lorem ipsum dolor sit amet,
@@ -29,6 +29,24 @@ test('Section', () => {
           R.text('Duis aute irure dolor in reprehenderit in voluptate')
         , R.newline()
         , R.text('velit esse cillum dolore eu fugiat nulla pariatur.')
+        ])
+      ])
+    ])
+  )
+})
+
+test('plain url link', () => {
+  const org = dedent`
+  [[https://example.com]]
+  `
+
+  const result = parse(org)
+
+  expect(result).toStrictEqual(
+    R.document([
+      R.paragraph([
+        R.link('https', 'https://example.com', [
+          R.text('https://example.com')
         ])
       ])
     ])

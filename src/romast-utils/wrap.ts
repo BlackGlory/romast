@@ -196,6 +196,36 @@ export type WrappedNode<
         >
       >
     }>
+: Node extends AST.Link
+  ? Mixin<Node, {
+      id: string
+      parent: NullOrWrappedNode<Parent>
+      index: number
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Link
+        >
+      >
+    }>
+: Node extends AST.Drawer
+  ? Mixin<Node, {
+      id: string
+      parent: NullOrWrappedNode<Parent>
+      index: number
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Drawer
+        >
+      >
+    }>
 : Mixin<Node, {
     id: string
     parent: NullOrWrappedNode<Parent>

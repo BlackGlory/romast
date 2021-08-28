@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-2.4'
+import * as OAST from '@src/oast-2.6'
 import { isFootnote } from '@oast-utils/is'
 import { find } from '@oast-utils/find'
 

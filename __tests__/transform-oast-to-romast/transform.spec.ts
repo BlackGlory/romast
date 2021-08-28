@@ -16,7 +16,7 @@ describe('OAST.Section, OAST.Headline, OAST.Stars, OAST.Tags', () => {
   it('return ROMAST.Section', () => {
     const oast = O.document({}, [
       O.section(1, {}, [
-        O.headline(1, true, 'content', [
+        O.headline(1, true, [
           O.stars(1)
         , O.plain('value')
         , O.tags(['tag1', 'tag2'])
@@ -76,7 +76,7 @@ describe('OAST.FootnoteReference', () => {
     it('return ROMAST.InlineFootnote', () => {
       const oast = O.document({}, [
         O.paragraph({}, [
-          O.footnoteReference('label', [
+          O.footnoteReference(undefined, [
             O.plain('footnote')
           ])
         ])
@@ -196,13 +196,15 @@ describe('OAST.Block', () => {
 describe('OAST.Drawer', () => {
   it('return ROMAST.Drawer', () => {
     const oast = O.document({}, [
-      O.drawer('name', 'value')
+      O.drawer('name', 'value', [
+        O.plain('value')
+      ])
     ])
 
     const result = transformDocument(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.drawer('name', 'value')
+      R.drawer('name', [R.text('value')])
     ]))
   })
 })
@@ -369,7 +371,7 @@ describe('OAST.HorizontalRule', () => {
 })
 
 describe('OAST.Newline', () => {
-  it('return undefined', () => {
+  it('return ROMAST.Newline', () => {
     const oast = O.document({}, [
       O.paragraph({}, [
         O.newline()
@@ -379,51 +381,29 @@ describe('OAST.Newline', () => {
     const result = transformDocument(oast)
 
     expect(result).toStrictEqual(R.document([
-      R.paragraph([])
+      R.paragraph([
+        O.newline()
+      ])
     ]))
   })
 })
 
 describe('OAST.StyledText', () => {
   describe('type = text.plain', () => {
-    describe('text is whitespace', () => {
-      it('return ROMAST.Newline', () => {
-        const oast = O.document({}, [
-          O.paragraph({}, [
-            O.plain('line1')
-          , O.plain(' ')
-          , O.plain('line2')
-          ])
+    it('return ROMAST.Text', () => {
+      const oast = O.document({}, [
+        O.paragraph({}, [
+          O.plain('value')
         ])
+      ])
 
-        const result = transformDocument(oast)
+      const result = transformDocument(oast)
 
-        expect(result).toStrictEqual(R.document([
-          R.paragraph([
-            R.text('line1')
-          , R.newline()
-          , R.text('line2')
-          ])
-        ]))
-      })
-    })
-
-    describe('text isnt whitespace', () => {
-      it('return ROMAST.Text', () => {
-        const oast = O.document({}, [
-          O.paragraph({}, [
-            O.plain('value')
-          ])
+      expect(result).toStrictEqual(R.document([
+        R.paragraph([
+          R.text('value')
         ])
-
-        const result = transformDocument(oast)
-
-        expect(result).toStrictEqual(R.document([
-          R.paragraph([
-            R.text('value')
-          ])
-        ]))
-      })
+      ]))
     })
   })
 
@@ -540,7 +520,9 @@ describe('OAST.Link', () => {
   it('return ROMAST.Link', () => {
     const oast = O.document({}, [
       O.paragraph({}, [
-        O.link('https', 'description', 'value')
+        O.link('https', 'description', [
+          O.plain('value')
+        ])
       ])
     ])
 
@@ -548,7 +530,9 @@ describe('OAST.Link', () => {
 
     expect(result).toStrictEqual(R.document([
       R.paragraph([
-        R.link('https', 'description', 'value')
+        R.link('https', 'description', [
+          R.text('value')
+        ])
       ])
     ]))
   })
@@ -558,7 +542,7 @@ describe('OAST.Todo', () => {
   it('return undefined', () => {
     const oast = O.document({}, [
       O.section(1, {}, [
-        O.headline(1, true, 'content', [
+        O.headline(1, true, [
           O.stars(1)
         , O.todo('TODO', true)
         , O.plain('value')
@@ -580,7 +564,7 @@ describe('OAST.Priority', () => {
   it('return undefined', () => {
     const oast = O.document({}, [
       O.section(1, {}, [
-        O.headline(1, true, 'content', [
+        O.headline(1, true, [
           O.stars(1)
         , O.todo('TODO', true)
         , O.priority('[#A]')

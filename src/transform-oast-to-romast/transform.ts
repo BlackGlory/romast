@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-2.4'
+import * as OAST from '@src/oast-2.6'
 import * as ROMAST from '@src/romast'
 import * as OAST_IS from '@oast-utils/is'
 import {
@@ -64,6 +64,16 @@ function transformTableContents(nodes: OAST.TableContent[], root: OAST.Document)
   return results
 }
 
+function transformTableRowContent(node: OAST.TableRowContent, root: OAST.Document) {
+  if (OAST_IS.isTableCell(node)) return transformTableCell(node, root)
+  if (OAST_IS.isTableColumnSeparator(node)) return transformTableColumnSeparator(node, root)
+  throw new UnknownNodeError()
+}
+
+function transformTableColumnSeparator(node: OAST.TableColumnSeparator, root: OAST.Document): undefined {
+  return undefined
+}
+
 function transformHeadlineContent(node: OAST.HeadlineContent, root: OAST.Document) {
   if (OAST_IS.isStars(node)) return transformStars(node, root)
   if (OAST_IS.isTodo(node)) return transformTodo(node, root)
@@ -81,6 +91,7 @@ function transformListContent(node: OAST.ListContent, root: OAST.Document) {
 
 function transformListItemContent(node: OAST.ListItemContent, root: OAST.Document) {
   if (OAST_IS.isListItemBullet(node)) return transformListItemBullet(node, root)
+  if (OAST_IS.isListItemTag(node)) return transformListItemTag(node, root)
   if (OAST_IS.isListItemCheckbox(node)) return transformListItemCheckbox(node, root)
   if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
   throw new UnknownNodeError()
@@ -103,7 +114,7 @@ function transformUniversalInlineContent(
   node: OAST.UniversalInlineContent
 , root: OAST.Document
 ): ROMAST.UniversalInlineContent | undefined {
-  if (OAST_IS.isStyledText(node)) return transformStyledText(node, root)
+  if (OAST_IS.isText(node)) return transformText(node, root)
   if (OAST_IS.isLink(node)) return transformLink(node, root)
   if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
@@ -153,8 +164,26 @@ function transformDrawer(node: OAST.Drawer, root: OAST.Document): ROMAST.Drawer 
   return {
     type: 'drawer'
   , name: node.name
-  , value: node.value
+  , children: map(node.children, x => transformDrawerContent(x, root))
   }
+}
+
+function transformDrawerContent(node: OAST.DrawerContent, root: OAST.Document) {
+  if (OAST_IS.isDrawerBegin(node)) return transformDrawerBegin(node, root)
+  if (OAST_IS.isDrawerEnd(node)) return transformDrawerEnd(node, root)
+  if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
+  throw new UnknownNodeError()
+}
+
+function transformDrawerBegin(
+  node: OAST.DrawerBegin
+, root: OAST.Document
+): undefined {
+  return undefined
+}
+
+function transformDrawerEnd(node: OAST.DrawerEnd, root: OAST.Document): undefined {
+  return undefined
 }
 
 function transformPlanning(node: OAST.Planning, root: OAST.Document): undefined {
@@ -194,7 +223,7 @@ function transformTableRow(
 ): ROMAST.TableRow {
   return {
     type: 'tableRow'
-  , children: map(node.children, x => transformTableCell(x, root))
+  , children: map(node.children, x => transformTableRowContent(x, root))
   }
 }
 
@@ -240,57 +269,97 @@ function transformHorizontalRule(
   return { type: 'horizontalRule' }
 }
 
-function transformNewline(node: OAST.Newline, root: OAST.Document): undefined {
-  return undefined
+function transformNewline(node: OAST.Newline, root: OAST.Document): ROMAST.Newline {
+  return newline()
 }
 
-function transformStyledText(node: OAST.StyledText, root: OAST.Document) {
-  switch (node.type) {
-    case 'text.plain': return isWhitespace(node.value)
-                              ? newline()
-                              : text(node.value)
-    case 'text.bold': return bold(node.value)
-    case 'text.verbatim': return verbatim(node.value)
-    case 'text.italic': return italic(node.value)
-    case 'text.strikeThrough': return strikethrough(node.value)
-    case 'text.underline': return underlined(node.value)
-    case 'text.code': return code(node.value)
+function transformText(node: OAST.Text, root: OAST.Document) {
+  switch (node.style) {
+    case undefined: return text(node.value)
+    case 'bold': return bold(node.value)
+    case 'verbatim': return verbatim(node.value)
+    case 'italic': return italic(node.value)
+    case 'strikeThrough': return strikethrough(node.value)
+    case 'underline': return underlined(node.value)
+    case 'code': return code(node.value)
     default: throw new UnknownNodeError()
-  }
-
-  function isWhitespace(text: string): boolean {
-    return /^\s*$/.test(text)
   }
 }
 
 function transformLink(node: OAST.Link, root: OAST.Document): ROMAST.Link {
   return {
     type: 'link'
-  , title: node.description ?? null
-  , protocol: node.protocol
-  , url: node.value
+  , protocol: node.path.protocol
+  , url: node.path.value
+  , children: map(node.children, x => transformLinkContent(x, root))
   }
+}
+
+function transformLinkContent(node: OAST.LinkContent, root: OAST.Document) {
+  if (OAST_IS.isOpening(node)) return transformOpening(node, root)
+  if (OAST_IS.isClosing(node)) return transformClosing(node, root)
+  if (OAST_IS.isLinkPath(node)) return transformLinkPath(node, root)
+  if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
+  throw new UnknownNodeError()
+}
+
+function transformLinkPath(node: OAST.LinkPath, root: OAST.Document): undefined {
+  return undefined
 }
 
 function transformFootnoteReference(
   node: OAST.FootnoteReference
 , root: OAST.Document
 ): ROMAST.Footnote | ROMAST.InlineFootnote {
-  if (node.children.length === 0) {
+  if (node.label) {
     const footnote = findFootnote(root, node.label)
     return {
       type: 'footnote'
     , children: map(
         footnote?.children ?? []
-      , x => transformUniversalBlockContent(x, root)
+      , x => transformFootnoteContent(x, root)
       )
     }
   } else {
     return {
       type: 'inlineFootnote'
-    , children: map(node.children, x => transformUniversalInlineContent(x, root))
+    , children: map(node.children, x => transformFootnoteReferenceContent(x, root))
     }
   }
+}
+
+function transformFootnoteContent(
+  node: OAST.FootnoteContent
+, root: OAST.Document
+) {
+  if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
+  if (OAST_IS.isUniversalBlockContent(node)) return transformUniversalBlockContent(node, root)
+  throw new UnknownNodeError()
+}
+
+function transformOpening(node: OAST.Opening, root: OAST.Document): undefined {
+  return undefined
+}
+
+function transformClosing(node: OAST.Closing, root: OAST.Document): undefined {
+  return undefined
+}
+
+function transformFootnoteReferenceContent(
+  node: OAST.FootnoteReferenceContent
+, root: OAST.Document
+) {
+  if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
+  if (OAST_IS.isOpening(node)) return transformOpening(node, root)
+  if (OAST_IS.isClosing(node)) return transformClosing(node, root)
+  if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
+}
+
+function transformFootnoteLabel(
+  node: OAST.FootnoteLabel
+, root: OAST.Document
+): undefined {
+  return undefined
 }
 
 function transformStars(node: OAST.Stars, root: OAST.Document): undefined {
@@ -318,6 +387,13 @@ function transformListItemCheckbox(
 
 function transformListItemBullet(
   node: OAST.ListItemBullet
+, root: OAST.Document
+): undefined {
+  return undefined
+}
+
+function transformListItemTag(
+  node: OAST.ListItemTag
 , root: OAST.Document
 ): undefined {
   return undefined

@@ -155,16 +155,14 @@ export interface Newline extends Node {
   type: 'newline'
 }
 
-export interface Drawer extends Node {
+export interface Drawer extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'drawer'
   name: string
-  value: string
 }
 
-export interface Link extends Node {
+export interface Link extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'link'
   protocol: 'internal' | string
-  title: string | null
   url: string
 }
 

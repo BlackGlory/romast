@@ -1,6 +1,6 @@
 import { parse } from 'orga'
 import { dedent } from 'extra-tags'
-import { isObject } from '@blackglory/types'
+import { isObject, isDate } from '@blackglory/types'
 
 test('break', () => {
   const text = dedent`
@@ -17,15 +17,14 @@ test('break', () => {
         type: 'paragraph'
       , children: [
           {
-            type: 'text.plain'
+            type: 'text'
           , value: 'Duis aute irure dolor in reprehenderit in voluptate '
           }
         , {
-            type: 'text.plain'
-          , value: ' '
+            type: 'newline'
           }
         , {
-            type: 'text.plain'
+            type: 'text'
           , value: 'velit esse cillum dolore eu fugiat nulla pariatur.'
           }
         ]
@@ -49,15 +48,14 @@ test('newline', () => {
         type: 'paragraph'
       , children: [
           {
-            type: 'text.plain'
+            type: 'text'
           , value: 'Duis aute irure dolor in reprehenderit in voluptate'
           }
         , {
-            type: 'text.plain'
-          , value: ' '
+            type: 'newline'
           }
         , {
-            type: 'text.plain'
+            type: 'text'
           , value: 'velit esse cillum dolore eu fugiat nulla pariatur.'
           }
         ]
@@ -112,17 +110,33 @@ describe('footnote', () => {
           type: 'paragraph'
         , children: [
             {
-              type: 'text.plain'
+              type: 'text'
             , value: 'The Org homepage'
             }
           , {
               type: 'footnote.reference'
             , label: 'LABEL'
-            , children: []
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'footnote.reference'
+                }
+              , {
+                  type: 'footnote.label'
+                , label: 'LABEL'
+                }
+              , {
+                  type: 'closing'
+                , element: 'footnote.reference'
+                }
+              ]
             }
           , {
-              type: 'text.plain'
+              type: 'text'
             , value: ' now looks a lot better than it used to.'
+            }
+          , {
+              type: 'newline'
             }
           ]
         }
@@ -131,10 +145,14 @@ describe('footnote', () => {
         , label: 'LABEL'
         , children: [
             {
+              type: 'footnote.label'
+            , label: 'LABEL'
+            }
+          , {
               type: 'paragraph'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'The link is: http://orgmode.org'
                 }
               ]
@@ -179,7 +197,7 @@ describe('footnote', () => {
                 , level: 1
                 }
               , {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'headline1'
                 }
               , { type: 'newline' }
@@ -189,14 +207,28 @@ describe('footnote', () => {
               type: 'paragraph'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'footnote'
                 }
               , {
                   type: 'footnote.reference'
                 , label: 'LABEL'
-                , children: []
+                , children: [
+                    {
+                      type: 'opening'
+                    , element: 'footnote.reference'
+                    }
+                  , {
+                      type: 'footnote.label'
+                    , label: 'LABEL'
+                    }
+                  , {
+                      type: 'closing'
+                    , element: 'footnote.reference'
+                    }
+                  ]
                 }
+              , { type: 'newline' }
               ]
             }
           ]
@@ -206,20 +238,28 @@ describe('footnote', () => {
         , label: 'LABEL'
         , children: [
             {
+              type: 'footnote.label'
+            , label: 'LABEL'
+            }
+          , {
               type: 'paragraph'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'paragraph1'
                 }
+              , { type: 'newline' }
               ]
             }
           , {
               type: 'paragraph'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'paragraph2'
+                }
+              , {
+                  type: 'newline'
                 }
               ]
             }
@@ -237,7 +277,7 @@ describe('footnote', () => {
                 , level: 2
                 }
               , {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'headline2'
                 }
               , {
@@ -249,9 +289,10 @@ describe('footnote', () => {
               type: 'paragraph'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'section2'
                 }
+              , { type: 'newline' }
               ]
             }
           ]
@@ -269,7 +310,7 @@ describe('footnote', () => {
                 , level: 1
                 }
               , {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'headline3'
                 }
               , {
@@ -281,7 +322,7 @@ describe('footnote', () => {
               type: 'paragraph'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'section3'
                 }
               ]
@@ -308,7 +349,7 @@ describe('footnote', () => {
           type: 'paragraph'
         , children: [
             {
-              type: 'text.plain'
+              type: 'text'
             , value: 'Hello'
             }
           , {
@@ -316,26 +357,44 @@ describe('footnote', () => {
             , label: 'LABEL'
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'opening'
+                , element: 'footnote.reference'
+                }
+              , {
+                  type: 'footnote.label'
+                , label: 'LABEL'
+                }
+              , {
+                  type: 'text'
                 , value: 'DEFINITION'
+                }
+              , {
+                  type: 'closing'
+                , element: 'footnote.reference'
                 }
               ]
             }
           , {
-              type: 'text.plain'
-            , value: ' '
+              type: 'newline'
             }
           , {
-              type: 'text.plain'
+              type: 'text'
             , value: 'World'
             }
           , {
               type: 'footnote.reference'
-            , label: ''
             , children: [
                 {
-                  type: 'text.plain'
+                  type: 'opening'
+                , element: 'footnote.reference'
+                }
+              , {
+                  type: 'text'
                 , value: 'DEFINITION'
+                }
+              , {
+                  type: 'closing'
+                , element: 'footnote.reference'
                 }
               ]
             }
@@ -364,6 +423,7 @@ test('heading', () => {
       , children: [
           {
             type: 'headline'
+          , actionable: false
           , level: 1
           , children: [
               {
@@ -371,7 +431,7 @@ test('heading', () => {
               , level: 1
               }
             , {
-                type: 'text.plain'
+                type: 'text'
               , value: 'headline1'
               }
             , {
@@ -385,6 +445,7 @@ test('heading', () => {
           , children: [
               {
                 type: 'headline'
+              , actionable: false
               , level: 2
               , tags: ['tag1', 'tag2']
               , children: [
@@ -393,7 +454,7 @@ test('heading', () => {
                   , level: 2
                   }
                 , {
-                    type: 'text.plain'
+                    type: 'text'
                   , value: 'headline2'
                   }
                 , {
@@ -411,14 +472,16 @@ test('heading', () => {
               , children: [
                   {
                     type: 'headline'
+                  , actionable: false
                   , level: 3
+                  , tags: ['tag3', 'tag4']
                   , children: [
                       {
                         type: 'stars'
                       , level: 3
                       }
                     , {
-                        type: 'text.plain'
+                        type: 'text'
                       , value: 'headline3'
                       }
                     , {
@@ -523,18 +586,20 @@ test('drawer', () => {
         type: 'paragraph'
       , children: [
           {
-            type: 'text.plain'
+            type: 'text'
           , value: 'Hello World.'
           }
+        , { type: 'newline' }
         ]
       }
     , {
         type: 'paragraph'
       , children: [
           {
-            type: 'text.plain'
+            type: 'text'
           , value: 'This is not a drawer.'
           }
+        , { type: 'newline' }
         ]
       }
     , {
@@ -550,34 +615,43 @@ test('drawer', () => {
               , level: 1
               }
             , {
-                type: 'text.plain'
+                type: 'text'
               , value: 'Headline'
               }
-            , {
-                type: 'newline'
-              }
+            , { type: 'newline' }
             ]
           }
         , {
             type: 'drawer'
           , name: 'DRAWERNAME'
-          , value: 'This is inside the drawer.'
+          , value: '\nThis is inside the drawer.\n'
+          , children: [
+              {
+                type: 'drawer.begin'
+              , name: 'DRAWERNAME'
+              }
+            , { type: 'newline' }
+            , {
+                type: 'text'
+              , value: 'This is inside the drawer.'
+              }
+            , { type: 'newline' }
+            , { type: 'drawer.end' }
+            ]
           }
         , {
             type: 'paragraph'
           , children: [
               {
-                type: 'text.plain'
+                type: 'text'
               , value: ':不支持中文:'
               }
+            , { type: 'newline' }
             , {
-                type: 'text.plain'
-              , value: ' '
-              }
-            , {
-                type: 'text.plain'
+                type: 'text'
               , value: 'This is not a drawer.'
               }
+            , { type: 'newline'}
             ]
           }
         ]
@@ -587,6 +661,57 @@ test('drawer', () => {
 })
 
 describe('link', () => {
+  test('styled text in link', () => {
+    const text = dedent`
+    Please read the [[ *README* ]] first.
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'Please read the '
+            }
+          , {
+              type: 'link'
+            , path: {
+                protocol: 'internal'
+              , value: ' *README* '
+              , search: undefined
+              }
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'link'
+                }
+              , {
+                  type: 'link.path'
+                , protocol: 'internal'
+                , value: ' *README* '
+                , search: undefined
+                }
+              , {
+                  type: 'closing'
+                , element: 'link'
+                }
+              ]
+            }
+          , {
+              type: 'text'
+            , value: ' first.'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
   test('link on styled text', () => {
     const text = dedent`
     *Please read the [[README]] first.*
@@ -601,7 +726,8 @@ describe('link', () => {
           type: 'paragraph'
         , children: [
             {
-              type: 'text.bold'
+              type: 'text'
+            , style: 'bold'
             , value: 'Please read the [[README]] first.'
             }
           ]
@@ -625,10 +751,31 @@ describe('link', () => {
         , children: [
             {
               type: 'link'
-            , protocol: 'https'
-            , description: 'Github'
-            , value: 'https://github.com'
-            , search: undefined
+            , path: {
+                protocol: 'https'
+              , value: 'https://github.com'
+              , search: undefined
+              }
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'link'
+                }
+              , {
+                  type: 'link.path'
+                , protocol: 'https'
+                , value: 'https://github.com'
+                , search: undefined
+                }
+              , {
+                  type: 'text'
+                , value: 'Github'
+                }
+              , {
+                  type: 'closing'
+                , element: 'link'
+                }
+              ]
             }
           ]
         }
@@ -651,10 +798,27 @@ describe('link', () => {
         , children: [
             {
               type: 'link'
-            , protocol: 'file'
-            , value: 'code/main.c'
-            , description: undefined
-            , search: 255
+            , path: {
+                protocol: 'file'
+              , value: 'code/main.c'
+              , search: 255
+              }
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'link'
+                }
+              , {
+                  type: 'link.path'
+                , protocol: 'file'
+                , value: 'code/main.c'
+                , search: 255
+                }
+              , {
+                  type: 'closing'
+                , element: 'link'
+                }
+              ]
             }
           ]
         }
@@ -676,15 +840,32 @@ describe('link', () => {
           type: 'paragraph'
         , children: [
             {
-              type: 'text.plain'
+              type: 'text'
             , value: '<<target>>'
             }
           , {
               type: 'link'
-            , protocol: 'internal'
-            , value: 'target'
-            , description: undefined
-            , search: undefined
+            , path: {
+                protocol: 'internal'
+              , value: 'target'
+              , search: undefined
+              }
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'link'
+                }
+              , {
+                  type: 'link.path'
+                , protocol: 'internal'
+                , value: 'target'
+                , search: undefined
+                }
+              , {
+                  type: 'closing'
+                , element: 'link'
+                }
+              ]
             }
           ]
         }
@@ -706,8 +887,51 @@ describe('link', () => {
           type: 'paragraph'
         , children: [
             {
-              type: 'text.plain'
+              type: 'text'
             , value: 'https://example.com'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('plain url link', () => {
+    const text = dedent`
+    [[https://example.com]]
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'link'
+            , path: {
+                protocol: 'https'
+              , value: 'https://example.com'
+              , search: undefined
+              }
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'link'
+                }
+              , {
+                  type: 'link.path'
+                , protocol: 'https'
+                , value: 'https://example.com'
+                , search: undefined
+                }
+              , {
+                  type: 'closing'
+                , element: 'link'
+                }
+              ]
             }
           ]
         }
@@ -759,27 +983,31 @@ describe('list', () => {
                 , ordered: false
                 }
               , {
-                  type: 'text.bold'
+                  type: 'list.item.tag'
+                , value: 'item'
+                }
+              , {
+                  type: 'text'
+                , style: 'bold'
                 , value: 'hello'
                 }
               , {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: ' '
                 }
               , {
-                  type: 'text.italic'
+                  type: 'text'
+                , style: 'italic'
                 , value: 'world'
                 }
+              , {
+                  type: 'newline'
+                }
+              , {
+                  type: 'text'
+                , value: 'text'
+                }
               ]
-            }
-          ]
-        }
-      , {
-          type: 'paragraph'
-        , children: [
-            {
-              type: 'text.plain'
-            , value: 'text'
             }
           ]
         }
@@ -813,19 +1041,17 @@ describe('list', () => {
                 , ordered: false
                 }
               , {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'line1'
                 }
+              , {
+                  type: 'newline'
+                }
+              , {
+                  type: 'text'
+                , value: 'line2'
+                }
               ]
-            }
-          ]
-        }
-      , {
-          type: 'paragraph'
-        , children: [
-            {
-              type: 'text.plain'
-            , value: 'line2'
             }
           ]
         }
@@ -859,8 +1085,11 @@ describe('list', () => {
                 , ordered: false
                 }
               , {
-                  type: 'text.plain'
+                  type: 'text'
                 , value: 'list1'
+                }
+              , {
+                  type: 'newline'
                 }
               ]
             }
@@ -879,7 +1108,7 @@ describe('list', () => {
                     , ordered: false
                     }
                   , {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: 'list2'
                     }
                   ]
@@ -927,7 +1156,7 @@ test('todo', () => {
               , value: '[#A]'
               }
             , {
-                type: 'text.plain'
+                type: 'text'
               , value: 'text [1/2] [50%]'
               }
             , {
@@ -941,6 +1170,18 @@ test('todo', () => {
           , timestamp: {
               date: expect.any(Date)
             }
+          , children: [
+              {
+                type: 'planning.keyword'
+              , value: 'SCHEDULED'
+              }
+            , {
+                type: 'planning.timestamp'
+              , value: {
+                  date: expect.any(Date)
+                }
+              }
+            ]
           }
         , {
             type: 'list'
@@ -959,9 +1200,10 @@ test('todo', () => {
                   , checked: true
                   }
                 , {
-                    type: 'text.plain'
+                    type: 'text'
                   , value: 'task1'
                   }
+                , { type: 'newline' }
                 ]
               }
             , {
@@ -978,19 +1220,15 @@ test('todo', () => {
                   , checked: false
                   }
                 , {
-                    type: 'text.plain'
+                    type: 'text'
                   , value: 'task2'
                   }
+                , { type: 'newline' }
+                , {
+                    type: 'text'
+                  , value: '[ ] text'
+                  }
                 ]
-              }
-            ]
-          }
-        , {
-            type: 'paragraph'
-          , children: [
-              {
-                type: 'text.plain'
-              , value: '[ ] text'
               }
             ]
           }
@@ -1022,28 +1260,37 @@ describe('table', () => {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: ' Column 1 '
                     }
                   ]
                 }
               , {
-                  type: 'table.cell'
-                , children: [
-                    {
-                      type: 'text.plain'
-                    , value: ' Column 2 '
-                    }
-                  ]
+                  type: 'table.columnSeparator'
                 }
               , {
                   type: 'table.cell'
                 , children: [
                     {
-                      type:'text.plain'
+                      type: 'text'
+                    , value: ' Column 2 '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.columnSeparator'
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type:'text'
                     , value: ' Column 3 '
                     }
                   ]
+                }
+              , {
+                  type: 'table.columnSeparator'
                 }
               ]
             }
@@ -1054,28 +1301,37 @@ describe('table', () => {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: ' foo      '
                     }
                   ]
                 }
               , {
-                  type: 'table.cell'
-                , children: [
-                    {
-                      type: 'text.plain'
-                    , value: ' bar      '
-                    }
-                  ]
+                  type: 'table.columnSeparator'
                 }
               , {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
+                    , value: ' bar      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.columnSeparator'
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text'
                     , value: '          '
                     }
                   ]
+                }
+              , {
+                  type: 'table.columnSeparator'
                 }
               ]
             }
@@ -1109,28 +1365,37 @@ describe('table', () => {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: ' Column 1 '
                     }
                   ]
                 }
               , {
+                  type: 'table.columnSeparator'
+                }
+              , {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: ' Column 2 '
                     }
                   ]
                 }
               , {
+                  type: 'table.columnSeparator'
+                }
+              , {
                   type: 'table.cell'
                 , children: [
                     {
-                      type:'text.plain'
+                      type:'text'
                     , value: ' Column 3 '
                     }
                   ]
+                }
+              , {
+                  type: 'table.columnSeparator'
                 }
               ]
             }
@@ -1142,28 +1407,37 @@ describe('table', () => {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: '        1 '
                     }
                   ]
                 }
               , {
-                  type: 'table.cell'
-                , children: [
-                    {
-                      type: 'text.plain'
-                    , value: ' foo      '
-                    }
-                  ]
+                  type: 'table.columnSeparator'
                 }
               , {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
+                    , value: ' foo      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.columnSeparator'
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text'
                     , value: '          '
                     }
                   ]
+                }
+              , {
+                  type: 'table.columnSeparator'
                 }
               ]
             }
@@ -1175,28 +1449,37 @@ describe('table', () => {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
                     , value: '        2 '
                     }
                   ]
                 }
               , {
-                  type: 'table.cell'
-                , children: [
-                    {
-                      type: 'text.plain'
-                    , value: ' bar      '
-                    }
-                  ]
+                  type: 'table.columnSeparator'
                 }
               , {
                   type: 'table.cell'
                 , children: [
                     {
-                      type: 'text.plain'
+                      type: 'text'
+                    , value: ' bar      '
+                    }
+                  ]
+                }
+              , {
+                  type: 'table.columnSeparator'
+                }
+              , {
+                  type: 'table.cell'
+                , children: [
+                    {
+                      type: 'text'
                     , value: '          '
                     }
                   ]
+                }
+              , {
+                  type: 'table.columnSeparator'
                 }
               ]
             }
@@ -1222,7 +1505,11 @@ function removeAllAdditionalProps<T extends object>(target: T): T {
       if (additionalProps.includes(prop)) return undefined
       const value = Reflect.get(target, prop)
       if (isObject(value)) {
-        return removeAllAdditionalProps(value)
+        if (isDate(value)) {
+          return value
+        } else {
+          return removeAllAdditionalProps(value)
+        }
       } else {
         return value
       }

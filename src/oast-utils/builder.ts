@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-2.4'
+import * as OAST from '@src/oast-2.6'
 
 export function document(
   properties: OAST.Document['properties']
@@ -53,22 +53,37 @@ export function block(
 export function drawer(
   name: OAST.Drawer['name']
 , value: OAST.Drawer['value']
+, children: OAST.Drawer['children']
 ): OAST.Drawer {
   return {
     type: 'drawer'
   , name
   , value
+  , children
   }
+}
+
+export function drawerBegin(name: string): OAST.DrawerBegin {
+  return {
+    type: 'drawer.begin'
+  , name
+  }
+}
+
+export function drawerEnd(): OAST.DrawerEnd {
+  return { type: 'drawer.end' }
 }
 
 export function planning(
   keyword: OAST.Planning['keyword']
 , timestamp: OAST.Planning['timestamp']
+, children: OAST.Planning['children']
 ): OAST.Planning {
   return {
     type: 'planning'
   , keyword
   , timestamp
+  , children
   }
 }
 
@@ -128,7 +143,6 @@ export function listItem(
 export function headline(
   level: OAST.Headline['level']
 , actionable: OAST.Headline['actionable']
-, content: OAST.Headline['content']
 , children: OAST.Headline['children']
 , { priority, tags }: Pick<OAST.Headline, 'priority' | 'tags'> = {}
 ): OAST.Headline {
@@ -136,7 +150,6 @@ export function headline(
     type: 'headline'
   , level
   , actionable
-  , content
   , children
   , priority
   , tags
@@ -162,67 +175,102 @@ export function newline(): OAST.Newline {
   return { type: 'newline' }
 }
 
-export function plain(value: OAST.StyledText['value']): OAST.StyledText {
+export function plain(value: OAST.Text['value']): OAST.Text {
   return {
-    type: 'text.plain'
+    type: 'text'
   , value
   }
 }
 
-export function bold(value: OAST.StyledText['value']): OAST.StyledText {
+export function bold(value: OAST.Text['value']): OAST.Text {
   return {
-    type: 'text.bold'
+    type: 'text'
+  , style: 'bold'
   , value
   }
 }
 
-export function verbatim(value: OAST.StyledText['value']): OAST.StyledText {
+export function verbatim(value: OAST.Text['value']): OAST.Text {
   return {
-    type: 'text.verbatim'
+    type: 'text'
+  , style: 'verbatim'
   , value
   }
 }
 
-export function italic(value: OAST.StyledText['value']): OAST.StyledText {
+export function italic(value: OAST.Text['value']): OAST.Text {
   return {
-    type: 'text.italic'
+    type: 'text'
+  , style: 'italic'
   , value
   }
 }
 
-export function strikeThrough(value: OAST.StyledText['value']): OAST.StyledText {
+export function strikeThrough(value: OAST.Text['value']): OAST.Text {
   return {
-    type: 'text.strikeThrough'
+    type: 'text'
+  , style: 'strikeThrough'
   , value
   }
 }
 
-export function underline(value: OAST.StyledText['value']): OAST.StyledText {
+export function underline(value: OAST.Text['value']): OAST.Text {
    return {
-     type: 'text.underline'
+     type: 'text'
+   , style: 'underline'
    , value
    }
 }
 
-export function code(value: OAST.StyledText['value']): OAST.StyledText {
+export function code(value: OAST.Text['value']): OAST.Text {
   return {
-    type: 'text.code'
+    type: 'text'
+  , style: 'code'
   , value
   }
 }
 
 export function link(
-  protocol: OAST.Link['protocol']
-, description: OAST.Link['description']
-, value: OAST.Link['value']
-, { search }: Pick<OAST.Link, 'search'> = {}
+  protocol: OAST.Link['path']['protocol']
+, value: OAST.Link['path']['value']
+, children: OAST.Link['children']
+, { search }: Pick<OAST.Link['path'], 'search'> = {}
 ): OAST.Link {
   return {
     type: 'link'
+  , path: {
+      protocol
+    , value
+    , search
+    }
+  , children
+  }
+}
+
+export function linkPath(
+  protocol: OAST.Link['path']['protocol']
+, value: OAST.Link['path']['value']
+, { search }: Pick<OAST.Link['path'], 'search'> = {}
+): OAST.LinkPath {
+  return {
+    type: 'link.path'
   , protocol
-  , description
   , value
   , search
+  }
+}
+
+export function opening(element: string): OAST.Opening {
+  return {
+    type: 'opening'
+  , element
+  }
+}
+
+export function closing(element: string): OAST.Closing {
+  return {
+    type: 'closing'
+  , element
   }
 }
 
@@ -289,6 +337,44 @@ export function listItemBullet(
   }
 }
 
+export function listItemTag(value: OAST.ListItemTag['value']): OAST.ListItemTag {
+  return {
+    type: 'list.item.tag'
+  , value
+  }
+}
+
 export function tableRule(): OAST.TableRule {
   return { type: 'table.hr' }
+}
+
+export function tableColumnSeparator(): OAST.TableColumnSeparator {
+  return { type: 'table.columnSeparator' }
+}
+
+export function footnoteLabel(
+  label: OAST.FootnoteLabel['label']
+): OAST.FootnoteLabel {
+  return {
+    type: 'footnote.label'
+  , label
+  }
+}
+
+export function planningKeyword(
+  value: OAST.PlanningKeyword['value']
+): OAST.PlanningKeyword {
+  return {
+    type: 'planning.keyword'
+  , value
+  }
+}
+
+export function planningTimestamp(
+  value: OAST.PlanningTimestamp['value']
+): OAST.PlanningTimestamp {
+  return {
+    type: 'planning.timestamp'
+  , value
+  }
 }

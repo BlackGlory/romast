@@ -148,25 +148,25 @@ export function newline(): ROMAST.Newline {
 
 export function drawer(
   name: ROMAST.Drawer['name']
-, value: ROMAST.Drawer['value']
+, children: ROMAST.Drawer['children']
 ): ROMAST.Drawer {
   return {
     type: 'drawer'
   , name
-  , value
+  , children
   }
 }
 
 export function link(
   protocol: ROMAST.Link['protocol']
-, title: ROMAST.Link['title']
 , url: ROMAST.Link['url']
+, children: ROMAST.Link['children']
 ): ROMAST.Link {
   return {
     type: 'link'
   , protocol
-  , title: title
-  , url: url
+  , url
+  , children
   }
 }
 

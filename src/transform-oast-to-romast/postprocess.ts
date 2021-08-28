@@ -1,16 +1,24 @@
 import * as ROMAST from '@src/romast'
 import { filter } from '@romast-utils/filter'
 import { map } from '@romast-utils/map'
-import { isParent, isSection, isParagraph, isText } from '@romast-utils/is'
+import { isParent, isSection, isParagraph, isText, isNewline, isTable, isLink }
+  from '@romast-utils/is'
 import { wrap, WrappedNode } from '@romast-utils/wrap'
 import { unwrap } from '@romast-utils/unwrap'
 import { text } from '@romast-utils/builder'
+import cloneDeep from 'lodash.clonedeep'
+import dropWhile from 'lodash.dropwhile'
+import dropRightWhile from 'lodash.droprightwhile'
 
 export function postprocess(document: ROMAST.Document): ROMAST.Document {
   return (
     correctSectionLevel(
-      removeEmptyParagraph(
-        concatContinuousText(document)
+      addTextNodesForPlainURLLinks(
+        removeEmptyParagraph(
+          trimNewlines(
+            concatContinuousText(document)
+          )
+        )
       )
     )
   )
@@ -21,6 +29,41 @@ function removeEmptyParagraph(document: ROMAST.Document): ROMAST.Document {
     document
   , node => !(isParagraph(node) && node.children.length === 0)
   ) as ROMAST.Document
+}
+
+function addTextNodesForPlainURLLinks(document: ROMAST.Document): ROMAST.Document {
+  return map(
+    document
+  , node => {
+      if (isLink(node) && node.children.length === 0) {
+        return {
+          ...node
+        , children: [text(node.url)]
+        }
+      }
+      return node
+    }
+  ) as ROMAST.Document
+}
+
+function trimNewlines<T extends ROMAST.Node & ROMAST.Parent>(node: T): T {
+  return map(
+    node
+  , node => {
+      const newNode = cloneDeep(node)
+      if (isParent(newNode)) {
+        newNode.children = dropWhile(newNode.children, isNewline)
+        newNode.children = dropRightWhile(newNode.children, isNewline)
+      }
+      if (isSection(newNode)) {
+        newNode.headline = trimNewlines(newNode.headline)
+      }
+      if (isTable(newNode) && newNode.header) {
+        newNode.header = trimNewlines(newNode.header)
+      }
+      return newNode
+    }
+  ) as T
 }
 
 function concatContinuousText(document: ROMAST.Document): ROMAST.Document {

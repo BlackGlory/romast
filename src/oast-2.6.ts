@@ -1,28 +1,16 @@
 // https://github.com/orgapp/orgajs/blob/v2.4.9/packages/orga/src/types.ts
 // 注意, orga的types.ts并不是一份准确的AST定义.
 // 它包含了会在后处理阶段被消耗掉, 并不最终作为AST输出的节点:
-// - `list.item.tag`
 // - `keyword`
-// - `planning.keyword`
-// - `planning.timestamp`
 // - `block.begin`
 // - `block.end`
-// - `drawer.begin`
-// - `drawer.end`
 // - `comment`
-// - `footnote.label`
 // - `footnote.inline.begin`
 // - `footnote.inline.end`
-// - `table.columnSeparator`
 // - `html`
 
-import { Literal as UnistLiteral, Node, Parent } from 'unist'
+import { Node, Parent } from 'unist'
 export { Node, Parent } from 'unist'
-
-// The original name is `Parent`, which is definitely a wrong name
-interface Child {
-  parent?: Parent
-}
 
 type Primitive = string | number | boolean
 
@@ -39,10 +27,6 @@ interface Timestamp {
   end?: Date
 }
 
-interface Literal extends UnistLiteral {
-  value: string
-}
-
 export type DocumentContent =
 | UniversalBlockContent
 | Section
@@ -56,6 +40,8 @@ export type SectionContent =
 
 export type TableContent = TableRow | TableRule
 
+export type TableRowContent = TableColumnSeparator | TableCell
+
 export type HeadlineContent =
 | Stars
 | Todo
@@ -67,7 +53,33 @@ export type ListContent = List | ListItem
 
 export type ListItemContent =
 | ListItemBullet
+| ListItemTag
 | ListItemCheckbox
+| UniversalInlineContent
+
+export type LinkContent = 
+| UniversalInlineContent
+| Opening
+| Closing
+| LinkPath
+
+export type PlanningContent = 
+| PlanningKeyword
+| PlanningTimestamp
+
+export type FootnoteReferenceContent = 
+| FootnoteLabel
+| Opening
+| Closing
+| UniversalInlineContent
+
+export type FootnoteContent =
+| FootnoteLabel
+| UniversalBlockContent
+
+export type DrawerContent =
+| DrawerBegin
+| DrawerEnd
 | UniversalInlineContent
 
 export type UniversalBlockContent =
@@ -79,25 +91,25 @@ export type UniversalBlockContent =
 | HorizontalRule
 
 export type UniversalInlineContent =
-| StyledText
+| Text
 | Link
 | FootnoteReference
 | Newline
 
-export interface Document extends Child, Parent {
+export interface Document extends Parent {
   type: 'document'
   properties: Record<string, string>
   children: DocumentContent[]
 }
 
-export interface Section extends Child, Parent {
+export interface Section extends Parent {
   type: 'section'
   level: number
   properties: Record<string, string>
   children: SectionContent[]
 }
 
-export interface Headline extends Child, Parent {
+export interface Headline extends Parent {
   type: 'headline'
   level: number
 
@@ -110,53 +122,62 @@ export interface Headline extends Child, Parent {
   // 带有Tag节点的Headline特有的属性
   tags?: string[]
 
-  content: string
-
   // See https://github.com/orgapp/orgajs/issues/110
   children: HeadlineContent[]
 }
 
-export interface Footnote extends Child, Parent {
+export interface Footnote extends Parent {
   type: 'footnote'
   label: string
 
   // See https://github.com/orgapp/orgajs/issues/110
-  children: UniversalBlockContent[]
+  children: FootnoteContent[]
 }
 
-export interface FootnoteReference extends Child, Parent {
+export interface FootnoteReference extends Parent {
   type: 'footnote.reference'
-  label: string
-  children: UniversalInlineContent[]
+  label?: string
+  children: FootnoteReferenceContent[]
 }
 
-export interface Block extends Literal, Attributed {
+export interface Block extends Node, Attributed {
   type: 'block'
   name: string
   params: string[]
   value: string
 }
 
-export interface Drawer extends Literal {
+export interface Drawer extends Node, Parent {
   type: 'drawer'
   name: string
   value: string
+  children: DrawerContent[]
 }
 
-export interface Planning extends Node {
+export interface DrawerBegin {
+  type: 'drawer.begin'
+  name: string
+}
+
+export interface DrawerEnd {
+  type: 'drawer.end'
+}
+
+export interface Planning extends Node, Parent {
   type: 'planning'
   keyword: string
   timestamp: Timestamp
+  children: PlanningContent[]
 }
 
-export interface List extends Child, Parent, Attributed {
+export interface List extends Parent, Attributed {
   type: 'list'
   indent: number
   ordered: boolean
   children: ListContent[]
 }
 
-export interface ListItem extends Child, Parent {
+export interface ListItem extends Parent {
   type: 'list.item'
   indent: number
 
@@ -168,17 +189,17 @@ export interface ListItem extends Child, Parent {
   children: ListItemContent[]
 }
 
-export interface Table extends Child, Parent, Attributed {
+export interface Table extends Parent, Attributed {
   type: 'table'
   children: TableContent[]
 }
 
-export interface TableRow extends Child, Parent {
+export interface TableRow extends Parent {
   type: 'table.row'
-  children: TableCell[]
+  children: TableRowContent[]
 }
 
-export interface TableCell extends Child, Parent {
+export interface TableCell extends Parent {
   type: 'table.cell'
   children: UniversalInlineContent[]
 }
@@ -187,7 +208,11 @@ export interface TableRule extends Node {
   type: 'table.hr'
 }
 
-export interface Paragraph extends Child, Parent, Attributed {
+export interface TableColumnSeparator extends Node {
+  type: 'table.columnSeparator'
+}
+
+export interface Paragraph extends Parent, Attributed {
   type: 'paragraph'
   children: UniversalInlineContent[]
 }
@@ -200,22 +225,42 @@ export interface Newline extends Node {
   type: 'newline'
 }
 
-export interface StyledText extends Literal {
-  type: 'text.plain'
-      | 'text.bold'
-      | 'text.verbatim'
-      | 'text.italic'
-      | 'text.strikeThrough'
-      | 'text.underline'
-      | 'text.code'
+export interface Text extends Node {
+  type: 'text'
+  style?: 'bold'
+        | 'verbatim'
+        | 'italic'
+        | 'strikeThrough'
+        | 'underline'
+        | 'code'
+  value: string
 }
 
-export interface Link extends Literal {
+export interface Link extends Parent {
   type: 'link'
+  path: {
+    protocol: string
+    value: string
+    search?: string | number
+  }
+  children: LinkContent[]
+}
+
+export interface LinkPath extends Node {
+  type: 'link.path'
   protocol: string
-  description?: string
   value: string
   search?: string | number
+}
+
+export interface Opening extends Node {
+  type: 'opening'
+  element: string
+}
+
+export interface Closing extends Node {
+  type: 'closing'
+  element: string
 }
 
 export interface Stars extends Node {
@@ -229,7 +274,7 @@ export interface Todo extends Node {
   actionable: boolean
 }
 
-export interface Priority extends Literal {
+export interface Priority extends Node {
   type: 'priority'
   value: string
 }
@@ -248,4 +293,24 @@ export interface ListItemBullet extends Node {
   type: 'list.item.bullet'
   ordered: boolean
   indent: number
+}
+
+export interface ListItemTag extends Node {
+  type: 'list.item.tag'
+  value: string
+}
+
+export interface FootnoteLabel extends Node {
+  type: 'footnote.label'
+  label: string
+}
+
+export interface PlanningKeyword extends Node {
+  type: 'planning.keyword'
+  value: string
+}
+
+export interface PlanningTimestamp extends Node {
+  type: 'planning.timestamp'
+  value: Timestamp 
 }

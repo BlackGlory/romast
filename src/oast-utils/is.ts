@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-2.4'
+import * as OAST from '@src/oast-2.6'
 
 function is<T extends OAST.Node>(node: OAST.Node, type: string): node is T {
   return node.type === type
@@ -26,6 +26,22 @@ export function isTableContent(node: OAST.Node): node is OAST.TableContent {
       || isTableRule(node)
 }
 
+export function isTableRowContent(node: OAST.Node): node is OAST.TableRowContent {
+  return isTableCell(node)
+      || isTableColumnSeparator(node)
+}
+
+export function isDrawerContent(node: OAST.Node): node is OAST.DrawerContent {
+  return isDrawerBegin(node)
+      || isDrawerEnd(node)
+      || isUniversalInlineContent(node)
+}
+
+export function isPlanningContent(node: OAST.Node): node is OAST.PlanningContent {
+  return isPlanningKeyword(node)
+      || isPlanningTimestamp(node)
+}
+
 export function isHeadlineContent(node: OAST.Node): node is OAST.HeadlineContent {
   return isStars(node)
       || isTodo(node)
@@ -43,14 +59,24 @@ export function isListItemContent(
   node: OAST.ListItemContent
 ): node is OAST.ListItemContent {
   return isListItemBullet(node)
+      || isListItemTag(node)
       || isListItemCheckbox(node)
+      || isUniversalInlineContent(node)
+}
+
+export function isFootnoteReferenceContent(
+  node: OAST.FootnoteReferenceContent
+): node is OAST.FootnoteReferenceContent {
+  return isFootnoteLabel(node)
+      || isOpening(node)
+      || isClosing(node)
       || isUniversalInlineContent(node)
 }
 
 export function isUniversalInlineContent(
   node: OAST.Node
 ): node is OAST.UniversalInlineContent {
-  return isStyledText(node)
+  return isText(node)
       || isLink(node)
       || isFootnoteReference(node)
       || isNewline(node)
@@ -87,6 +113,14 @@ export function isDrawer(node: OAST.Node): node is OAST.Drawer {
   return is(node, 'drawer')
 }
 
+export function isDrawerBegin(node: OAST.Node): node is OAST.DrawerBegin {
+  return is(node, 'drawer.begin')
+}
+
+export function isDrawerEnd(node: OAST.Node): node is OAST.DrawerEnd {
+  return is(node, 'drawer.end')
+}
+
 export function isPlanning(node: OAST.Node): node is OAST.Planning {
   return is(node, 'planning')
 }
@@ -105,6 +139,10 @@ export function isTableRow(node: OAST.Node): node is OAST.TableRow {
 
 export function isTableCell(node: OAST.Node): node is OAST.TableCell {
   return is(node, 'table.cell')
+}
+
+export function isTableColumnSeparator(node: OAST.Node): node is OAST.TableColumnSeparator {
+  return is(node, 'table.columnSeparator')
 }
 
 export function isListItem(node: OAST.Node): node is OAST.ListItem {
@@ -127,18 +165,24 @@ export function isNewline(node: OAST.Node): node is OAST.Newline {
   return is(node, 'newline')
 }
 
-export function isStyledText(node: OAST.Node): node is OAST.StyledText {
-  return is(node, 'text.plain')
-      || is(node, 'text.bold')
-      || is(node, 'text.verbatim')
-      || is(node, 'text.italic')
-      || is(node, 'text.strikeThrough')
-      || is(node, 'text.underline')
-      || is(node, 'text.code')
+export function isText(node: OAST.Node): node is OAST.Text {
+  return is(node, 'text')
 }
 
 export function isLink(node: OAST.Node): node is OAST.Link {
   return is(node, 'link')
+}
+
+export function isLinkPath(node: OAST.Node): node is OAST.LinkPath {
+  return is(node, 'link.path')
+}
+
+export function isOpening(node: OAST.Node): node is OAST.Opening {
+  return is(node, 'opening')
+}
+
+export function isClosing(node: OAST.Node): node is OAST.Closing {
+  return is(node, 'closing')
 }
 
 export function isFootnoteReference(node: OAST.Node): node is OAST.FootnoteReference {
@@ -169,6 +213,22 @@ export function isListItemBullet(node: OAST.Node): node is OAST.ListItemBullet {
   return is(node, 'list.item.bullet')
 }
 
+export function isListItemTag(node: OAST.Node): node is OAST.ListItemTag {
+  return is(node, 'list.item.tag')
+}
+
 export function isTableRule(node: OAST.Node): node is OAST.TableRule {
   return is(node, 'table.hr')
+}
+
+export function isFootnoteLabel(node: OAST.Node): node is OAST.FootnoteLabel {
+  return is(node, 'footnote.label')
+}
+
+export function isPlanningKeyword(node: OAST.Node): node is OAST.PlanningKeyword {
+  return is(node, 'planning.keyword')
+}
+
+export function isPlanningTimestamp(node: OAST.Node): node is OAST.PlanningTimestamp {
+  return is(node, 'planning.timestamp')
 }

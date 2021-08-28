@@ -257,16 +257,14 @@ interface Newline extends Node {
   type: 'newline'
 }
 
-interface Drawer extends Node {
+interface Drawer extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'drawer'
   name: string
-  value: string
 }
 
-interface Link extends Node {
+interface Link extends Node, ParentOf<UniversalInlineContent[]> {
   type: 'link'
   protocol: 'internal' | string
-  title: string | null
   url: string
 }
 
@@ -304,7 +302,6 @@ interface Code extends Node {
   type: 'code'
   value: string
 }
-
 ```
 
 ### parse
@@ -579,6 +576,36 @@ type WrappedNode<
           AST.UniversalInlineContent
         , AST.UniversalInlineContent
         , AST.InlineFootnote
+        >
+      >
+    }>
+: Node extends AST.Link
+  ? Mixin<Node, {
+      id: string
+      parent: NullOrWrappedNode<Parent>
+      index: number
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Link
+        >
+      >
+    }>
+: Node extends AST.Drawer
+  ? Mixin<Node, {
+      id: string
+      parent: NullOrWrappedNode<Parent>
+      index: number
+      previousSibling: NullOrWrappedNode<Sibling>
+      nextSibling: NullOrWrappedNode<Sibling>
+      children: Array<
+        WrappedNode<
+          AST.UniversalInlineContent
+        , AST.UniversalInlineContent
+        , AST.Drawer
         >
       >
     }>
