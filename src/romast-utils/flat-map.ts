@@ -2,7 +2,7 @@ import * as ROMAST from '@src/romast'
 import { isParent, isSection, isHeadline, isTable, isTableRowGroup } from './is'
 import cloneDeep from 'lodash.clonedeep'
 import { assert } from '@blackglory/errors'
-import 'core-js/features/array/flat'
+import 'core-js/features/array/flat-map'
 
 export function flatMap(
   node: ROMAST.Node
@@ -38,7 +38,7 @@ export function flatMap(
       }
 
       if (isParent(node)) {
-        node.children = node.children.map(x => flatMap(x, fn)).flat()
+        node.children = node.children.flatMap(x => flatMap(x, fn))
       }
 
       return node
