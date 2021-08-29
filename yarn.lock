@@ -1106,6 +1106,13 @@
   dependencies:
     justypes "^0.1.5"
 
+"@blackglory/types@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@blackglory/types/-/types-0.5.0.tgz#07da1f0c1e0ba29bf64ee2f6f77cb8f31d481c2b"
+  integrity sha512-bsx+PuiuAN3quUE9oE0H7FDG77wgFQtfMnI6KSsF3iQVT+EygqgoVsZ7e1MwQf+mtHT4gnffYqxo+CHESYMqeQ==
+  dependencies:
+    justypes "^0.1.5"
+
 "@commitlint/cli@^13.1.0":
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-13.1.0.tgz#3608bb24dbef41aaa0729ffe65c7f9b57409626a"
@@ -4176,6 +4183,15 @@ iterable-operator@^0.14.2:
     "@blackglory/errors" "^1.1.2"
     "@blackglory/go" "^0.1.0"
     "@blackglory/types" "^0.4.7"
+
+iterable-operator@^0.14.3:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/iterable-operator/-/iterable-operator-0.14.3.tgz#37b6b5a79983969290b27db05ebe0a3febd3c599"
+  integrity sha512-ucjfCfeOLe65P6QwMdWNlx6/RiP6MbJKikXT+p8FIApffAVHAS2QtmuEMgfTW9ua+v99JCZbnKaXvh2nv8IuGg==
+  dependencies:
+    "@blackglory/errors" "^1.1.2"
+    "@blackglory/go" "^0.1.0"
+    "@blackglory/types" "^0.5.0"
 
 jest-changed-files@^27.1.0:
   version "27.1.0"
