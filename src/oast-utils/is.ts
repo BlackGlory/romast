@@ -21,6 +21,7 @@ export function isSectionContent(node: OAST.Node): node is OAST.SectionContent {
       || isSection(node)
       || isHeadline(node)
       || isPlanning(node)
+      || isNewline(node)
       || isEmptyLine(node)
 }
 

@@ -33,32 +33,88 @@ test('break', () => {
   })
 })
 
-test('newline', () => {
-  const text = dedent`
-  Duis aute irure dolor in reprehenderit in voluptate
-  velit esse cillum dolore eu fugiat nulla pariatur.
-  `
+describe('newline', () => {
+  test('as a child node of document', () => {
+    const text = dedent`
+    Duis aute irure dolor in reprehenderit in voluptate
+    velit esse cillum dolore eu fugiat nulla pariatur.
+    `
 
-  const result = removeAllAdditionalProps(parse(text))
+    const result = removeAllAdditionalProps(parse(text))
 
-  expect(result).toMatchObject({
-    type: 'document'
-  , children: [
-      {
-        type: 'paragraph'
-      , children: [
-          {
-            type: 'text'
-          , value: 'Duis aute irure dolor in reprehenderit in voluptate'
-          }
-        , { type: 'newline' }
-        , {
-            type: 'text'
-          , value: 'velit esse cillum dolore eu fugiat nulla pariatur.'
-          }
-        ]
-      }
-    ]
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'Duis aute irure dolor in reprehenderit in voluptate'
+            }
+          , { type: 'newline' }
+          , {
+              type: 'text'
+            , value: 'velit esse cillum dolore eu fugiat nulla pariatur.'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('as a child node of section', () => {
+    const text =
+      '* Section1' + '\r\n'
+    + '** Section2'
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'section'
+        , level: 1
+        , children: [
+            {
+              type: 'headline'
+            , children: [
+                {
+                  type: 'stars'
+                , level: 1
+                }
+              , {
+                  type: 'text'
+                , value: 'Section1'
+                }
+              , { type: 'newline' }
+              ]
+            }
+          , { type: 'newline' }
+          , {
+              type: 'section'
+            , level: 2
+            , children: [
+                {
+                  type: 'headline'
+                , children: [
+                    {
+                      type: 'stars'
+                    , level: 2
+                    }
+                  , {
+                      type: 'text'
+                    , value: 'Section2'
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
 })
 

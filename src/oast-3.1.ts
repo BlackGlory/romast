@@ -39,6 +39,7 @@ export type SectionContent =
 | Section
 | Headline
 | Planning
+| Newline // 自orga v3.1.0开始出现, 只有当文件以CRLF换行时才出现
 | EmptyLine // 自orga v3.1.0开始出现
 
 export type TableContent = TableRow | TableRule

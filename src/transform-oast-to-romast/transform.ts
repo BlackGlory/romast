@@ -46,6 +46,7 @@ function transformSectionContent(node: OAST.SectionContent, root: OAST.Document)
   if (OAST_IS.isSection(node)) return transformSection(node, root)
   if (OAST_IS.isHeadline(node)) return undefined
   if (OAST_IS.isPlanning(node)) return transformPlanning(node, root)
+  if (OAST_IS.isNewline(node)) return undefined
   if (OAST_IS.isEmptyLine(node)) return transformEmptyline(node, root)
   throw new UnknownNodeError(node)
 }
