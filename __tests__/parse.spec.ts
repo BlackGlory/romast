@@ -35,6 +35,42 @@ test('section', () => {
   )
 })
 
+test('empty lines', () => {
+  const org = dedent`
+  Hello
+
+
+  World
+
+  * Section
+  Hello
+
+
+  World
+  `
+
+  const result = parse(org)
+
+  expect(result).toStrictEqual(
+    R.document([
+      R.paragraph([
+        R.text('Hello')
+      ])
+    , R.paragraph([
+        R.text('World')
+      ])
+    , R.section(1, R.headline([], [R.text('Section')]), [
+        R.paragraph([
+          R.text('Hello')
+        ])
+      , R.paragraph([
+          R.text('World')
+        ])
+      ])
+    ])
+  )
+})
+
 test('plain url link', () => {
   const org = dedent`
   [[https://example.com]]

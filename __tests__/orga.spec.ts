@@ -51,9 +51,7 @@ test('newline', () => {
             type: 'text'
           , value: 'Duis aute irure dolor in reprehenderit in voluptate'
           }
-        , {
-            type: 'newline'
-          }
+        , { type: 'newline' }
         , {
             type: 'text'
           , value: 'velit esse cillum dolore eu fugiat nulla pariatur.'
@@ -61,6 +59,106 @@ test('newline', () => {
         ]
       }
     ]
+  })
+})
+
+describe('empty lines', () => {
+  test('as a child node of document', () => {
+    const text = dedent`
+    Hello
+
+
+    World
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'Hello'
+            }
+          , { type: 'newline' }
+          , { type: 'emptyLine' }
+          ]
+        }
+      , { type: 'emptyLine' }
+      , {
+          type:'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'World'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('as a child node of section', () => {
+    const text = dedent`
+    * Section
+    Hello
+
+
+    World
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'section'
+        , children: [
+            {
+              type: 'headline'
+            , children: [
+                {
+                  type: 'stars'
+                , level: 1
+                }
+              , {
+                  type: 'text'
+                , value: 'Section'
+                }
+              , {
+                  type: 'newline'
+                }
+              ]
+            }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text'
+                , value: 'Hello'
+                }
+              , { type: 'newline' }
+              , { type: 'emptyLine' }
+              ]
+            }
+          , { type: 'emptyLine' }
+          , {
+              type:'paragraph'
+            , children: [
+                {
+                  type: 'text'
+                , value: 'World'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
   })
 })
 

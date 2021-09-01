@@ -39,6 +39,7 @@ export type SectionContent =
 | Section
 | Headline
 | Planning
+| EmptyLine // 自orga v3.1.0开始出现
 
 export type TableContent = TableRow | TableRule
 
