@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.5](https://github.com/BlackGlory/romast/compare/v2.0.4...v2.0.5) (2021-09-01)
+
+
+### Bug Fixes
+
+* orga version ([0e567fb](https://github.com/BlackGlory/romast/commit/0e567fb05f058d7759097094de7eac3231fd99fa))
+
 ### [2.0.4](https://github.com/BlackGlory/romast/compare/v2.0.3...v2.0.4) (2021-08-31)
 
 ### [2.0.3](https://github.com/BlackGlory/romast/compare/v2.0.2...v2.0.3) (2021-08-29)
