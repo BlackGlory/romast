@@ -5296,7 +5296,7 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-orga@^3.0.1:
+orga@~3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/orga/-/orga-3.0.1.tgz#cba9b9f0e2481d663e4084a8180dc657aaaf54e7"
   integrity sha512-Amq356eLViN6eIiNDPug2Lv5y2b7GRfp1cJ1LCDresRstWewYM9ZA6WelcgW4qiQ5Vx3lcgHxnaE9+DUGze15g==
