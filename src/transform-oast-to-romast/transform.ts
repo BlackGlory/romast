@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.0'
+import * as OAST from '@src/oast-3.1'
 import * as ROMAST from '@src/romast'
 import * as OAST_IS from '@oast-utils/is'
 import {
@@ -32,6 +32,8 @@ function transformDocumentContent(node: OAST.DocumentContent, root: OAST.Documen
   if (OAST_IS.isUniversalBlockContent(node)) return transformUniversalBlockContent(node, root)
   if (OAST_IS.isSection(node)) return transformSection(node, root)
   if (OAST_IS.isFootnote(node)) return transformFootnote(node, root)
+  if (OAST_IS.isNewline(node)) return transformNewline(node, root)
+  if (OAST_IS.isEmptyline(node)) return transformEmptyline(node, root)
   throw new UnknownNodeError()
 }
 
@@ -118,6 +120,7 @@ function transformUniversalInlineContent(
   if (OAST_IS.isLink(node)) return transformLink(node, root)
   if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
+  if (OAST_IS.isEmptyline(node)) return transformEmptyline(node, root)
   throw new UnknownNodeError()
 }
 
@@ -271,6 +274,10 @@ function transformHorizontalRule(
 
 function transformNewline(node: OAST.Newline, root: OAST.Document): ROMAST.Newline {
   return newline()
+}
+
+function transformEmptyline(node: OAST.Emptyline, root: OAST.Document): undefined {
+  return undefined
 }
 
 function transformText(node: OAST.Text, root: OAST.Document) {

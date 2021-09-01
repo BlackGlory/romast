@@ -145,6 +145,7 @@ type InlineNode =
 type DocumentContent =
 | UniversalBlockContent
 | Section
+| Newline
 
 type SectionContent =
 | UniversalBlockContent

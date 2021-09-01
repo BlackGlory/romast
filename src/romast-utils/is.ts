@@ -43,6 +43,7 @@ export function isInlineNode(node: ROMAST.Node): node is ROMAST.InlineNode {
 export function isDocumentContent(node: ROMAST.Node): node is ROMAST.DocumentContent {
   return isUniversalBlockContent(node)
       || isSection(node)
+      || isNewline(node)
 }
 
 export function isSectionContent(node: ROMAST.Node): node is ROMAST.SectionContent {

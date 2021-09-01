@@ -1,4 +1,4 @@
-// https://github.com/orgapp/orgajs/blob/v3.0.0/packages/orga/src/types.ts
+// https://github.com/orgapp/orgajs/blob/orga@3.1.0/packages/orga/src/types.ts
 // 注意, orga的types.ts并不是一份准确的AST定义.
 // 它包含了会在后处理阶段被消耗掉, 并不最终作为AST输出的节点:
 // - `keyword`
@@ -31,6 +31,8 @@ export type DocumentContent =
 | UniversalBlockContent
 | Section
 | Footnote
+| Newline // 自orga v3.1.0开始出现
+| Emptyline // 自orga v3.1.0开始出现
 
 export type SectionContent =
 | UniversalBlockContent
@@ -95,6 +97,7 @@ export type UniversalInlineContent =
 | Link
 | FootnoteReference
 | Newline
+| Emptyline
 
 export interface Document extends Parent {
   type: 'document'
@@ -223,6 +226,10 @@ export interface HorizontalRule extends Node {
 
 export interface Newline extends Node {
   type: 'newline'
+}
+
+export interface Emptyline extends Node {
+  type: 'emptyLine'
 }
 
 export interface Text extends Node {

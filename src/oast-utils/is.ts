@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.0'
+import * as OAST from '@src/oast-3.1'
 
 function is<T extends OAST.Node>(node: OAST.Node, type: string): node is T {
   return node.type === type
@@ -12,6 +12,8 @@ export function isDocumentContent(node: OAST.Node): node is OAST.DocumentContent
   return isUniversalBlockContent(node)
       || isSection(node)
       || isFootnote(node)
+      || isNewline(node)
+      || isEmptyline(node)
 }
 
 export function isSectionContent(node: OAST.Node): node is OAST.SectionContent {
@@ -80,6 +82,7 @@ export function isUniversalInlineContent(
       || isLink(node)
       || isFootnoteReference(node)
       || isNewline(node)
+      || isEmptyline(node)
 }
 
 export function isUniversalBlockContent(
@@ -163,6 +166,10 @@ export function isHorizontalRule(node: OAST.Node): node is OAST.HorizontalRule {
 
 export function isNewline(node: OAST.Node): node is OAST.Newline {
   return is(node, 'newline')
+}
+
+export function isEmptyline(node: OAST.Node): node is OAST.Emptyline {
+  return is(node, 'emptyLine')
 }
 
 export function isText(node: OAST.Node): node is OAST.Text {

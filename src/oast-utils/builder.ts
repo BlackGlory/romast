@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.0'
+import * as OAST from '@src/oast-3.1'
 
 export function document(
   properties: OAST.Document['properties']
@@ -173,6 +173,10 @@ export function horizontalRule(): OAST.HorizontalRule {
 
 export function newline(): OAST.Newline {
   return { type: 'newline' }
+}
+
+export function emptyLine(): OAST.Emptyline {
+  return { type: 'emptyLine' }
 }
 
 export function plain(value: OAST.Text['value']): OAST.Text {

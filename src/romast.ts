@@ -43,6 +43,7 @@ export type InlineNode =
 export type DocumentContent =
 | UniversalBlockContent
 | Section
+| Newline // 自orga v3.1.0开始
 
 export type SectionContent =
 | UniversalBlockContent

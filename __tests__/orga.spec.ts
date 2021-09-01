@@ -89,7 +89,10 @@ test('comment', () => {
 
   expect(result).toMatchObject({
     type: 'document'
-  , children: []
+  , children: [
+      { type: 'emptyLine' }
+    , { type: 'emptyLine' }
+    ]
   })
 })
 
@@ -137,6 +140,9 @@ describe('footnote', () => {
             }
           , {
               type: 'newline'
+            }
+          , {
+              type: 'emptyLine'
             }
           ]
         }
@@ -229,6 +235,7 @@ describe('footnote', () => {
                   ]
                 }
               , { type: 'newline' }
+              , { type: 'emptyLine' }
               ]
             }
           ]
@@ -249,6 +256,7 @@ describe('footnote', () => {
                 , value: 'paragraph1'
                 }
               , { type: 'newline' }
+              , { type: 'emptyLine' }
               ]
             }
           , {
@@ -258,9 +266,8 @@ describe('footnote', () => {
                   type: 'text'
                 , value: 'paragraph2'
                 }
-              , {
-                  type: 'newline'
-                }
+              , { type: 'newline' }
+              , { type: 'emptyLine' }
               ]
             }
           ]
@@ -280,9 +287,7 @@ describe('footnote', () => {
                   type: 'text'
                 , value: 'headline2'
                 }
-              , {
-                  type: 'newline'
-                }
+              , { type: 'newline' }
               ]
             }
           , {
@@ -293,6 +298,7 @@ describe('footnote', () => {
                 , value: 'section2'
                 }
               , { type: 'newline' }
+              , { type: 'emptyLine' }
               ]
             }
           ]
@@ -313,9 +319,7 @@ describe('footnote', () => {
                   type: 'text'
                 , value: 'headline3'
                 }
-              , {
-                  type: 'newline'
-                }
+              , { type: 'newline' }
               ]
             }
           , {
@@ -584,14 +588,17 @@ test('drawer', () => {
   , children: [
       {
         type: 'paragraph'
+      , attributes: {}
       , children: [
           {
             type: 'text'
           , value: 'Hello World.'
           }
         , { type: 'newline' }
+        , { type: 'emptyLine' }
         ]
       }
+    , { type: 'newline' }
     , {
         type: 'paragraph'
       , children: [
@@ -602,6 +609,8 @@ test('drawer', () => {
         , { type: 'newline' }
         ]
       }
+    , { type: 'newline' }
+    , { type: 'emptyLine' }
     , {
         type: 'section'
       , level: 1
@@ -639,6 +648,7 @@ test('drawer', () => {
             , { type: 'drawer.end' }
             ]
           }
+        , { type: 'emptyLine' }
         , {
             type: 'paragraph'
           , children: [
