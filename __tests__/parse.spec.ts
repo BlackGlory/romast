@@ -35,6 +35,22 @@ test('section', () => {
   )
 })
 
+test('CRLF', () => {
+  const org =
+    '* Section1' + '\r\n'
+  + '** Section2'
+
+  const result = parse(org)
+
+  expect(result).toStrictEqual(
+    R.document([
+      R.section(1, R.headline([], [R.text('Section1')]), [
+        R.section(2, R.headline([], [R.text('Section2')]), [])
+      ])
+    ])
+  )
+})
+
 test('empty lines', () => {
   const org = dedent`
   Hello
