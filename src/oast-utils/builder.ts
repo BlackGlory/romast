@@ -175,7 +175,7 @@ export function newline(): OAST.Newline {
   return { type: 'newline' }
 }
 
-export function emptyLine(): OAST.Emptyline {
+export function emptyLine(): OAST.EmptyLine {
   return { type: 'emptyLine' }
 }
 

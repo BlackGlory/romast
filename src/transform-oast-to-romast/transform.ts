@@ -33,7 +33,7 @@ function transformDocumentContent(node: OAST.DocumentContent, root: OAST.Documen
   if (OAST_IS.isSection(node)) return transformSection(node, root)
   if (OAST_IS.isFootnote(node)) return transformFootnote(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
-  if (OAST_IS.isEmptyline(node)) return transformEmptyline(node, root)
+  if (OAST_IS.isEmptyLine(node)) return transformEmptyline(node, root)
   throw new UnknownNodeError()
 }
 
@@ -120,7 +120,7 @@ function transformUniversalInlineContent(
   if (OAST_IS.isLink(node)) return transformLink(node, root)
   if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
-  if (OAST_IS.isEmptyline(node)) return transformEmptyline(node, root)
+  if (OAST_IS.isEmptyLine(node)) return transformEmptyline(node, root)
   throw new UnknownNodeError()
 }
 
@@ -276,7 +276,7 @@ function transformNewline(node: OAST.Newline, root: OAST.Document): ROMAST.Newli
   return newline()
 }
 
-function transformEmptyline(node: OAST.Emptyline, root: OAST.Document): undefined {
+function transformEmptyline(node: OAST.EmptyLine, root: OAST.Document): undefined {
   return undefined
 }
 

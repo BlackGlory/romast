@@ -32,7 +32,7 @@ export type DocumentContent =
 | Section
 | Footnote
 | Newline // 自orga v3.1.0开始出现
-| Emptyline // 自orga v3.1.0开始出现
+| EmptyLine // 自orga v3.1.0开始出现
 
 export type SectionContent =
 | UniversalBlockContent
@@ -97,7 +97,7 @@ export type UniversalInlineContent =
 | Link
 | FootnoteReference
 | Newline
-| Emptyline
+| EmptyLine
 
 export interface Document extends Parent {
   type: 'document'
@@ -228,7 +228,7 @@ export interface Newline extends Node {
   type: 'newline'
 }
 
-export interface Emptyline extends Node {
+export interface EmptyLine extends Node {
   type: 'emptyLine'
 }
 

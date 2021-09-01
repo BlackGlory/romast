@@ -13,7 +13,7 @@ export function isDocumentContent(node: OAST.Node): node is OAST.DocumentContent
       || isSection(node)
       || isFootnote(node)
       || isNewline(node)
-      || isEmptyline(node)
+      || isEmptyLine(node)
 }
 
 export function isSectionContent(node: OAST.Node): node is OAST.SectionContent {
@@ -21,6 +21,7 @@ export function isSectionContent(node: OAST.Node): node is OAST.SectionContent {
       || isSection(node)
       || isHeadline(node)
       || isPlanning(node)
+      || isEmptyLine(node)
 }
 
 export function isTableContent(node: OAST.Node): node is OAST.TableContent {
@@ -82,7 +83,7 @@ export function isUniversalInlineContent(
       || isLink(node)
       || isFootnoteReference(node)
       || isNewline(node)
-      || isEmptyline(node)
+      || isEmptyLine(node)
 }
 
 export function isUniversalBlockContent(
@@ -168,7 +169,7 @@ export function isNewline(node: OAST.Node): node is OAST.Newline {
   return is(node, 'newline')
 }
 
-export function isEmptyline(node: OAST.Node): node is OAST.Emptyline {
+export function isEmptyLine(node: OAST.Node): node is OAST.EmptyLine {
   return is(node, 'emptyLine')
 }
 
