@@ -19,7 +19,11 @@ import { CustomError, assert } from '@blackglory/errors'
 import { isntUndefined } from '@blackglory/types'
 import { findFootnote } from './find-footnote'
 
-export class UnknownNodeError extends CustomError {}
+export class UnknownNodeError extends CustomError {
+  constructor(node: OAST.Node) {
+    super(JSON.stringify(node, null, 2))
+  }
+}
 
 export function transformDocument(root: OAST.Document): ROMAST.Document {
   return {
@@ -34,7 +38,7 @@ function transformDocumentContent(node: OAST.DocumentContent, root: OAST.Documen
   if (OAST_IS.isFootnote(node)) return transformFootnote(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
   if (OAST_IS.isEmptyLine(node)) return transformEmptyline(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformSectionContent(node: OAST.SectionContent, root: OAST.Document) {
@@ -43,7 +47,7 @@ function transformSectionContent(node: OAST.SectionContent, root: OAST.Document)
   if (OAST_IS.isHeadline(node)) return undefined
   if (OAST_IS.isPlanning(node)) return transformPlanning(node, root)
   if (OAST_IS.isEmptyLine(node)) return transformEmptyline(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformTableContents(nodes: OAST.TableContent[], root: OAST.Document) {
@@ -57,7 +61,7 @@ function transformTableContents(nodes: OAST.TableContent[], root: OAST.Document)
       results.push(rowGroup)
       rowGroup = tableRowGroup([])
     } else {
-      throw new UnknownNodeError()
+      throw new UnknownNodeError(node)
     }
   }
   if (rowGroup.children.length > 0) {
@@ -70,7 +74,7 @@ function transformTableContents(nodes: OAST.TableContent[], root: OAST.Document)
 function transformTableRowContent(node: OAST.TableRowContent, root: OAST.Document) {
   if (OAST_IS.isTableCell(node)) return transformTableCell(node, root)
   if (OAST_IS.isTableColumnSeparator(node)) return transformTableColumnSeparator(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformTableColumnSeparator(node: OAST.TableColumnSeparator, root: OAST.Document): undefined {
@@ -83,13 +87,13 @@ function transformHeadlineContent(node: OAST.HeadlineContent, root: OAST.Documen
   if (OAST_IS.isPriority(node)) return transformPriority(node, root)
   if (OAST_IS.isTags(node)) return transformTags(node, root)
   if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformListContent(node: OAST.ListContent, root: OAST.Document) {
   if (OAST_IS.isList(node)) return transformList(node, root)
   if (OAST_IS.isListItem(node)) return transformListItem(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformListItemContent(node: OAST.ListItemContent, root: OAST.Document) {
@@ -97,7 +101,7 @@ function transformListItemContent(node: OAST.ListItemContent, root: OAST.Documen
   if (OAST_IS.isListItemTag(node)) return transformListItemTag(node, root)
   if (OAST_IS.isListItemCheckbox(node)) return transformListItemCheckbox(node, root)
   if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformUniversalBlockContent(
@@ -110,7 +114,7 @@ function transformUniversalBlockContent(
   if (OAST_IS.isList(node)) return transformList(node, root)
   if (OAST_IS.isTable(node)) return transformTable(node, root)
   if (OAST_IS.isHorizontalRule(node)) return transformHorizontalRule(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformUniversalInlineContent(
@@ -122,7 +126,7 @@ function transformUniversalInlineContent(
   if (OAST_IS.isFootnoteReference(node)) return transformFootnoteReference(node, root)
   if (OAST_IS.isNewline(node)) return transformNewline(node, root)
   if (OAST_IS.isEmptyLine(node)) return transformEmptyline(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformSection(node: OAST.Section, root: OAST.Document): ROMAST.Section {
@@ -176,7 +180,7 @@ function transformDrawerContent(node: OAST.DrawerContent, root: OAST.Document) {
   if (OAST_IS.isDrawerBegin(node)) return transformDrawerBegin(node, root)
   if (OAST_IS.isDrawerEnd(node)) return transformDrawerEnd(node, root)
   if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformDrawerBegin(
@@ -290,7 +294,7 @@ function transformText(node: OAST.Text, root: OAST.Document) {
     case 'strikeThrough': return strikethrough(node.value)
     case 'underline': return underlined(node.value)
     case 'code': return code(node.value)
-    default: throw new UnknownNodeError()
+    default: throw new UnknownNodeError(node)
   }
 }
 
@@ -308,7 +312,7 @@ function transformLinkContent(node: OAST.LinkContent, root: OAST.Document) {
   if (OAST_IS.isClosing(node)) return transformClosing(node, root)
   if (OAST_IS.isLinkPath(node)) return transformLinkPath(node, root)
   if (OAST_IS.isUniversalInlineContent(node)) return transformUniversalInlineContent(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformLinkPath(node: OAST.LinkPath, root: OAST.Document): undefined {
@@ -342,7 +346,7 @@ function transformFootnoteContent(
 ) {
   if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
   if (OAST_IS.isUniversalBlockContent(node)) return transformUniversalBlockContent(node, root)
-  throw new UnknownNodeError()
+  throw new UnknownNodeError(node)
 }
 
 function transformOpening(node: OAST.Opening, root: OAST.Document): undefined {
