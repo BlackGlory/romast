@@ -94,6 +94,7 @@ function transformHeadlineContent(node: OAST.HeadlineContent, root: OAST.Documen
 function transformListContent(node: OAST.ListContent, root: OAST.Document) {
   if (OAST_IS.isList(node)) return transformList(node, root)
   if (OAST_IS.isListItem(node)) return transformListItem(node, root)
+  if (OAST_IS.isNewline(node)) return undefined
   throw new UnknownNodeError(node)
 }
 

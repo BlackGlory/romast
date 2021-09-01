@@ -53,7 +53,10 @@ export type HeadlineContent =
 | Tags
 | UniversalInlineContent
 
-export type ListContent = List | ListItem
+export type ListContent =
+| List
+| ListItem
+| Newline // 自orga v3.1.0开始出现, 复现方式未知
 
 export type ListItemContent =
 | ListItemBullet

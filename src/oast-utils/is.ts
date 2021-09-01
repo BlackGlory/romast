@@ -57,6 +57,7 @@ export function isHeadlineContent(node: OAST.Node): node is OAST.HeadlineContent
 export function isListContent(node: OAST.Node): node is OAST.ListContent {
   return isList(node)
       || isListItem(node)
+      || isNewline(node)
 }
 
 export function isListItemContent(
