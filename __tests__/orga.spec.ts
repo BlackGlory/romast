@@ -64,9 +64,10 @@ describe('newline', () => {
   })
 
   test('as a child node of section', () => {
-    const text =
-      '* Section1' + '\r\n'
-    + '** Section2'
+    const text = dedent`
+    * Section1\r
+    ** Section2
+    `
 
     const result = removeAllAdditionalProps(parse(text))
 
@@ -110,6 +111,63 @@ describe('newline', () => {
                   ]
                 }
               ]
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('as a child node of section', () => {
+    const text = dedent`
+    - line1\r
+      \r
+    text
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'list'
+        , children: [
+            {
+              type: 'list.item'
+            , indent: 0
+            , children: [
+                {
+                  type: 'list.item.bullet'
+                , indent: 0
+                , ordered: false
+                }
+              , {
+                  type: 'text'
+                , value: 'line1'
+                }
+              , {
+                  type: 'newline'
+                }
+              , {
+                  type: 'newline'
+                }
+              , {
+                  type: 'emptyLine'
+                }
+              ]
+            }
+          , {
+              type: 'newline'
+            }
+          ]
+        }
+      , {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'text'
             }
           ]
         }

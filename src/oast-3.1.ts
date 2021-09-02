@@ -56,7 +56,7 @@ export type HeadlineContent =
 export type ListContent =
 | List
 | ListItem
-| Newline // 自orga v3.1.0开始出现, 复现方式未知
+| Newline // 自orga v3.1.0开始出现, 只有当文件以CRLF换行时才出现
 
 export type ListItemContent =
 | ListItemBullet
