@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.1](https://github.com/BlackGlory/romast/compare/v2.3.0...v2.3.1) (2021-09-02)
+
+
+### Bug Fixes
+
+* the `header` of `WrappedNode<AST.Table>` is nullable ([7329d09](https://github.com/BlackGlory/romast/commit/7329d0915d363c1adbab29fa913315c7bb095aac))
+
 ## [2.3.0](https://github.com/BlackGlory/romast/compare/v2.2.1...v2.3.0) (2021-09-02)
 
 
