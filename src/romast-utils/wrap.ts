@@ -130,7 +130,7 @@ export type WrappedNode<
       index: number
       previousSibling: NullOrWrappedNode<Sibling>
       nextSibling: NullOrWrappedNode<Sibling>
-      header: WrappedNode<AST.TableRowGroup, null, AST.Table>
+      header: WrappedNode<AST.TableRowGroup, null, AST.Table> | null
       children: Array<WrappedNode<AST.TableRowGroup, AST.TableRowGroup, AST.Table>>
     }>
 : Node extends AST.TableRowGroup
