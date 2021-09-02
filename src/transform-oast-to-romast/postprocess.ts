@@ -16,7 +16,9 @@ export function postprocess(document: ROMAST.Document): ROMAST.Document {
       addTextNodesForPlainURLLinks(
         removeEmptyParagraph(
           trimNewlines(
-            concatContinuousText(document)
+            mergeContinuousNewline(
+              concatContinuousText(document)
+            )
           )
         )
       )
@@ -68,9 +70,32 @@ function concatContinuousText(document: ROMAST.Document): ROMAST.Document {
         const newChildren: ROMAST.Node[] = node.children.reduce(
           (acc: ROMAST.Node[], cur: ROMAST.Node) => {
             const lastNode = last(acc)
-            if (lastNode && isText(cur) && isText(lastNode)) {
+            if (lastNode && isText(lastNode) && isText(cur)) {
               const newText = text(lastNode.value + cur.value)
               return [...acc.slice(0, -1), newText]
+            } else {
+              return [...acc, cur]
+            }
+          }
+        , []
+        )
+        return { ...node, children: newChildren }
+      }
+      return node
+    }
+  ) as ROMAST.Document
+}
+
+function mergeContinuousNewline(document: ROMAST.Document): ROMAST.Document {
+  return map(
+    document
+  , node => {
+      if (isParent(node)) {
+        const newChildren: ROMAST.Node[] = node.children.reduce(
+          (acc: ROMAST.Node[], cur: ROMAST.Node) => {
+            const lastNode = last(acc)
+            if (lastNode && isNewline(lastNode) && isNewline(cur)) {
+              return acc
             } else {
               return [...acc, cur]
             }

@@ -35,20 +35,46 @@ test('section', () => {
   )
 })
 
-test('CRLF', () => {
-  const org =
-    '* Section1' + '\r\n'
-  + '** Section2'
+describe('CRLF', () => {
+  test('section', () => {
+    const org = dedent`
+    * Section1\r
+    ** Section2
+    `
 
-  const result = parse(org)
+    const result = parse(org)
 
-  expect(result).toStrictEqual(
-    R.document([
-      R.section(1, R.headline([], [R.text('Section1')]), [
-        R.section(2, R.headline([], [R.text('Section2')]), [])
+    expect(result).toStrictEqual(
+      R.document([
+        R.section(1, R.headline([], [R.text('Section1')]), [
+          R.section(2, R.headline([], [R.text('Section2')]), [])
+        ])
       ])
-    ])
-  )
+    )
+  })
+
+  test('list', () => {
+    const org = dedent`
+    - line1\r
+      \r
+    text
+    `
+
+    const result = parse(org)
+
+    expect(result).toStrictEqual(
+      R.document([
+        R.list(0, false, [
+          R.listItem(0, [
+            R.text('line1')
+          ])
+        ])
+      , R.paragraph([
+          R.text('text')
+        ])
+      ])
+    )
+  })
 })
 
 test('empty lines', () => {
