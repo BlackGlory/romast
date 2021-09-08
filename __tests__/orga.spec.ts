@@ -118,7 +118,7 @@ describe('newline', () => {
     })
   })
 
-  test('as a child node of section', () => {
+  test('as a child node of list item', () => {
     const text = dedent`
     - line1\r
       \r
@@ -168,6 +168,78 @@ describe('newline', () => {
             {
               type: 'text'
             , value: 'text'
+            }
+          ]
+        }
+      ]
+    })
+  })
+
+  test('as a child node of footnote', () => {
+    const text = dedent`
+    This is example[fn:footnote]
+
+    [fn:footnote]
+    Hello
+    World
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'This is example'
+            }
+          , {
+              type: 'footnote.reference'
+            , label: 'footnote'
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'footnote.reference'
+                }
+              , {
+                  type: 'footnote.label'
+                , label: 'footnote'
+                }
+              , {
+                  type: 'closing'
+                , element: 'footnote.reference'
+                }
+              ]
+            }
+          , { type: 'newline' }
+          , { type: 'emptyLine' }
+          ]
+        }
+      , {
+          type: 'footnote'
+        , label: 'footnote'
+        , children: [
+            {
+              type: 'footnote.label'
+            , label: 'footnote'
+            }
+          , { type: 'newline' }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text'
+                , value: 'Hello'
+                }
+              , { type: 'newline' }
+              , {
+                  type: 'text'
+                , value: 'World'
+                }
+              ]
             }
           ]
         }

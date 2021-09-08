@@ -83,6 +83,7 @@ export type FootnoteReferenceContent =
 export type FootnoteContent =
 | FootnoteLabel
 | UniversalBlockContent
+| Newline // 自orga v3.1.0开始出现
 
 export type DrawerContent =
 | DrawerBegin

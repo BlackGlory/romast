@@ -147,3 +147,32 @@ test('incorrect section level', () => {
     ])
   )
 })
+
+test('footnote', () => {
+  const org = dedent`
+  text[fn:footnote]
+
+  [fn:footnote]
+  Hello
+
+  World
+  `
+
+  const result = parse(org)
+
+  expect(result).toStrictEqual(
+    R.document([
+      R.paragraph([
+        R.text('text')
+      , R.footnote([
+          R.paragraph([
+            R.text('Hello')
+          ])
+        , R.paragraph([
+            R.text('World')
+          ])
+        ])
+      ])
+    ])
+  )
+})

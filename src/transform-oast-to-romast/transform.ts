@@ -348,6 +348,7 @@ function transformFootnoteContent(
 ) {
   if (OAST_IS.isFootnoteLabel(node)) return transformFootnoteLabel(node, root)
   if (OAST_IS.isUniversalBlockContent(node)) return transformUniversalBlockContent(node, root)
+  if (OAST_IS.isNewline(node)) return undefined
   throw new UnknownNodeError(node)
 }
 
