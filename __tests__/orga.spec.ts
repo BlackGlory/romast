@@ -453,6 +453,56 @@ describe('footnote', () => {
     })
   })
 
+  test('non-ascii label', () => {
+    const text = dedent`
+    The Org homepage[fn:标签] now looks a lot better than it used to.
+
+    [fn:标签] The link is: http://orgmode.org
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'text'
+            , value: 'The Org homepage[fn:标签] now looks a lot better than it used to.'
+            }
+          , {
+              type: 'newline'
+            }
+          , {
+              type: 'emptyLine'
+            }
+          ]
+        }
+      , {
+          type: 'footnote'
+        , label: '标签'
+        , children: [
+            {
+              type: 'footnote.label'
+            , label: '标签'
+            }
+          , {
+              type: 'paragraph'
+            , children: [
+                {
+                  type: 'text'
+                , value: 'The link is: http://orgmode.org'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
+  })
+
   test('footnote with other nodes', () => {
     const text = dedent`
     * headline1
