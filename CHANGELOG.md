@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://github.com/BlackGlory/romast/compare/v2.3.1...v2.3.2) (2021-09-08)
+
+
+### Bug Fixes
+
+* add Newline into OAST.FootnoteContent ([6d914ce](https://github.com/BlackGlory/romast/commit/6d914ce123e8d64ddef5a2a2c1357abf0bc0f80d))
+
 ### [2.3.1](https://github.com/BlackGlory/romast/compare/v2.3.0...v2.3.1) (2021-09-02)
 
 
