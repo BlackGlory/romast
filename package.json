@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
     "@blackglory/jest-matchers": "^0.1.20",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
@@ -82,7 +82,7 @@
     "@blackglory/errors": "^1.1.2",
     "@blackglory/types": "^0.5.0",
     "@types/unist": "^2.0.6",
-    "core-js": "^3.17.2",
+    "core-js": "^3.17.3",
     "date-fns": "^2.23.0",
     "hotypes": "^0.4.2",
     "iterable-operator": "^0.14.3",
@@ -90,6 +90,6 @@
     "lodash.droprightwhile": "^4.6.0",
     "lodash.dropwhile": "^4.6.0",
     "nanoid": "^3.1.25",
-    "orga": "~3.1.0"
+    "orga": "~3.1.1"
   }
 }
