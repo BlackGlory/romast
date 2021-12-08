@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.1'
+import * as OAST from '@src/oast-3.2'
 import * as ROMAST from '@src/romast'
 import { parse as orga } from 'orga'
 import { transform } from '@src/transform-oast-to-romast'

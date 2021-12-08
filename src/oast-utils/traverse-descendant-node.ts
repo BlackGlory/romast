@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.1'
+import * as OAST from '@src/oast-3.2'
 import { isParent } from './is'
 
 export function* traverseDescendantNodes(parent: OAST.Parent): Iterable<OAST.Node> {

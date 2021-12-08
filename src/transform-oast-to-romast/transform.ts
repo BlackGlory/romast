@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.1'
+import * as OAST from '@src/oast-3.2'
 import * as ROMAST from '@src/romast'
 import * as OAST_IS from '@oast-utils/is'
 import {
