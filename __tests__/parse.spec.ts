@@ -131,6 +131,24 @@ test('plain url link', () => {
   )
 })
 
+test('local image', () => {
+  const org = dedent`
+  [[./image.png][image]]
+  `
+
+  const result = parse(org)
+
+  expect(result).toStrictEqual(
+    R.document([
+      R.paragraph([
+        R.link('file', './image.png', [
+          R.text('image')
+        ])
+      ])
+    ])
+  )
+})
+
 test('incorrect section level', () => {
   const org = dedent`
   *** level1

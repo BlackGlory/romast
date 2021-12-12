@@ -87,6 +87,6 @@
     "lodash.droprightwhile": "^4.6.0",
     "lodash.dropwhile": "^4.6.0",
     "nanoid": "^3.1.30",
-    "orga": "~3.2.1"
+    "orga": "3.2.0"
   }
 }

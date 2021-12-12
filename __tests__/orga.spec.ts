@@ -1080,6 +1080,52 @@ describe('link', () => {
     })
   })
 
+  test('local image', () => {
+    const text = dedent`
+    [[./image.png][image]]
+    `
+
+    const result = removeAllAdditionalProps(parse(text))
+
+    expect(result).toMatchObject({
+      type: 'document'
+    , children: [
+        {
+          type: 'paragraph'
+        , children: [
+            {
+              type: 'link'
+            , path: {
+                protocol: 'file'
+              , value: './image.png'
+              , search: undefined
+              }
+            , children: [
+                {
+                  type: 'opening'
+                , element: 'link'
+                }
+              , {
+                  type: 'link.path'
+                , protocol: 'file'
+                , value: './image.png'
+                }
+              , {
+                  type: 'text'
+                , value: 'image'
+                }
+              , {
+                  type: 'closing'
+                , element: 'link'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
+  })
+
   test('external link', () => {
     const text = dedent`
     [[https://github.com][Github]]
