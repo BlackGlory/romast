@@ -128,7 +128,7 @@ function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
             break
           }
         }
-        node.level = sectionCount
+        return { ...node, level: sectionCount }
       }
       return node
     }
