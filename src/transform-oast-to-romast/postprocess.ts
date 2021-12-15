@@ -1,7 +1,7 @@
 import * as ROMAST from '@src/romast'
 import { filter } from '@romast-utils/filter'
 import { map } from '@romast-utils/map'
-import { isParent, isSection, isParagraph, isText, isNewline, isTable, isLink }
+import { isParent, isSection, isParagraph, isText, isNewline, isLink }
   from '@romast-utils/is'
 import { wrap, WrappedNode } from '@romast-utils/wrap'
 import { unwrap } from '@romast-utils/unwrap'
