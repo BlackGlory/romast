@@ -320,7 +320,7 @@ If `strict` is `false`, theses non-compliant are simply ignored.
 #### builder
 
 ```ts
-import {} from 'romast/utils/builder'
+import {} from 'romast/utils/builder.js'
 ```
 
 Each romast node has a corresponding builder.
@@ -328,7 +328,7 @@ Each romast node has a corresponding builder.
 #### is
 
 ```ts
-import {} from 'romast/utils/is'
+import {} from 'romast/utils/is.js'
 ```
 
 Each romast node has a corresponding `is` function.
@@ -336,7 +336,7 @@ Each romast node has a corresponding `is` function.
 #### flatMap
 
 ```ts
-import { flatMap } from 'romast/utils/flat-map'
+import { flatMap } from 'romast/utils/flat-map.js'
 
 function flatMap(
   node: AST.Node
@@ -347,7 +347,7 @@ function flatMap(
 #### map
 
 ```ts
-import { map } from 'romast/utils/map'
+import { map } from 'romast/utils/map.js'
 
 function map(
   node: AST.Node
@@ -358,7 +358,7 @@ function map(
 #### filter
 
 ```ts
-import { filter } from 'romast/utils/filter'
+import { filter } from 'romast/utils/filter.js'
 
 function filter(
   node: AST.Node
@@ -369,7 +369,7 @@ function filter(
 #### find
 
 ```ts
-import { find } from 'romast/utils/find'
+import { find } from 'romast/utils/find.js'
 
 function find<T extends AST.Node>(
   node: AST.Node
@@ -380,6 +380,8 @@ function find<T extends AST.Node>(
 #### findAll
 
 ```ts
+import { findAll } from 'romast/utils/find-all.js'
+
 function findAll<T extends AST.Node>(
   node: AST.Node
 , predicate: (node: AST.Node) => boolean
@@ -389,7 +391,7 @@ function findAll<T extends AST.Node>(
 #### traverseDescendantNodes
 
 ```ts
-import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes'
+import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes.js'
 
 function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 ```
@@ -397,7 +399,7 @@ function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 #### wrap
 
 ```ts
-import { wrap } from 'romast/utils/wrap'
+import { wrap } from 'romast/utils/wrap.js'
 
 type NullOrWrappedNode<T extends AST.Node | null> =
   T extends null
@@ -626,7 +628,7 @@ function wrap<T extends AST.Node>(node: T): WrappedNode<T>
 #### unwrap
 
 ```ts
-import { unwrap } from 'romast/utils/unwrap'
+import { unwrap } from 'romast/utils/unwrap.js'
 
 function unwrap<T extends AST.Node>(node: WrappedNode<T>): T
 ```
