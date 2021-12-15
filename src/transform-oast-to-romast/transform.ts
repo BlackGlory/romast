@@ -1,20 +1,7 @@
 import * as OAST from '@src/oast-3.2'
 import * as ROMAST from '@src/romast'
 import * as OAST_IS from '@oast-utils/is'
-import {
-  example
-, source
-, quote
-, text
-, bold
-, verbatim
-, italic
-, strikethrough
-, underlined
-, code
-, newline
-, tableRowGroup
-} from '@romast-utils/builder'
+import * as Builder from '@romast-utils/builder'
 import { CustomError, assert } from '@blackglory/errors'
 import { isntUndefined } from '@blackglory/types'
 import { findFootnote } from './find-footnote'
@@ -29,10 +16,9 @@ export function transformDocument(
   root: OAST.Document
 , strict: boolean
 ): ROMAST.Document {
-  return {
-    type: 'document'
-  , children: map(root.children, x => transformDocumentContent(x, root, strict))
-  }
+  return Builder.document(
+    map(root.children, x => transformDocumentContent(x, root, strict))
+  )
 }
 
 function transformDocumentContent(
@@ -69,13 +55,13 @@ function transformTableContents(
 ) {
   const results: ROMAST.TableRowGroup[] = []
 
-  let rowGroup: ROMAST.TableRowGroup = tableRowGroup([])
+  let rowGroup: ROMAST.TableRowGroup = Builder.tableRowGroup([])
   for (const node of nodes) {
     if (OAST_IS.isTableRow(node)) {
       rowGroup.children.push(transformTableRow(node, root, strict))
     } else if (OAST_IS.isTableRule(node)) {
       results.push(rowGroup)
-      rowGroup = tableRowGroup([])
+      rowGroup = Builder.tableRowGroup([])
     } else {
       if (strict) throw new UnknownNodeError(node)
     }
@@ -176,12 +162,11 @@ function transformSection(
   const [headline, ...children] = node.children
   assert(OAST_IS.isHeadline(headline), 'The first element of children should be a headline')
 
-  return {
-    type: 'section'
-  , level: node.level
-  , headline: transformHeadline(headline, root, strict)
-  , children: map(children, x => transformSectionContent(x, root, strict))
-  }
+  return Builder.section(
+    node.level
+  , transformHeadline(headline, root, strict)
+  , map(children, x => transformSectionContent(x, root, strict))
+  )
 }
 
 function transformHeadline(
@@ -189,11 +174,10 @@ function transformHeadline(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.Headline {
-  return {
-    type: 'headline'
-  , tags: node.tags ?? []
-  , children: map(node.children, x => transformHeadlineContent(x, root, strict))
-  }
+  return Builder.headline(
+    node.tags ?? []
+  , map(node.children, x => transformHeadlineContent(x, root, strict))
+  )
 }
 
 function transformFootnote(
@@ -210,9 +194,9 @@ function transformBlock(
 , strict: boolean
 ): ROMAST.Example | ROMAST.Source | ROMAST.Example | ROMAST.Quote | undefined {
   switch (node.name.toLowerCase()) {
-    case 'quote': return quote(node.value)
-    case 'src': return source(node.params, node.value)
-    case 'example': return example(node.params, node.value)
+    case 'quote': return Builder.quote(node.value)
+    case 'src': return Builder.source(node.params, node.value)
+    case 'example': return Builder.example(node.params, node.value)
     default: return undefined
   }
 }
@@ -222,11 +206,10 @@ function transformDrawer(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.Drawer {
-  return {
-    type: 'drawer'
-  , name: node.name
-  , children: map(node.children, x => transformDrawerContent(x, root, strict))
-  }
+  return Builder.drawer(
+    node.name
+  , map(node.children, x => transformDrawerContent(x, root, strict))
+  )
 }
 
 function transformDrawerContent(
@@ -269,12 +252,11 @@ function transformList(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.List {
-  return {
-    type: 'list'
-  , indent: node.indent
-  , ordered: node.ordered
-  , children: map(node.children, x => transformListContent(x, root, strict))
-  }
+  return Builder.list(
+    node.indent
+  , node.ordered
+  , map(node.children, x => transformListContent(x, root, strict))
+  )
 }
 
 function transformTable(
@@ -284,18 +266,10 @@ function transformTable(
 ): ROMAST.Table {
   const tableContents = transformTableContents(node.children, root, strict)
   if (tableContents.length <= 1) {
-    return {
-      type: 'table'
-    , header: null
-    , children: tableContents
-    }
+    return Builder.table(null, tableContents)
   } else {
     const [header, ...children] = tableContents
-    return {
-      type: 'table'
-    , header
-    , children
-    }
+    return Builder.table(header, children)
   }
 }
 
@@ -304,10 +278,9 @@ function transformTableRow(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.TableRow {
-  return {
-    type: 'tableRow'
-  , children: map(node.children, x => transformTableRowContent(x, root, strict))
-  }
+  return Builder.tableRow(
+    map(node.children, x => transformTableRowContent(x, root, strict))
+  )
 }
 
 function transformTableCell(
@@ -315,10 +288,9 @@ function transformTableCell(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.TableCell {
-  return {
-    type: 'tableCell'
-  , children: map(node.children, x => transformUniversalInlineContent(x, root, strict))
-  }
+  return Builder.tableCell(
+    map(node.children, x => transformUniversalInlineContent(x, root, strict))
+  )
 }
 
 function transformListItem(
@@ -328,13 +300,14 @@ function transformListItem(
 ): ROMAST.ListItem {
   const checkbox = node.children.find(OAST_IS.isListItemCheckbox)
   const checked = checkbox ? checkbox.checked : null
-  return {
-    type: 'listItem'
-  , indent: node.indent
-  , checked
-  , term: node.tag ?? null
-  , children: map(node.children, x => transformListItemContent(x, root, strict))
-  }
+  return Builder.listItem(
+    node.indent
+  , map(node.children, x => transformListItemContent(x, root, strict))
+  , {
+      checked
+    , term: node.tag ?? null
+    }
+  )
 }
 
 function transformParagraph(
@@ -342,13 +315,9 @@ function transformParagraph(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.Paragraph {
-  return {
-    type: 'paragraph'
-  , children: map(
-      node.children
-    , x => transformUniversalInlineContent(x, root, strict)
-    )
-  }
+  return Builder.paragraph(
+    map(node.children, x => transformUniversalInlineContent(x, root, strict))
+  )
 }
 
 function transformHorizontalRule(
@@ -356,7 +325,7 @@ function transformHorizontalRule(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.HorizontalRule {
-  return { type: 'horizontalRule' }
+  return Builder.horizontalRule()
 }
 
 function transformNewline(
@@ -364,7 +333,7 @@ function transformNewline(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.Newline {
-  return newline()
+  return Builder.newline()
 }
 
 function transformEmptyline(
@@ -377,13 +346,13 @@ function transformEmptyline(
 
 function transformText(node: OAST.Text, root: OAST.Document, strict: boolean) {
   switch (node.style) {
-    case undefined: return text(node.value)
-    case 'bold': return bold(node.value)
-    case 'verbatim': return verbatim(node.value)
-    case 'italic': return italic(node.value)
-    case 'strikeThrough': return strikethrough(node.value)
-    case 'underline': return underlined(node.value)
-    case 'code': return code(node.value)
+    case undefined: return Builder.text(node.value)
+    case 'bold': return Builder.bold(node.value)
+    case 'verbatim': return Builder.verbatim(node.value)
+    case 'italic': return Builder.italic(node.value)
+    case 'strikeThrough': return Builder.strikethrough(node.value)
+    case 'underline': return Builder.underlined(node.value)
+    case 'code': return Builder.code(node.value)
     default: throw new UnknownNodeError(node)
   }
 }
@@ -393,12 +362,11 @@ function transformLink(
 , root: OAST.Document
 , strict: boolean
 ): ROMAST.Link {
-  return {
-    type: 'link'
-  , protocol: node.path.protocol
-  , url: node.path.value
-  , children: map(node.children, x => transformLinkContent(x, root, strict))
-  }
+  return Builder.link(
+    node.path.protocol
+  , node.path.value
+  , map(node.children, x => transformLinkContent(x, root, strict))
+  )
 }
 
 function transformLinkContent(
@@ -428,21 +396,19 @@ function transformFootnoteReference(
 ): ROMAST.Footnote | ROMAST.InlineFootnote {
   if (node.label) {
     const footnote = findFootnote(root, node.label)
-    return {
-      type: 'footnote'
-    , children: map(
+    return Builder.footnote(
+      map(
         footnote?.children ?? []
       , x => transformFootnoteContent(x, root, strict)
       )
-    }
+    )
   } else {
-    return {
-      type: 'inlineFootnote'
-    , children: map(
+    return Builder.inlineFootnote(
+      map(
         node.children
       , x => transformFootnoteReferenceContent(x, root, strict)
       )
-    }
+    )
   }
 }
 
