@@ -3,9 +3,9 @@ import * as ROMAST from '@src/romast'
 import { parse as orga } from 'orga'
 import { transform } from '@src/transform-oast-to-romast'
 
-export function parse(text: string): ROMAST.Document {
+export function parse(text: string, strict: boolean = false): ROMAST.Document {
   const oast = orga(dosToUnix(text)) as OAST.Document
-  const romast = transform(oast)
+  const romast = transform(oast, strict)
   return romast
 }
 

@@ -308,8 +308,12 @@ interface Code extends Node {
 ### parse
 
 ```ts
-function parse(text: string): AST.Document
+function parse(text: string, strict: boolean = false): AST.Document
 ```
+
+Limited by the parser, The analysis results may have non-compliant nodes.
+If `strict` is `true`, an `UnknownNodeError` will be thrown when there are non-compliant nodes.
+If `strict` is `false`, theses non-compliant are simply ignored.
 
 ### utils
 

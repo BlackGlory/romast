@@ -6,7 +6,7 @@ describe('OAST.Document', () => {
   it('return ROMAST.Document', () => {
     const oast = O.document({}, [])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([]))
   })
@@ -24,7 +24,7 @@ describe('OAST.Section, OAST.Headline, OAST.Stars, OAST.Tags', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.section(1,R.headline(['tag1', 'tag2'], [R.text('value')]), [])
@@ -38,7 +38,7 @@ describe('OAST.Footnote', () => {
       O.footnote('label', [])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([]))
   })
@@ -58,7 +58,7 @@ describe('OAST.FootnoteReference', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -82,7 +82,7 @@ describe('OAST.FootnoteReference', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -102,7 +102,7 @@ describe('OAST.Block', () => {
         O.block('QUOTE', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.quote('value')
@@ -116,7 +116,7 @@ describe('OAST.Block', () => {
         O.block('quote', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.quote('value')
@@ -130,7 +130,7 @@ describe('OAST.Block', () => {
         O.block('SRC', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.source([], 'value')
@@ -144,7 +144,7 @@ describe('OAST.Block', () => {
         O.block('src', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.source([], 'value')
@@ -158,7 +158,7 @@ describe('OAST.Block', () => {
         O.block('EXAMPLE', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.example([], 'value')
@@ -172,7 +172,7 @@ describe('OAST.Block', () => {
         O.block('example', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.example([], 'value')
@@ -186,7 +186,7 @@ describe('OAST.Block', () => {
         O.block('COMMENT', [], 'value', {})
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([]))
     })
@@ -201,7 +201,7 @@ describe('OAST.Drawer', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.drawer('name', [R.text('value')])
@@ -215,7 +215,7 @@ describe('OAST.Planning', () => {
       O.footnote('label', [])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([]))
   })
@@ -233,7 +233,7 @@ describe('OAST.List, OAST.ListItem, OAST.ListItemBullet, OAST.ListItemCheckbox',
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.list(0, true, [
@@ -253,7 +253,7 @@ describe('OAST.Table, OAST.TableRow, OAST.TableRule, OAST.TableCell', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.table(null, [
@@ -279,7 +279,7 @@ describe('OAST.Table, OAST.TableRow, OAST.TableRule, OAST.TableCell', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.table(
@@ -316,7 +316,7 @@ describe('OAST.Table, OAST.TableRow, OAST.TableRule, OAST.TableCell', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.table(
@@ -348,7 +348,7 @@ describe('OAST.Pargraph', () => {
       O.paragraph({}, [])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.paragraph([])
@@ -362,7 +362,7 @@ describe('OAST.HorizontalRule', () => {
       O.horizontalRule()
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.horizontalRule()
@@ -378,7 +378,7 @@ describe('OAST.Newline', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.paragraph([
@@ -397,7 +397,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -415,7 +415,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -433,7 +433,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -451,7 +451,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -469,7 +469,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -487,7 +487,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -505,7 +505,7 @@ describe('OAST.StyledText', () => {
         ])
       ])
 
-      const result = transformDocument(oast)
+      const result = transformDocument(oast, true)
 
       expect(result).toStrictEqual(R.document([
         R.paragraph([
@@ -526,7 +526,7 @@ describe('OAST.Link', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.paragraph([
@@ -550,7 +550,7 @@ describe('OAST.Todo', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.section(1, R.headline([], [
@@ -573,7 +573,7 @@ describe('OAST.Priority', () => {
       ])
     ])
 
-    const result = transformDocument(oast)
+    const result = transformDocument(oast, true)
 
     expect(result).toStrictEqual(R.document([
       R.section(1, R.headline([], [
