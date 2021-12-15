@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/BlackGlory/romast/compare/v2.3.8...v2.4.0) (2021-12-15)
+
+
+### Features
+
+* add parameter strict ([0561bd0](https://github.com/BlackGlory/romast/commit/0561bd0534551139cc13d4c16b065dfe7bc1c1d7))
+
 ### [2.3.8](https://github.com/BlackGlory/romast/compare/v2.3.7...v2.3.8) (2021-12-12)
 
 
