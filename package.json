@@ -77,9 +77,9 @@
   },
   "dependencies": {
     "@blackglory/errors": "^1.1.2",
-    "@blackglory/types": "^0.5.2",
+    "@blackglory/types": "^0.6.0",
     "@types/unist": "^2.0.6",
-    "core-js": "^3.19.3",
+    "core-js": "^3.20.0",
     "date-fns": "^2.27.0",
     "hotypes": "^0.4.3",
     "iterable-operator": "^0.14.4",
