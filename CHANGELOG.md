@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/BlackGlory/romast/compare/v2.4.0...v3.0.0) (2021-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* - `wrap` => `addHelpers`
+- `unwrap` => `removeHelpers`
+
+* rename wrap to addHelpers, unwrap to removeHelpers ([48ac7e7](https://github.com/BlackGlory/romast/commit/48ac7e7b1bb4754ff8865f868be1f2c7dc4dfde2))
+
 ## [2.4.0](https://github.com/BlackGlory/romast/compare/v2.3.8...v2.4.0) (2021-12-15)
 
 
