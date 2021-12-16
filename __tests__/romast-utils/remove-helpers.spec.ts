@@ -1,10 +1,10 @@
-import { wrap } from '@romast-utils/wrap'
-import { unwrap } from '@romast-utils/unwrap'
+import { addHelpers } from '@romast-utils/add-helpers'
+import { removeHelpers } from '@romast-utils/remove-helpers'
 import * as R from '@romast-utils/builder'
 
-describe('unwrap', () => {
+describe('removeHelpers', () => {
   test('root', () => {
-    const ast = wrap(
+    const ast = addHelpers(
       R.document([
         R.paragraph([
           R.text('first')
@@ -18,7 +18,7 @@ describe('unwrap', () => {
       ])
     )
 
-    const result = unwrap(ast)
+    const result = removeHelpers(ast)
 
     expect(result).toStrictEqual(
       R.document([
@@ -36,13 +36,13 @@ describe('unwrap', () => {
   })
 
   test('section.headline', () => {
-    const ast = wrap(
+    const ast = addHelpers(
       R.document([
         R.section(1, R.headline([], []), [])
       ])
     )
 
-    const result = unwrap(ast)
+    const result = removeHelpers(ast)
 
     expect(result).toStrictEqual(
       R.document([

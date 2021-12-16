@@ -3,8 +3,8 @@ import { filter } from '@romast-utils/filter'
 import { map } from '@romast-utils/map'
 import { isParent, isSection, isParagraph, isText, isNewline, isLink }
   from '@romast-utils/is'
-import { wrap, WrappedNode } from '@romast-utils/wrap'
-import { unwrap } from '@romast-utils/unwrap'
+import { addHelpers, NodeWithHelpers } from '@romast-utils/add-helpers'
+import { removeHelpers } from '@romast-utils/remove-helpers'
 import { text } from '@romast-utils/builder'
 import cloneDeep from 'lodash.clonedeep'
 import dropWhile from 'lodash.dropwhile'
@@ -110,13 +110,13 @@ function mergeContinuousNewline(document: ROMAST.Document): ROMAST.Document {
 }
 
 function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
-  const wrappedDocument = wrap(document)
+  const addHelperspedDocument = addHelpers(document)
   const newDocument = map(
-    wrappedDocument
+    addHelperspedDocument
   , node => {
       if (isSection(node)) {
         let sectionCount = 0
-        let current: WrappedNode<ROMAST.Node> = node as WrappedNode<ROMAST.Section>
+        let current: NodeWithHelpers<ROMAST.Node> = node as NodeWithHelpers<ROMAST.Section>
         while (true) {
           if (isSection(current)) {
             sectionCount++
@@ -132,8 +132,8 @@ function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
       }
       return node
     }
-  ) as WrappedNode<ROMAST.Document>
-  return unwrap(newDocument)
+  ) as NodeWithHelpers<ROMAST.Document>
+  return removeHelpers(newDocument)
 }
 
 function last<T>(arr: T[]): T | undefined {

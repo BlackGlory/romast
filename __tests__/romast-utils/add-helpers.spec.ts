@@ -1,7 +1,7 @@
-import { wrap } from '@romast-utils/wrap'
+import { addHelpers } from '@romast-utils/add-helpers'
 import * as R from '@romast-utils/builder'
 
-describe('wrap', () => {
+describe('addHelpers', () => {
   test('root', () => {
     const ast = R.document([
       R.paragraph([
@@ -15,7 +15,7 @@ describe('wrap', () => {
       ])
     ])
 
-    const result = wrap(ast)
+    const result = addHelpers(ast)
 
     expect(result).toMatchObject({
       type: 'document'
@@ -91,7 +91,7 @@ describe('wrap', () => {
       R.section(0, R.headline([], []), [])
     ])
 
-    const result = wrap(ast)
+    const result = addHelpers(ast)
 
     expect(result).toMatchObject({
       type: 'document'
