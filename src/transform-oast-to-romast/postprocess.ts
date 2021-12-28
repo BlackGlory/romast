@@ -11,18 +11,14 @@ import dropWhile from 'lodash.dropwhile'
 import dropRightWhile from 'lodash.droprightwhile'
 
 export function postprocess(document: ROMAST.Document): ROMAST.Document {
-  return (
-    correctSectionLevel(
-      addTextNodesForPlainURLLinks(
-        removeEmptyParagraph(
-          trimNewlines(
-            mergeContinuousNewline(
-              concatContinuousText(document)
-            )
-          )
-        )
-      )
-    )
+  return pipe(
+    document
+  , concatContinuousText
+  , mergeContinuousNewline
+  , trimNewlines
+  , removeEmptyParagraph
+  , addTextNodesForPlainURLLinks
+  , correctSectionLevel
   )
 }
 
@@ -138,4 +134,8 @@ function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
 
 function last<T>(arr: T[]): T | undefined {
   return arr[arr.length - 1]
+}
+
+function pipe<T>(value: T, ...fns: Array<(value: T) => T>): T {
+  return fns.reduce((result, fn) => fn(result), value)
 }
