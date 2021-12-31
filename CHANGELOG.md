@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/BlackGlory/romast/compare/v3.0.0...v4.0.0) (2021-12-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* `map` and `flatMap` now use shallow copy.
+Rename `addHelpers` to `addHelersInPlace`.
+Rename `removeHelpers` to `removeHelpersInPlace`
+
+* replace deep copy with shallow copy ([f0be232](https://github.com/BlackGlory/romast/commit/f0be2322cb6cd1ac4072b854f61811cc5181c077))
+
 ## [3.0.0](https://github.com/BlackGlory/romast/compare/v2.4.0...v3.0.0) (2021-12-16)
 
 
