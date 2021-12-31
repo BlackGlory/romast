@@ -1,6 +1,5 @@
 import * as ROMAST from '@src/romast'
 import { isParent, isSection, isHeadline, isTable, isTableRowGroup } from './is'
-import cloneDeep from 'lodash.clonedeep'
 import { assert } from '@blackglory/errors'
 import 'core-js/features/array/flat-map'
 
@@ -8,7 +7,7 @@ export function flatMap(
   node: ROMAST.Node
 , fn: (node: ROMAST.Node) => ROMAST.Node[]
 ): ROMAST.Node[] {
-  return flatMap(cloneDeep(node), fn)
+  return flatMap(node, fn)
 
   function flatMap(
     node: ROMAST.Node
@@ -24,7 +23,10 @@ export function flatMap(
         const [newHeadline] = result
         assert(isHeadline(newHeadline))
 
-        node.headline = newHeadline
+        node = {
+          ...node
+        , headline: newHeadline
+        } as ROMAST.Section
       }
 
       if (isTable(node) && node.header) {
@@ -34,11 +36,17 @@ export function flatMap(
         const [newTableRowGroup] = result
         assert(isTableRowGroup(newTableRowGroup))
 
-        node.header = newTableRowGroup
+        node = {
+          ...node
+        , header: newTableRowGroup
+        } as ROMAST.Table
       }
 
       if (isParent(node)) {
-        node.children = node.children.flatMap(x => flatMap(x, fn))
+        node = {
+          ...node
+        , children: node.children.flatMap(x => flatMap(x, fn))
+        } as ROMAST.Node & ROMAST.Parent
       }
 
       return node

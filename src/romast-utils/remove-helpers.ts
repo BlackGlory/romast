@@ -1,12 +1,10 @@
 import * as AST from '@src/romast'
 import { NodeWithHelpers } from './add-helpers.js'
 import { isParent, isSection, isTable } from './is'
-import cloneDeep from 'lodash.clonedeep'
 
-export function removeHelpers<T extends AST.Node>(node: NodeWithHelpers<T>): T {
-  const clone = cloneDeep(node)
-  removeHelpersForTree(clone)
-  return clone as T
+export function removeHelpersInPlace<T extends AST.Node>(node: NodeWithHelpers<T>): T {
+  removeHelpersForTree(node)
+  return node as T
 }
 
 function removeHelpersForTree<T extends AST.Node>(node: NodeWithHelpers<T>): void {

@@ -53,7 +53,6 @@ describe('flatMap', () => {
       return [node]
     })
 
-    expect(result[0]).not.toBe(ast)
     expect(result).toStrictEqual([
       paragraph([
         bold('bold')

@@ -3,10 +3,9 @@ import { filter } from '@romast-utils/filter'
 import { map } from '@romast-utils/map'
 import { isParent, isSection, isParagraph, isText, isNewline, isLink }
   from '@romast-utils/is'
-import { addHelpers, NodeWithHelpers } from '@romast-utils/add-helpers'
-import { removeHelpers } from '@romast-utils/remove-helpers'
+import { addHelpersInPlace, NodeWithHelpers } from '@romast-utils/add-helpers'
+import { removeHelpersInPlace } from '@romast-utils/remove-helpers'
 import { text } from '@romast-utils/builder'
-import cloneDeep from 'lodash.clonedeep'
 import dropWhile from 'lodash.dropwhile'
 import dropRightWhile from 'lodash.droprightwhile'
 
@@ -48,12 +47,13 @@ function trimNewlines<T extends ROMAST.Node & ROMAST.Parent>(node: T): T {
   return map(
     node
   , node => {
-      const newNode = cloneDeep(node)
-      if (isParent(newNode)) {
-        newNode.children = dropWhile(newNode.children, isNewline)
-        newNode.children = dropRightWhile(newNode.children, isNewline)
+      if (isParent(node)) {
+        return {
+          ...node
+        , children: dropRightWhile(dropWhile(node.children, isNewline), isNewline)
+        }
       }
-      return newNode
+      return node
     }
   ) as T
 }
@@ -106,7 +106,7 @@ function mergeContinuousNewline(document: ROMAST.Document): ROMAST.Document {
 }
 
 function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
-  const addHelperspedDocument = addHelpers(document)
+  const addHelperspedDocument = addHelpersInPlace(document)
   const newDocument = map(
     addHelperspedDocument
   , node => {
@@ -129,7 +129,7 @@ function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
       return node
     }
   ) as NodeWithHelpers<ROMAST.Document>
-  return removeHelpers(newDocument)
+  return removeHelpersInPlace(newDocument)
 }
 
 function last<T>(arr: T[]): T | undefined {

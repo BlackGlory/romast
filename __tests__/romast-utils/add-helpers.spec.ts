@@ -1,4 +1,4 @@
-import { addHelpers } from '@romast-utils/add-helpers'
+import { addHelpersInPlace } from '@romast-utils/add-helpers'
 import * as R from '@romast-utils/builder'
 
 describe('addHelpers', () => {
@@ -15,7 +15,7 @@ describe('addHelpers', () => {
       ])
     ])
 
-    const result = addHelpers(ast)
+    const result = addHelpersInPlace(ast)
 
     expect(result).toMatchObject({
       type: 'document'
@@ -91,7 +91,7 @@ describe('addHelpers', () => {
       R.section(0, R.headline([], []), [])
     ])
 
-    const result = addHelpers(ast)
+    const result = addHelpersInPlace(ast)
 
     expect(result).toMatchObject({
       type: 'document'

@@ -53,7 +53,6 @@ describe('map', () => {
       return node
     })
 
-    expect(result).not.toBe(ast)
     expect(result).toStrictEqual(
       paragraph([
         bold('bold')
