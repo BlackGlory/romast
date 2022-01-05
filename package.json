@@ -16,6 +16,7 @@
     "./es2018/utils/*": "./lib/es2018/romast-utils/*",
     "./es2015/utils/*": "./lib/es2015/romast-utils/*"
   },
+  "sideEffects": false,
   "types": "lib/es2018/index.d.ts",
   "repository": "git@github.com:BlackGlory/romast.git",
   "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
