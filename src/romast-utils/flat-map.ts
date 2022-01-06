@@ -1,7 +1,7 @@
 import * as ROMAST from '@src/romast'
 import { isParent, isSection, isHeadline, isTable, isTableRowGroup } from './is'
 import { assert } from '@blackglory/errors'
-import 'core-js/features/array/flat-map'
+import _flatMap from 'lodash.flatmap'
 
 export function flatMap(
   node: ROMAST.Node
@@ -45,7 +45,7 @@ export function flatMap(
       if (isParent(node)) {
         node = {
           ...node
-        , children: node.children.flatMap(x => flatMap(x, fn))
+        , children: _flatMap(node.children, x => flatMap(x, fn))
         } as ROMAST.Node & ROMAST.Parent
       }
 
