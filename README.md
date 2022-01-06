@@ -396,10 +396,10 @@ import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes.
 function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 ```
 
-#### addHelpersInPlace
+#### addHelpers
 
 ```ts
-import { addHelpersInPlace } from 'romast/utils/add-helpers.js'
+import { addHelpers, addHelpersInPlace } from 'romast/utils/add-helpers.js'
 
 type NullOrNodeWithHelpers<T extends AST.Node | null> =
   T extends null
@@ -622,13 +622,15 @@ type NodeWithHelpers<
     nextSibling: NullOrNodeWithHelpers<Sibling>
   }>
 
+function addHelpers<T extends AST.Node>(node: T): NodeWithHelpers<T>
 function addHelpersInPlace<T extends AST.Node>(node: T): NodeWithHelpers<T>
 ```
 
-#### removeHelpersInPlace
+#### removeHelpers
 
 ```ts
-import { removeHelpersInPlace } from 'romast/utils/remove-helpers.js'
+import { removeHelpers, removeHelpersInPlace } from 'romast/utils/remove-helpers.js'
 
+function removeHelpers<T extends AST.Node>(node: NodeWithHelpers<T>): T
 function removeHelpersInPlace<T extends AST.Node>(node: NodeWithHelpers<T>): T
 ```
