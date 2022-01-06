@@ -634,3 +634,18 @@ import { removeHelpers, removeHelpersInPlace } from 'romast/utils/remove-helpers
 function removeHelpers<T extends AST.Node>(node: NodeWithHelpers<T>): T
 function removeHelpersInPlace<T extends AST.Node>(node: NodeWithHelpers<T>): T
 ```
+
+#### withHelpers
+
+```ts
+import { withHelpers, withHelpersInPlace } from 'romast/utils/with-helpers.js'
+
+function withHelpers<T extends AST.Node, U>(
+  node: T
+, fn: (node: NodeWithHelpers<T>) => U
+): U
+function withHelpersInPlace<T extends AST.Node, U>(
+  node: T
+, fn: (node: NodeWithHelpers<T>) => U
+): U
+```
