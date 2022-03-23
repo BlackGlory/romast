@@ -6,8 +6,8 @@ import { isParent, isSection, isParagraph, isText, isNewline, isLink }
 import { addHelpersInPlace, NodeWithHelpers } from '@romast-utils/add-helpers'
 import { removeHelpersInPlace } from '@romast-utils/remove-helpers'
 import { text } from '@romast-utils/builder'
-import dropWhile from 'lodash.dropwhile'
-import dropRightWhile from 'lodash.droprightwhile'
+import dropWhile from 'lodash/dropWhile'
+import dropRightWhile from 'lodash/dropRightWhile'
 
 export function postprocess(document: ROMAST.Document): ROMAST.Document {
   return pipe(

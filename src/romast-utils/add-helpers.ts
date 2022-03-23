@@ -3,7 +3,7 @@ import { Mixin } from 'hotypes'
 import { isParent, isSection, isTable } from './is'
 import { isntUndefined } from '@blackglory/types'
 import { nanoid } from 'nanoid'
-import cloneDeep from 'lodash.clonedeep'
+import cloneDeep from 'lodash/cloneDeep'
 
 type NullOrNodeWithHelpers<T extends AST.Node | null> =
   T extends null

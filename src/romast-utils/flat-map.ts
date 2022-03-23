@@ -1,7 +1,7 @@
 import * as ROMAST from '@src/romast'
 import { isParent, isSection, isHeadline, isTable, isTableRowGroup } from './is'
 import { assert } from '@blackglory/errors'
-import _flatMap from 'lodash.flatmap'
+import _flatMap from 'lodash/flatMap'
 
 export function flatMap(
   node: ROMAST.Node
