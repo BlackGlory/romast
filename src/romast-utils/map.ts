@@ -16,7 +16,7 @@ export function map(
 
     if (isSection(newNode)) {
       const newHeadline = map(newNode.headline, fn)
-      assert(isHeadline(newHeadline))
+      assert(isHeadline(newHeadline), 'section.headline must be headline')
 
       newNode = {
         ...newNode
@@ -26,7 +26,7 @@ export function map(
 
     if (isTable(newNode) && newNode.header) {
       const newTableRowGroup = map(newNode.header, fn)
-      assert(isTableRowGroup(newTableRowGroup))
+      assert(isTableRowGroup(newTableRowGroup), 'table.header must be tableRowGroup')
 
       newNode = {
         ...newNode

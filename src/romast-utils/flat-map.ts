@@ -18,10 +18,10 @@ export function flatMap(
     return newNodes.map(node => {
       if (isSection(node)) {
         const result = flatMap(node.headline, fn)
-        assert(result.length === 1)
+        assert(result.length === 1, 'section.headline must be only one')
 
         const [newHeadline] = result
-        assert(isHeadline(newHeadline))
+        assert(isHeadline(newHeadline), 'section.headline must be headline')
 
         node = {
           ...node
@@ -31,10 +31,10 @@ export function flatMap(
 
       if (isTable(node) && node.header) {
         const result = flatMap(node.header, fn)
-        assert(result.length === 1)
+        assert(result.length === 1, 'table.header must be only one')
 
         const [newTableRowGroup] = result
-        assert(isTableRowGroup(newTableRowGroup))
+        assert(isTableRowGroup(newTableRowGroup), 'table.header must be tableRowGroup')
 
         node = {
           ...node
