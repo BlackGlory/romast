@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/BlackGlory/romast/compare/v4.1.3...v5.0.0) (2022-04-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* The exports field changed
+
+* improve exports ([0228126](https://github.com/BlackGlory/romast/commit/02281263d2a49bbbd11f906d35d2c0fb8217084f))
+
 ### [4.1.3](https://github.com/BlackGlory/romast/compare/v4.1.2...v4.1.3) (2022-04-30)
 
 ### [4.1.2](https://github.com/BlackGlory/romast/compare/v4.1.1...v4.1.2) (2022-04-30)
