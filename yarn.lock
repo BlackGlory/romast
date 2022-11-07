@@ -2814,9 +2814,9 @@ extra-timers@^0.2.5:
     extra-rand "^0.1.1"
 
 extra-utils@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/extra-utils/-/extra-utils-3.0.0.tgz#84742d0b0c47b18a027d7242148f3d0465652ce9"
-  integrity sha512-OAR6JaoI5iawmuFOAYOOYvLcbgviIuZJehHem4L1h/368rCtu/RetsPqoUiJ3oCnYEqvylV2aFmoxCoQDfX1dA==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/extra-utils/-/extra-utils-3.1.0.tgz#4cc528533ac9b1448e890649dddeb86ce114c7ef"
+  integrity sha512-r+5APMrbC2DJmOZs1cdBS73eMQuHBCroHLkhYGYj5z6pxHa1UYMIISqS6TTxltzu/UpLRSzhXUL3eHwQ9ohk5Q==
   dependencies:
     justypes "^3.0.0"
     lodash "^4.17.21"

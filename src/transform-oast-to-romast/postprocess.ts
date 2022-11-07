@@ -8,6 +8,7 @@ import { removeHelpersInPlace } from '@romast-utils/remove-helpers'
 import { text } from '@romast-utils/builder'
 import dropWhile from 'lodash/dropWhile'
 import dropRightWhile from 'lodash/dropRightWhile'
+import { pipe } from 'extra-utils'
 
 export function postprocess(document: ROMAST.Document): ROMAST.Document {
   return pipe(
@@ -134,8 +135,4 @@ function correctSectionLevel(document: ROMAST.Document): ROMAST.Document {
 
 function last<T>(arr: T[]): T | undefined {
   return arr[arr.length - 1]
-}
-
-function pipe<T>(value: T, ...fns: Array<(value: T) => T>): T {
-  return fns.reduce((result, fn) => fn(result), value)
 }
