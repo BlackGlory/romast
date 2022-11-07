@@ -1,6 +1,6 @@
 {
   "name": "romast",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Renderable Org-Mode Abstract Syntax Tree",
   "keywords": [],
   "files": [
