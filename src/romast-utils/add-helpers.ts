@@ -1,7 +1,7 @@
 import * as AST from '@src/romast'
 import { Mixin } from 'hotypes'
 import { isParent, isSection, isTable } from './is'
-import { isntUndefined } from '@blackglory/types'
+import { isntUndefined } from 'extra-utils'
 import { nanoid } from 'nanoid'
 import cloneDeep from 'lodash/cloneDeep'
 

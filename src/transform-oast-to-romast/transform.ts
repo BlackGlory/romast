@@ -3,7 +3,7 @@ import * as ROMAST from '@src/romast'
 import * as OAST_IS from '@oast-utils/is'
 import * as Builder from '@romast-utils/builder'
 import { CustomError, assert } from '@blackglory/errors'
-import { isntUndefined } from '@blackglory/types'
+import { isntUndefined } from 'extra-utils'
 import { findFootnote } from './find-footnote'
 
 export class UnknownNodeError extends CustomError {
