@@ -1,5 +1,4 @@
 # romast
-
 **R**enderable **O**rg-**M**ode **A**bstract **S**yntax **T**ree.
 
 romast is an easy-to-render version of [oast v3],
@@ -9,7 +8,6 @@ So you can precisely control the translation results by recursive descent analys
 [oast v3]: https://github.com/orgapp/orgajs
 
 ## Install
-
 ```sh
 npm install --save romast
 # or
@@ -17,7 +15,6 @@ yarn add romast
 ```
 
 ## Usage
-
 ```ts
 import { parse } from 'romast'
 import { dedent } from 'extra-tags'
@@ -96,9 +93,7 @@ const romast = parse(org)
 ```
 
 ## API
-
 ### AST
-
 ```ts
 interface Node {
   type: string
@@ -306,7 +301,6 @@ interface Code extends Node {
 ```
 
 ### parse
-
 ```ts
 function parse(text: string, strict: boolean = false): AST.Document
 ```
@@ -316,9 +310,7 @@ If `strict` is `true`, an `UnknownNodeError` will be thrown when there are non-c
 If `strict` is `false`, theses non-compliant are simply ignored.
 
 ### utils
-
 #### builder
-
 ```ts
 import * as Builder from 'romast/utils/builder'
 ```
@@ -326,7 +318,6 @@ import * as Builder from 'romast/utils/builder'
 Each romast node has a corresponding builder.
 
 #### is
-
 ```ts
 import * as Is from 'romast/utils/is'
 ```
@@ -334,7 +325,6 @@ import * as Is from 'romast/utils/is'
 Each romast node has a corresponding `is` function.
 
 #### flatMap
-
 ```ts
 import { flatMap } from 'romast/utils/flat-map'
 
@@ -345,7 +335,6 @@ function flatMap(
 ```
 
 #### map
-
 ```ts
 import { map } from 'romast/utils/map'
 
@@ -356,7 +345,6 @@ function map(
 ```
 
 #### filter
-
 ```ts
 import { filter } from 'romast/utils/filter'
 
@@ -367,7 +355,6 @@ function filter(
 ```
 
 #### find
-
 ```ts
 import { find } from 'romast/utils/find'
 
@@ -378,7 +365,6 @@ function find<T extends AST.Node>(
 ```
 
 #### findAll
-
 ```ts
 import { findAll } from 'romast/utils/find-all'
 
@@ -389,7 +375,6 @@ function findAll<T extends AST.Node>(
 ```
 
 #### traverseDescendantNodes
-
 ```ts
 import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes'
 
@@ -397,7 +382,6 @@ function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 ```
 
 #### addHelpers
-
 ```ts
 import { addHelpers, addHelpersInPlace } from 'romast/utils/add-helpers'
 
@@ -627,7 +611,6 @@ function addHelpersInPlace<T extends AST.Node>(node: T): NodeWithHelpers<T>
 ```
 
 #### removeHelpers
-
 ```ts
 import { removeHelpers, removeHelpersInPlace } from 'romast/utils/remove-helpers'
 
@@ -636,7 +619,6 @@ function removeHelpersInPlace<T extends AST.Node>(node: NodeWithHelpers<T>): T
 ```
 
 #### withHelpers
-
 ```ts
 import { withHelpers, withHelpersInPlace } from 'romast/utils/with-helpers'
 
