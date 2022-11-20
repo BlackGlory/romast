@@ -320,7 +320,7 @@ If `strict` is `false`, theses non-compliant are simply ignored.
 #### builder
 
 ```ts
-import {} from 'romast/utils/builder.js'
+import * as Builder from 'romast/utils/builder'
 ```
 
 Each romast node has a corresponding builder.
@@ -328,7 +328,7 @@ Each romast node has a corresponding builder.
 #### is
 
 ```ts
-import {} from 'romast/utils/is.js'
+import * as Is from 'romast/utils/is'
 ```
 
 Each romast node has a corresponding `is` function.
@@ -336,7 +336,7 @@ Each romast node has a corresponding `is` function.
 #### flatMap
 
 ```ts
-import { flatMap } from 'romast/utils/flat-map.js'
+import { flatMap } from 'romast/utils/flat-map'
 
 function flatMap(
   node: AST.Node
@@ -347,7 +347,7 @@ function flatMap(
 #### map
 
 ```ts
-import { map } from 'romast/utils/map.js'
+import { map } from 'romast/utils/map'
 
 function map(
   node: AST.Node
@@ -358,7 +358,7 @@ function map(
 #### filter
 
 ```ts
-import { filter } from 'romast/utils/filter.js'
+import { filter } from 'romast/utils/filter'
 
 function filter(
   node: AST.Node
@@ -369,7 +369,7 @@ function filter(
 #### find
 
 ```ts
-import { find } from 'romast/utils/find.js'
+import { find } from 'romast/utils/find'
 
 function find<T extends AST.Node>(
   node: AST.Node
@@ -380,7 +380,7 @@ function find<T extends AST.Node>(
 #### findAll
 
 ```ts
-import { findAll } from 'romast/utils/find-all.js'
+import { findAll } from 'romast/utils/find-all'
 
 function findAll<T extends AST.Node>(
   node: AST.Node
@@ -391,7 +391,7 @@ function findAll<T extends AST.Node>(
 #### traverseDescendantNodes
 
 ```ts
-import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes.js'
+import { traverseDescendantNodes } from 'romast/utils/traverse-descendant-nodes'
 
 function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 ```
@@ -399,7 +399,7 @@ function traverseDescendantNodes(node: AST.Node): Iterable<AST.Node>
 #### addHelpers
 
 ```ts
-import { addHelpers, addHelpersInPlace } from 'romast/utils/add-helpers.js'
+import { addHelpers, addHelpersInPlace } from 'romast/utils/add-helpers'
 
 type NullOrNodeWithHelpers<T extends AST.Node | null> =
   T extends null
@@ -629,7 +629,7 @@ function addHelpersInPlace<T extends AST.Node>(node: T): NodeWithHelpers<T>
 #### removeHelpers
 
 ```ts
-import { removeHelpers, removeHelpersInPlace } from 'romast/utils/remove-helpers.js'
+import { removeHelpers, removeHelpersInPlace } from 'romast/utils/remove-helpers'
 
 function removeHelpers<T extends AST.Node>(node: NodeWithHelpers<T>): T
 function removeHelpersInPlace<T extends AST.Node>(node: NodeWithHelpers<T>): T
@@ -638,7 +638,7 @@ function removeHelpersInPlace<T extends AST.Node>(node: NodeWithHelpers<T>): T
 #### withHelpers
 
 ```ts
-import { withHelpers, withHelpersInPlace } from 'romast/utils/with-helpers.js'
+import { withHelpers, withHelpersInPlace } from 'romast/utils/with-helpers'
 
 function withHelpers<T extends AST.Node, U>(
   node: T
