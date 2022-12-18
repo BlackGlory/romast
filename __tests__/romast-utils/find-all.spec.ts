@@ -2,7 +2,6 @@ import { findAll } from '@romast-utils/find-all'
 import { isText } from '@romast-utils/is'
 import { section, headline, paragraph, text } from '@romast-utils/builder'
 import { toArray } from 'iterable-operator'
-import '@blackglory/jest-matchers'
 
 describe('findAll', () => {
   it('is preorder', () => {
@@ -58,11 +57,10 @@ describe('findAll', () => {
           ])
         ])
 
-      const result = findAll(ast, isText)
-      const arrResult = toArray(result)
+      const iter = findAll(ast, isText)
+      const result = toArray(iter)
 
-      expect(result).toBeIterable()
-      expect(arrResult).toStrictEqual([
+      expect(result).toStrictEqual([
         text('deep')
       , text('shallow')
       ])
