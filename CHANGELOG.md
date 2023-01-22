@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/BlackGlory/romast/compare/v5.0.4...v6.0.0) (2023-01-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* - CommonJS => ESM.
+- The minimal version of Node.js is 16.
+
+* commonjs => esm ([2d84c10](https://github.com/BlackGlory/romast/commit/2d84c10d9e3b1cd5bc6550ae41df151892775290))
+
 ### [5.0.4](https://github.com/BlackGlory/romast/compare/v5.0.3...v5.0.4) (2023-01-21)
 
 ### [5.0.3](https://github.com/BlackGlory/romast/compare/v5.0.2...v5.0.3) (2022-11-07)
