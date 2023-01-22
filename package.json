@@ -61,12 +61,12 @@
     "typescript-transform-paths": "^3.4.6"
   },
   "dependencies": {
-    "@blackglory/errors": "^2.4.3",
+    "@blackglory/errors": "^3.0.0",
     "@types/unist": "^2.0.6",
     "date-fns": "^2.29.3",
     "extra-utils": "^5.0.1",
     "hotypes": "^0.5.1",
-    "iterable-operator": "^4.0.0",
+    "iterable-operator": "^4.0.2",
     "lodash-es": "^4.17.21",
     "nanoid": "^4.0.0",
     "orga": "3.2.0"
