@@ -1,5 +1,5 @@
-import { addHelpersInPlace } from '@romast-utils/add-helpers'
-import * as R from '@romast-utils/builder'
+import { addHelpersInPlace } from '@romast-utils/add-helpers.js'
+import * as R from '@romast-utils/builder.js'
 
 describe('addHelpers', () => {
   test('root', () => {

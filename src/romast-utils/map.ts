@@ -1,5 +1,5 @@
-import * as ROMAST from '@src/romast'
-import { isParent, isSection, isHeadline, isTable, isTableRowGroup } from './is'
+import * as ROMAST from '@src/romast.js'
+import { isParent, isSection, isHeadline, isTable, isTableRowGroup } from './is.js'
 import { assert } from '@blackglory/errors'
 
 export function map(

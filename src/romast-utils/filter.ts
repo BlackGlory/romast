@@ -1,5 +1,5 @@
-import { flatMap } from './flat-map'
-import * as ROMAST from '@src/romast'
+import { flatMap } from './flat-map.js'
+import * as ROMAST from '@src/romast.js'
 
 export function filter(
   node: ROMAST.Node

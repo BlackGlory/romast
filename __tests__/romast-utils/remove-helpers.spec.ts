@@ -1,6 +1,6 @@
-import { addHelpersInPlace } from '@romast-utils/add-helpers'
-import { removeHelpersInPlace } from '@romast-utils/remove-helpers'
-import * as R from '@romast-utils/builder'
+import { addHelpersInPlace } from '@romast-utils/add-helpers.js'
+import { removeHelpersInPlace } from '@romast-utils/remove-helpers.js'
+import * as R from '@romast-utils/builder.js'
 
 describe('removeHelpers', () => {
   test('root', () => {

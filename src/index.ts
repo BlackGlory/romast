@@ -1,2 +1,2 @@
-export * as AST from './romast'
-export { parse } from './parse'
+export * as AST from './romast.js'
+export { parse } from './parse.js'

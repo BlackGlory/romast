@@ -1,13 +1,12 @@
-import * as ROMAST from '@src/romast'
-import { filter } from '@romast-utils/filter'
-import { map } from '@romast-utils/map'
+import * as ROMAST from '@src/romast.js'
+import { filter } from '@romast-utils/filter.js'
+import { map } from '@romast-utils/map.js'
 import { isParent, isSection, isParagraph, isText, isNewline, isLink }
-  from '@romast-utils/is'
-import { addHelpersInPlace, NodeWithHelpers } from '@romast-utils/add-helpers'
-import { removeHelpersInPlace } from '@romast-utils/remove-helpers'
-import { text } from '@romast-utils/builder'
-import dropWhile from 'lodash/dropWhile'
-import dropRightWhile from 'lodash/dropRightWhile'
+  from '@romast-utils/is.js'
+import { addHelpersInPlace, NodeWithHelpers } from '@romast-utils/add-helpers.js'
+import { removeHelpersInPlace } from '@romast-utils/remove-helpers.js'
+import { text } from '@romast-utils/builder.js'
+import { dropWhile, dropRightWhile } from 'lodash-es'
 import { pipe } from 'extra-utils'
 
 export function postprocess(document: ROMAST.Document): ROMAST.Document {

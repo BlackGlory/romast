@@ -1,4 +1,4 @@
-import * as ROMAST from '@src/romast'
+import * as ROMAST from '@src/romast.js'
 
 function is<T extends ROMAST.Node>(node: ROMAST.Node, type: string): node is T {
   return node.type === type

@@ -1,6 +1,6 @@
-import * as OAST from '@src/oast-3.2'
-import { isFootnote } from '@oast-utils/is'
-import { find } from '@oast-utils/find'
+import * as OAST from '@src/oast-3.2.js'
+import { isFootnote } from '@oast-utils/is.js'
+import { find } from '@oast-utils/find.js'
 
 export function findFootnote(
   node: OAST.Node

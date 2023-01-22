@@ -1,6 +1,6 @@
-import { findAll } from '@romast-utils/find-all'
-import { isText } from '@romast-utils/is'
-import { section, headline, paragraph, text } from '@romast-utils/builder'
+import { findAll } from '@romast-utils/find-all.js'
+import { isText } from '@romast-utils/is.js'
+import { section, headline, paragraph, text } from '@romast-utils/builder.js'
 import { toArray } from 'iterable-operator'
 
 describe('findAll', () => {

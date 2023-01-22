@@ -1,9 +1,9 @@
-import * as AST from '@src/romast'
+import * as AST from '@src/romast.js'
 import { Mixin } from 'hotypes'
-import { isParent, isSection, isTable } from './is'
+import { isParent, isSection, isTable } from './is.js'
 import { isntUndefined } from 'extra-utils'
 import { nanoid } from 'nanoid'
-import cloneDeep from 'lodash/cloneDeep'
+import { cloneDeep } from 'lodash-es'
 
 type NullOrNodeWithHelpers<T extends AST.Node | null> =
   T extends null

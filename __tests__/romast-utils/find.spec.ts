@@ -1,6 +1,6 @@
-import { find } from '@romast-utils/find'
-import { isText, isBold } from '@romast-utils/is'
-import { section, headline, paragraph, text } from '@romast-utils/builder'
+import { find } from '@romast-utils/find.js'
+import { isText, isBold } from '@romast-utils/is.js'
+import { section, headline, paragraph, text } from '@romast-utils/builder.js'
 
 describe('find', () => {
   it('is preorder', () => {

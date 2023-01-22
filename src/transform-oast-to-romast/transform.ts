@@ -1,10 +1,10 @@
-import * as OAST from '@src/oast-3.2'
-import * as ROMAST from '@src/romast'
-import * as OAST_IS from '@oast-utils/is'
-import * as Builder from '@romast-utils/builder'
+import * as OAST from '@src/oast-3.2.js'
+import * as ROMAST from '@src/romast.js'
+import * as OAST_IS from '@oast-utils/is.js'
+import * as Builder from '@romast-utils/builder.js'
 import { CustomError, assert } from '@blackglory/errors'
 import { isntUndefined } from 'extra-utils'
-import { findFootnote } from './find-footnote'
+import { findFootnote } from './find-footnote.js'
 
 export class UnknownNodeError extends CustomError {
   constructor(node: OAST.Node) {

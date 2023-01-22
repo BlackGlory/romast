@@ -1,7 +1,7 @@
-import * as OAST from '@src/oast-3.2'
-import * as ROMAST from '@src/romast'
-import { transformDocument } from './transform'
-import { postprocess } from './postprocess'
+import * as OAST from '@src/oast-3.2.js'
+import * as ROMAST from '@src/romast.js'
+import { transformDocument } from './transform.js'
+import { postprocess } from './postprocess.js'
 
 export function transform(
   root: OAST.Document

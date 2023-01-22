@@ -1,4 +1,4 @@
-import * as OAST from '@src/oast-3.2'
+import * as OAST from '@src/oast-3.2.js'
 
 function is<T extends OAST.Node>(node: OAST.Node, type: string): node is T {
   return node.type === type

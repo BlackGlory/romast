@@ -1,6 +1,5 @@
-import * as ROMAST from '@src/romast'
-import { traverseDescendantNodes } from './traverse-descendant-nodes'
-import { isParent, isSection, isTable } from './is'
+import * as ROMAST from '@src/romast.js'
+import { traverseDescendantNodes } from './traverse-descendant-nodes.js'
 import { find as findInIterable } from 'iterable-operator'
 
 export function find<T extends ROMAST.Node>(

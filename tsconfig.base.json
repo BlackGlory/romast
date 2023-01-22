@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2018"
-  , "module": "CommonJS"
+  , "module": "NodeNext"
+  , "moduleResolution": "NodeNext"
   , "strict": true
   , "esModuleInterop": true
   , "noUnusedLocals": false
@@ -13,5 +14,9 @@
     , "@romast-utils/*": ["src/romast-utils/*"]
     , "@test/*": ["__tests__/*"]
     }
+  , "plugins": [
+      { "transform": "typescript-transform-paths" }
+    , { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
   }
 }

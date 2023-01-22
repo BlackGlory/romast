@@ -1,7 +1,7 @@
-import * as OAST from '@src/oast-3.2'
-import * as ROMAST from '@src/romast'
+import * as OAST from '@src/oast-3.2.js'
+import * as ROMAST from '@src/romast.js'
 import { parse as orga } from 'orga'
-import { transform } from '@src/transform-oast-to-romast'
+import { transform } from '@src/transform-oast-to-romast/index.js'
 
 export function parse(text: string, strict: boolean = false): ROMAST.Document {
   const oast = orga(dosToUnix(text)) as OAST.Document

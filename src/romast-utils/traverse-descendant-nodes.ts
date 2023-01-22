@@ -1,5 +1,5 @@
-import * as ROMAST from '@src/romast'
-import { isParent, isSection, isTable } from './is'
+import * as ROMAST from '@src/romast.js'
+import { isParent, isSection, isTable } from './is.js'
 
 export function* traverseDescendantNodes(node: ROMAST.Node): Iterable<ROMAST.Node> {
   if (isSection(node)) {

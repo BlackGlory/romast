@@ -1,6 +1,6 @@
-import { transformDocument } from '@src/transform-oast-to-romast/transform'
-import * as O from '@oast-utils/builder'
-import * as R from '@romast-utils/builder'
+import { transformDocument } from '@src/transform-oast-to-romast/transform.js'
+import * as O from '@oast-utils/builder.js'
+import * as R from '@romast-utils/builder.js'
 
 describe('OAST.Document', () => {
   it('return ROMAST.Document', () => {

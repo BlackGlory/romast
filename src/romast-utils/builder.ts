@@ -1,4 +1,4 @@
-import * as ROMAST from '@src/romast'
+import * as ROMAST from '@src/romast.js'
 
 export function document(children: ROMAST.Document['children']): ROMAST.Document {
   return {

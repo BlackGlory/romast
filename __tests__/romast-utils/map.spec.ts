@@ -1,6 +1,6 @@
-import { map } from '@romast-utils/map'
-import { isText } from '@romast-utils/is'
-import { section, headline, paragraph, bold, text } from '@romast-utils/builder'
+import { map } from '@romast-utils/map.js'
+import { isText } from '@romast-utils/is.js'
+import { section, headline, paragraph, bold, text } from '@romast-utils/builder.js'
 
 describe('map', () => {
   it('is preorder', () => {
