@@ -3,7 +3,6 @@
 
 romast is an easy-to-render version of [oast v3],
 the new AST is designed to render nodes directly from AST to any platform, e.g. React.
-So you can precisely control the translation results by recursive descent analysis.
 
 [oast v3]: https://github.com/orgapp/orgajs
 
