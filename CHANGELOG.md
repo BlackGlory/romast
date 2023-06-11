@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [6.0.2](https://github.com/BlackGlory/romast/compare/v6.0.1...v6.0.2) (2023-06-11)
+
+
+### Bug Fixes
+
+* export src ([8922320](https://github.com/BlackGlory/romast/commit/892232019e94f8834e0f11b3daa18344a8858fb0))
+
 ### [6.0.1](https://github.com/BlackGlory/romast/compare/v6.0.0...v6.0.1) (2023-01-22)
 
 ## [6.0.0](https://github.com/BlackGlory/romast/compare/v5.0.4...v6.0.0) (2023-01-22)
