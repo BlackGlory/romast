@@ -1,6 +1,6 @@
 import { parse } from 'orga'
 import { dedent } from 'extra-tags'
-import { isObject, isDate } from '@blackglory/types'
+import { isObject, isDate } from 'extra-utils'
 
 test('break', () => {
   const text = dedent`
