@@ -4,12 +4,13 @@ import { section, headline, paragraph, bold, text } from '@romast-utils/builder.
 
 describe('flatMap', () => {
   it('is preorder', () => {
-    const ast =
+    const ast = (
       section(1, headline([], [text('headline')]), [
         paragraph([
           text('text')
         ])
       ])
+    )
 
     const result: string[] = []
     flatMap(ast, node => {
@@ -21,7 +22,7 @@ describe('flatMap', () => {
   })
 
   it('is DFS', () => {
-    const ast =
+    const ast = (
       section(1, headline([], []), [
         section(1, headline([], []), [
           paragraph([
@@ -32,6 +33,7 @@ describe('flatMap', () => {
           text('shallow')
         ])
       ])
+    )
 
     const result: string[] = []
     flatMap(ast, node => {
@@ -43,19 +45,18 @@ describe('flatMap', () => {
   })
 
   it('create a new tree', () => {
-    const ast =
-      paragraph([
-        text('text')
-      ])
+    const ast = paragraph([
+      text('foo')
+    ])
 
     const result = flatMap(ast, node => {
-      if (isText(node)) return [bold('bold')]
+      if (isText(node)) return [bold('bar')]
       return [node]
     })
 
     expect(result).toStrictEqual([
       paragraph([
-        bold('bold')
+        bold('bar')
       ])
     ])
   })
